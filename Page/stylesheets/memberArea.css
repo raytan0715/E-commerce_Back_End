@@ -1,0 +1,232 @@
+body{
+  font-family: "Noto Sans TC", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* 中間選單
+-------------------------------------------------- */
+
+.CategoryList_Container{
+  /*background-color: rgb(255, 159, 127);*/
+  display: flex;
+  justify-content: center; /* 水平排列靠中間對齊 */
+  margin-bottom: 15px;
+}
+
+.list {
+  display: flex;
+  flex-direction: row; /* 改為水平排列 */
+  width: 50%;        
+  /*margin-bottom: 10px;*/
+  justify-content: center; /* 水平排列時靠左對齊 */
+  align-items:flex-end; /* 垂直方向居中對齊 */
+  /*background-color: rgb(225, 255, 0);*/
+}
+
+.list label {
+  font-size: 18px;
+  letter-spacing: 2px;
+  line-height: 50px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  color: rgb(0, 0, 0);
+  z-index: 12;
+  /*margin-right: 10px;*/
+}
+
+/* 原初樣式 */
+.modify,
+.record {
+    background-color: #ada090;
+    margin-right: 25px;
+    border-radius: 20px;
+    border: 0px;
+    cursor: pointer; /* 將鼠標光標改為手型 */
+    transition: background-color 0.3s; /* 添加過渡效果 */
+}
+
+.modify .title,
+.record .title {
+    color: #fff;
+    font-weight: 800;
+}
+
+/* 當radio被選中時的樣式 - 目前這個沒有用可以忽略*/
+#modify:checked + .modify,
+#record:checked + .record {
+    background-color: #393939;
+    color: #bcbcbc;
+}
+
+.modify:hover
+.record:hover{
+  background-color: #393939;
+  color: #bcbcbc;
+}
+
+#modify:checked~.text-content .modify,
+#record:checked~.text-content .record {
+  display: block;
+}
+.content input {
+  display: none;
+}
+
+/*---*/
+
+.content .text-content { 
+  width: 70%; /* 可以調整個人資料在容器中的位置 */
+  height: 100%;
+}
+.content .text {
+  display: none;
+}
+.content .text .title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.content .text p {
+  text-align: justify;
+}
+
+
+/* 個人與訂單資料
+-------------------------------------------------- */
+
+.PersonalInfo_Container {
+  width: 100%;
+  height: 100%;
+  display: flex;             /*置中*/
+  justify-content: center;   /*置中*/
+  align-items: center;       /*置中*/
+  
+}
+
+.container2 {
+  position: relative;
+  height: 500px;
+  width: 950px;
+  /*margin-top: 25px;*/
+  margin-bottom: 50px;
+  background-color: rgba(245, 245, 245, 0.932);
+  border-radius: 30px;
+  background-color: #f0ece8; /* 新增的样式 */
+  /*padding: 20px;          /* 新增的样式 */
+}
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+/*容器*/
+.PersonalAndOrder_Container{
+  /*background-color: blue;*/
+  display: flex;
+  justify-content: center;
+}
+
+.text-content input {
+  display: block;
+}
+.p-table {
+  position: absolute;
+  top: 80px;
+}
+.p-table td {
+  padding: 10px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.t-left{
+  text-align: right;
+  margin-right: 30px;
+}
+
+/* ========== 修改資料 ========== */
+.rr {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 15%;
+}
+.rr .info{
+  margin-right: 50px;
+  text-align: center;
+}
+.rr p {
+  font-family: 'GenRyuMin-B';
+  letter-spacing: 1px;
+  font-size: 18px;
+}
+.mod-txt input{
+  width: 300px;
+  font-family: 'Mukta', sans-serif;
+  font-size: 16px;
+  color: #202020;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #202020;
+  padding: 2px 0px;
+  letter-spacing: 1px;
+  margin: 20px 0px;
+  outline: none;  /*點擊時不要出現邊框*/
+}
+
+/* 送出按鈕 */
+.p-sub {
+  font-size: 14px;
+  letter-spacing: 3px;
+  padding: 8px 40px;
+  color: #FFFFFF;
+  background-color: #353535;
+  border: 1px solid #353535;
+  cursor: pointer;
+  transition: .3s;
+  margin: 40px 0px 0px 75px;
+}
+.p-sub:hover{
+  cursor: pointer;
+  color: #000;
+  background: none;
+}
+
+.acc h2{
+  font-size: 15px;
+  font-weight: normal;
+  letter-spacing: 2px;
+  margin-top: 125px;
+  margin-left: 20px;
+}
+
+/* 訂單紀錄 */
+.r-table{
+  position: absolute;
+  top: 15%;
+  width: 72%;
+  border-collapse: collapse;
+}
+.r-table th{
+  font-size: 18px;
+  letter-spacing: 1px;
+  padding-bottom: 10px;
+  text-align: left;
+}
+.r-table td{
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding: 5px 0px;
+}
+.r-table td span{
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+
+

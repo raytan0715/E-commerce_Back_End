@@ -1,0 +1,462 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.sql.*" %>
+
+<!doctype html>
+
+<html lang="en" data-bs-theme="auto">
+
+  <!-- 此為登入後的介面 -->
+
+  <head>
+    
+    <script src="./assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.122.0">
+
+    <!-- 網頁標題 -->
+    <title> 吃貨道| 吃貨的專屬門道 </title>
+
+    <!-- 引用 Bootstrap 套件--->
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/masonry/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/footers/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 使用font-awesome線上免下載圖標(icon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- 登入欄位引用線上資源 -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- header -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!-- header -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+    <!-- 引用 思源黑體字形 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- css 樣式檔案 -->
+    <link href="./stylesheets/index.css" rel="stylesheet">
+
+    <!-- 登入註冊樣式檔  -->
+    <link rel="stylesheet" href="./stylesheets/LoginArea.css">
+
+    <!-- 購物車樣式檔 -->
+    <link rel="stylesheet" href="./stylesheets/BuyCart.css">
+
+    <!-- 會員介面樣式檔 -->
+    <link rel="stylesheet" href="./stylesheets/memberArea.css">
+
+  </head>
+
+  <body>
+
+    <!-- 上方欄位 (工具欄)
+    ================================================== -->
+
+      <!-- 共具欄第一欄 -->
+      <nav class="navbar navbar-expand-lg"> 
+
+        <!-- 工具欄第一欄內容物容器 -->
+        <div class="row navOneRow">
+
+          <!-- 【圖標logo】-->
+          <div class="col-sm navLogoCol" >
+            <div class="navLogo" >
+              <!-- Logo 點擊回到登入後主頁 -->
+              <a href="index_LoggedIn.jsp">
+              <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
+              </a>
+            </div>
+          </div>
+          
+
+          <!-- 【搜尋欄】 -->
+          <div class="col-sm searchBarCol">
+              
+              <form class="d-flex" style="width:750px;"> 
+                <input id="searchBar" class="form-control me-2 searchBar" type="search" placeholder="🔍 搜尋" aria-label="Search">
+                
+                <script>
+                  // 在輸入框獲得焦點時，添加特定的樣式
+                  document.getElementById("searchBar").addEventListener("focus", function() {
+                      this.classList.add("focused");
+                  });
+
+                  // 在輸入框獲得焦點時，移除特定的樣式
+                  document.getElementById("searchBar").addEventListener("blur", function() {
+                      this.classList.remove("focused");
+                  });
+                </script>
+              </form>
+            </div>
+
+          <!-- 右側兩個按鈕欄位 -->
+          <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
+
+            <!-- 【購物車】 -->
+            <div id="cart">
+
+              <!-- 購物車按鈕 --> 
+                <button onclick="openNav()".style.display='block' type="button" class="btn btn-light" style="width: auto;height:auto;">
+                    <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
+                </button>
+              
+              <!-- 旁邊顯示之購物車界面 -->
+              <div id="mySidebar" class="sidebar">
+
+                  <!-- 購物車頁面右邊之大叉叉-->
+                  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+                  <div class="sidebarinner">
+
+                      <form action="">
+
+                          <!-- 購物車商品之單頁 商品01 -->
+                          <div class="cart-p">
+                              <img src="./picture/material/productPic/snacks/snacks_2.PNG">
+                              <div>
+
+                                  <div class="cp1">   <!--商品名稱-->
+                                      <h1>GEMEZ Enaak 韓式小雞麵 雞汁味</h1>
+                                      <p>一盒裝 24入</p>
+                                  </div>
+
+                                  <div class="cp2">   <!-- 數量增減 -->
+                                    <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input id="quantity" type="text" value="1"/>
+                                    <input id="add" type="button" value="+"/> 
+                                  </div>
+                              </div>
+
+                              <div class="cp3">   <!-- 商品價格 -->
+                                  <p>$239</p>
+                              </div>
+
+                              <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+
+                          </div>
+
+                          <!-- 購物車商品之單頁 商品02 -->
+                          <div class="cart-p">
+
+                              <img src="./picture/material/productPic/drinks/banana.jpg">
+                              <div>
+                                  <div class="cp1">   <!--商品名稱-->
+                                      <h1>【韓味不二】香蕉牛奶</h1>
+                                      <p>一瓶(200ml)</p>
+                                  </div>
+                                  <div class="cp2">   <!-- 數量增減 -->
+                                      <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                      <input id="quantity" type="text" value="1"/>
+                                      <input id="add" type="button" value="+"/> 
+                                  </div>
+                              </div>
+
+                              <div class="cp3">   <!-- 商品價格 -->
+                                  <p>$25</p>
+                              </div>
+
+                              <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+
+                          </div>
+
+                          <!-- 購物車商品之單頁 商品03 -->
+                          <div class="cart-p">
+
+                            <img src="./picture/material/productPic/drinks/banana.jpg">
+                            <div>
+                                <div class="cp1">   <!--商品名稱-->
+                                    <h1>【韓味不二】香蕉牛奶</h1>
+                                    <p>一瓶(200ml)</p>
+                                </div>
+                                <div class="cp2">   <!-- 數量增減 -->
+                                    <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input id="quantity" type="text" value="1"/>
+                                    <input id="add" type="button" value="+"/> 
+                                </div>
+                            </div>
+
+                            <div class="cp3">   <!-- 商品價格 -->
+                                <p>$25</p>
+                            </div>
+
+                            <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+
+                        </div>
+                          
+                        <!-- 計算總價 -->
+                        <div class="cart-total">
+                            <p>總金額<p>
+                            <p class="r">$289</p>
+                        </div>
+
+                        <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
+                        <div class="cart-but row" >
+
+                            <div class="col">
+                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="location.href='shop.html'">
+                            </div>
+                            <div class="col">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='checkout.html'">
+                            </div>
+
+                        </div>
+
+                      </form>
+
+                  </div>
+
+              </div>
+
+            </div>
+
+            <!-- 【會員註冊登入】 -->
+
+            <!-- 會員註冊與登入按鈕 -->
+            <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+              <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
+               OOO 您好！
+            </button>
+
+            <!-- 登出按鈕 -->
+            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+              <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
+              登出
+            </button>
+
+            <!-- 購物車所需js檔 -->
+            <script src="./javascript/h.js" charset="utf-8"></script>
+
+          </div>
+
+        </div>
+
+        
+      </nav>
+
+      <!-- 工具欄第二欄 -->
+      <nav class="navbar navbar-expand-lg navbar-black bg-black" aria-label="Tenth navbar example"> 
+
+        <div class="container-fluid" style="background-color: #f7f7f7">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+          
+          <!-- 下拉式選單 -->
+          <div class="collapse navbar-collapse justify-content-md-center navCol-2" id="navbarsExample08"> 
+
+            <!-- 【商品瀏覽】 -->
+            <li class="nav-item dropdown">
+              <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">所有商品</a></li>
+                <li><a class="dropdown-item" href="#">泡麵</a></li>
+                <li><a class="dropdown-item" href="#">飲料</a></li>
+                <li><a class="dropdown-item" href="#">零食糖果</a></li>
+              </ul>
+            </li>
+
+            <!-- 【關於我們】 -->
+            <li class="nav-item dropdown">
+              <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">品牌理念</a></li>
+                <li><a class="dropdown-item" href="#">成員介紹</a></li>
+              </ul>
+            </li>
+
+            <!-- 【聯絡我們】 -->
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#FooterArea"  aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>
+            </li>
+
+          </div>
+
+        </div>
+      </nav>
+
+   
+    <!-- 個人資料頁面大容器 -->
+    <div class="mt-5 PersonalInfo_Container">
+
+        <div class="row">
+
+            <!-- 上方選單容器 -->
+            <div class="col-12 CategoryList_Container">
+                
+                <!-- 上側選單 -->
+
+                <div class="list">
+                    <label for="modify" class="btn btn-secondary modify">
+                        <span class="title">基本資料</span>
+                    </label>
+                    <label for="record" class="btn btn-secondary record">
+                        <span class="title">訂單記錄</span>
+                    </label>
+                </div>
+
+            </div>
+
+            <!-- 下方個人資料顯示區容器 -->
+            <div class="col-12 PersonalAndOrder_Container">
+
+                <!-- 個人資料與訂單資料顯示區-->
+                <div class="container2">
+
+                    <div class="content">
+
+                        <img src="" alt="">
+                        <input type="radio"  name="slider" id="modify" autocomplete="off" checked>
+                        <input type="radio"  name="slider"  id="record" autocomplete="off">
+
+                        <!-- 個人資料與訂單資料顯示區 - 字區域 -->
+                        <div class="text-content">
+
+                            <div class="modify text">
+
+                                <div class="rr">
+
+                                    <div class="info">
+                                        <p style="color: #6e573a;font-weight: 1000;font-size: 20px; text-align: center;">基本資料</p>
+                                        <form action="">
+                                            <div class="mod-txt">
+                                                <input type="text" name="" id="AccountName" placeholder="Name" value="酷奇">
+                                                <input type="text" name="" id="AccountPhone" placeholder="Phone" value="0989524655">
+                                                <input type="date" name="birthday" id="AccountBirthday" placeholder="生日" value="" style="color: black;">
+                                                <input type="text" name="" id="AccountAddress" placeholder="地址：320桃園市中壢區中北路200號" value="">
+                                            </div>
+                                            <input type="submit" value="更新資料" class="p-sub">
+                                        </form>
+                                    </div>
+
+                                    <div class="acc" >
+                                        <p style="color: #6e573a;font-weight: 1000;font-size: 20px; text-align: center;">帳號密碼</p>
+                                        <form action="">
+                                            <div class="mod-txt">
+                                                <input type="text" name="" id="" placeholder="Email" value="abcabc@gmail.com">
+                                                <input type="text" name="" id="" placeholder="Password" value="*****">
+                                            </div>
+                                            <input type="submit" value="更新資料" class="p-sub">
+                                        </form>
+                                        <h2 style="color: #6e573a;font-weight: 800;font-size: 16px;">*修改資料直接填入輸入格即可。*</h2>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="record text" style="color: #6e573a;">
+
+                                <table class="r-table">
+                                    <tr>
+                                        <th>訂單編號</th>
+                                        <th class="dis">訂單日期</th>
+                                        <th>品名</th>
+                                        <th>數量</th>
+                                        <th>合計</th>
+                                        <th class="dis">備註</th>
+                                        <th class="dis">訂單狀態</th>
+                                    </tr>
+                                    <tr>
+                                        <td>A20240510</td>
+                                        <td class="dis">2024/05/10</td>
+                                        <td><span>No Brand<br>經典炸醬拉麵 135g克 x 5 x 1PC包</span></td>
+                                        <td>1</td>
+                                        <td>$179</td>
+                                        <td class="dis">無</td>
+                                        <td class="dis">已完成</td>
+                                    </tr>
+                                    <tr>
+                                        <td>A20240510</td>
+                                        <td class="dis">2024/05/10</td>
+                                        <td><span>OTTOGI<br>不倒翁 粗麵條版Q拉麵</span></td>
+                                        <td>1</td>
+                                        <td>$225</td>
+                                        <td class="dis">無</td>
+                                        <td class="dis">已完成</td>
+                                    </tr>
+                                    <tr>
+                                        <td>A20240524</td>
+                                        <td class="dis">2024/05/24</td>
+                                        <td><span>SAMYANG<br>三養 4種起司風味火辣雞肉風味鐵板炒麵</span></td>
+                                        <td>1</td>
+                                        <td>$150</td>
+                                        <td class="dis">無</td>
+                                        <td class="dis">已完成</td>
+                                    </tr>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+      
+
+      <!-- 頁尾(含聯絡資訊) 
+      ================================================== -->
+
+      <section id="FooterArea" class="Footer border-top container " style="background-color: #e6e6e6; width: 100%;color: #796146;">
+
+        <footer class="py-5">
+
+          <div class="row" style="display: flex; align-items: center;">
+            <div class="col">
+                <h5 style="font-size: 22px;font-weight: 1000;margin-bottom: 20px;">聯絡資訊</h5>
+                <ul style="font-size: 17px;font-weight: 500">
+                    <li style="margin-bottom: 10px;">客服專線：(03)26599</li>
+                    <li style="margin-bottom: 10px;">客服時間：09:00-18:00</li>
+                    <li style="margin-bottom: 10px;">信箱 : foodie@gmail.com</li>
+                    <li>地址：320桃園市中壢區中北路200號<br>(中原大學資訊管理學系)</li>
+                </ul>
+            </div>
+        
+            <div class="col">
+                <div class="MapArea">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.266894455652!2d121.24097727482966!3d24.957032541387473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346822143c046009%3A0x63e3ef21e3beebac!2z6LOH6KiK566h55CG5a2457O7!5e0!3m2!1szh-TW!2stw!4v1715502788841!5m2!1szh-TW!2stw" width="500" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+
+            </div>
+      
+        </footer>
+
+        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top ">
+
+          <p>&copy; 2024 Company, Inc. All rights reserved.</p>
+
+          <!-- 可自行更動網頁瀏覽人數設定 -->
+          <p> 網頁瀏覽人數：999人</p>
+        </div>
+
+        </div>
+
+      </section>
+
+    
+    <!-- Javascript 區域 -->
+    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
+
+  </body>
+  
+</html>

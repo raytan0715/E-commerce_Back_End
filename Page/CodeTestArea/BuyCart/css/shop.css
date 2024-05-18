@@ -1,0 +1,474 @@
+/* ========== 動態廣告 ========== */
+.ad {
+	padding-top: 7%;
+}
+.ad .mySlides {
+	display: none
+}
+.ad img {
+	vertical-align: middle;
+}
+.ad .slideshow-container {
+	width: 70%;
+	position: relative;
+	margin: auto;
+}
+.ad .prev,
+.ad .next {
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	width: auto;
+	padding: 16px;
+	margin-top: -22px;
+	color: white;
+	background-color: #ebebeb;
+	font-weight: bold;
+	font-size: 18px;
+	transition: 0.3s ease;
+	border-radius: 0 3px 3px 0;
+	user-select: none;
+}
+.ad .next {
+	right: 0;
+	border-radius: 3px 0 0 3px;
+}
+.ad .prev:hover,
+.ad .next:hover {
+	background-color: rgba(0, 0, 0, 0.8);
+}
+.ad .dot {
+	cursor: pointer;
+	height: 10px;
+	width: 10px;
+	margin: 0 7px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
+}
+.ad .active,
+.ad .dot:hover {
+	background-color: #717171;
+}
+.ad .fade {
+	-webkit-animation-name: fade;
+	-webkit-animation-duration: 1.5s;
+	animation-name: fade;
+	animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+	from {
+		opacity: .4
+	}
+	to {
+		opacity: 1
+	}
+}
+
+@keyframes fade {
+	from {
+		opacity: .4
+	}
+	to {
+		opacity: 1
+	}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+	.prev,
+	.next,
+	.text {
+		font-size: 11px
+	}
+}
+
+
+
+
+
+/* ========== 熱門商品 ========== */
+.s1 {
+	padding: 100px 0px 50px 0px;
+	/* background-color: rgb(231, 231, 231); */
+	text-align: center;
+}
+
+/*標題 */
+.prod-t1 {
+	margin-bottom: 80px;
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	cursor: default;
+}
+
+.prod-t1 h1 {
+  	font-family: 'Mukta', sans-serif;
+	font-weight: bold;
+	font-size: 34px;
+	letter-spacing: 5px;
+	padding: 0px 15px;
+}
+
+.prod-t1:after {          /*下底線*/
+	content: '';
+	width: 0%;
+	height: 18px;
+	background-color: rgb(187, 187, 187);
+	position: absolute;
+	top: 30px;
+	left: 0;
+	transition: all .3s linear;
+	z-index: -1;
+}
+
+.prod-t1:hover::after {
+	width: 100%;
+}
+
+/* 	熱門商品Slider */
+.s1-1 {
+	background-color: #fff;
+}
+
+.slider {
+	width: 90%;
+	margin: auto;
+}
+
+.slick-slide {
+	margin: 0px 5px;
+}
+
+.slick-slide {
+	transition: all ease-in-out .3s;
+	opacity: .2;
+}
+
+.slick-active {
+	opacity: 1;
+}
+
+.slid-img {
+	width: 95% !important;
+	height: 100% !important;
+	/* border-style: solid; */
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: .3s;
+}
+
+.slid-img img {
+	width: 100%;
+	max-width: 380px;
+	max-height: 380px !important;
+}
+
+.slid-img:hover {
+	transform: scale(1.1);
+}
+
+/* Slider細節在slick裡 */
+
+
+
+/* ========== 商品分類 ========== */
+#s2 {
+	width: 100%;
+	height: 100%;
+	min-height: 100vh;
+	/* background-color: rgb(228, 228, 228); */
+	/* display: flex;                 */
+	text-align: center;
+	justify-content: center;
+	/*置中*/
+	padding: 50px 0px;
+}
+
+/* 分類選項 */
+.s2-1 {
+	display: flex;
+	/* align-items: center; */
+	justify-content: center;
+	/*置中*/
+	margin-bottom: 80px;
+}
+
+.prod-cate li {
+	list-style: none;
+	display: inline;
+	width: 120px;
+	height: 240px;
+	letter-spacing: 1px;
+	background-color: rgb(233, 233, 233);
+	opacity: 0;
+}
+
+.prod-cate p {
+	font-family: 'GenRyuMin-M';
+	font-size: 18px;
+	color: rgb(0, 0, 0);
+	letter-spacing: 2px;
+	position: relative;
+	top: 110px;
+}
+
+.prod-cate table td {
+	/* border: #2e2e2e 1px solid; */
+	height: 160px;
+}
+
+.prod-cate tr {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.prod-cate td {
+	width: 120px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.prod-cate .blank {
+	width: 40px;
+}
+
+.prod-cate td li {
+	position: absolute;
+}
+
+.prod-cate td img {
+	position: absolute;
+	height: 150px;
+	z-index: -1;
+}
+
+.prod-cate li:hover {
+	cursor: pointer;
+	/*鼠標變手*/
+}
+
+.prod-cate li:hover+img {
+	transform: rotate(30deg);
+}
+
+.prod-cate li.active+img {
+	transform: scale(1.1);
+}
+
+td:hover p {
+	color: #6c7783;
+	cursor: pointer;
+}
+
+/* 商品圖 */
+.s2-2 {
+	/* background-color: #f1f1f1; */
+	padding: 10px;
+	display: flex;
+	justify-content: center;  /*置中*/
+	overflow-x: hidden;
+
+}
+
+.prod {
+	width: 1020px;
+	min-height: 700px;
+	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
+	/* background-color: indianred; */
+}
+
+.category {
+	width: 270px;
+	height: 340px;
+	text-align: center;
+	cursor: pointer;
+	/* background-color: antiquewhite; */
+	margin: 20px 35px 30px 35px;
+	border-bottom: 1px solid rgb(180, 180, 180);
+}
+
+.category img {
+	width: 250px;
+	display: block;
+}
+
+.p-b {
+	background: rgb(231, 231, 231);
+	width: 270px;
+	height: 270px;
+	/* border-radius: 50%; */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.category h1 {
+	font-family: 'Mukta', sans-serif;
+	font-weight: bold;
+	font-size: 24px;
+	line-height: 24px;
+	letter-spacing: 1px;
+	margin-top: 12px;
+	color: #2e2e2e;
+}
+
+.category p {
+	font-family: 'Mukta', sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 22px;
+	letter-spacing: 1px;
+	color: #2e2e2e;
+}
+
+/* 商品hover */
+.category:hover img {
+	opacity: 0.85;
+}
+
+.category:hover h1 {
+	color: #686b6e;
+}
+
+.category:hover p {
+	color: #686b6e;
+
+}
+
+.man-s {
+	position: absolute;
+	right: 0;
+	margin-top: 290px;
+	height: 450px;
+	/* background-color: indianred; */
+	overflow: hidden;
+
+}
+
+.man-s .m-i {
+	position: relative;
+	top: 120px;
+	right: -120px;
+	height: 350px;
+	transition: .5s;
+}
+
+.man-s .m-t {
+	position: absolute;
+	right: 110px;
+	height: 180px;
+	transition: .6s;
+	opacity: 0;
+}
+
+.man-s .m-i:hover {
+	right: -70px;
+	transform: rotate(-15deg);
+}
+
+.man-s .m-i:hover+.m-t {
+	transform: scale(1.1);
+	opacity: 1;
+}
+
+
+@media screen and (max-width: 450px) {
+	.ad{
+		padding-top: 20%;
+		
+	}
+	.ad .slideshow-container{
+		width: 100%;
+	}
+	.ad .prev,.ad .next {
+		/* display: none; */
+		padding: 8px;
+		font-size: 10px;
+	}
+	.s1{
+		padding: 50px 0px;
+	}
+	.prod-t1 {
+		margin-bottom: 30px;
+	}
+	.prod-t1 h1 {
+		font-size: 20px;
+		letter-spacing: 5px;
+		padding: 0px 10px;
+	}	
+	.prod-t1:after {
+		height: 12px;
+		background-color: rgb(187, 187, 187);
+		position: absolute;
+		top: 18px;
+		left: 0;
+		transition: all .3s linear;
+		z-index: -1;
+	}
+	.slider {
+		width: 85%;
+	}
+	.prod-cate li {
+		width: 80px;
+		height: 160px;
+	}
+	.prod-cate p {
+		font-size: 12px;
+		top: 70px;
+	}
+	.prod-cate table td {
+		height: 100px;
+	}
+	.prod-cate td {
+		width: 60px;
+	}
+	.prod-cate .blank {
+		width: 3px;
+	}
+	.prod-cate td img {
+		height: 85px;
+	}
+
+	.s2-2{
+		padding: 0px;
+	}
+	.prod {
+		width: 340px;
+		min-height: 100%;
+	}
+	.category {
+		width: 150px;
+		height: 200px;
+		margin: 10px;
+	}
+	.p-b{
+		width: 150px;
+		height: 150px;
+	}
+	.category img {
+		width: 130px;
+	}
+	.category h1{
+		font-size: 18px;
+		line-height: 20px;
+		margin-top: 8px;
+	}
+	.category p{
+		font-size: 12px;
+		line-height: 15px;
+	}
+
+	.man-s{
+		display: none;
+	}
+}

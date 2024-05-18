@@ -1,0 +1,299 @@
+.s1{
+    /* width: 100%;
+    height: 100%; */
+    padding: 130px 60px;
+    text-align: center;
+}
+/* 標題 */
+.mem-t{
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+.mem-t h1{
+    font-family: 'Mukta', sans-serif;
+	font-weight: bold;
+	font-size: 34px;
+	letter-spacing: 5px;
+    padding: 0px 15px;
+    /* text-align: center; */
+}
+.mem-t:after {                 /*下底線*/
+	content: '';
+	width: 100%;
+	height: 20px;
+	background-color: rgb(201, 201, 201);
+	position: absolute;
+	top: 38px;
+	left: 0;
+	transition: all .3s linear;
+	z-index: -1;
+}
+
+
+
+/* 組員 */
+.team{
+    display: flex;
+    justify-content: center;
+}
+.m-1{
+    width: 100%;
+    height: 500px;
+    /* background-color: bisque; */
+    text-align: center;
+}
+.team-pic{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    width: 100%;
+    height: 100%;
+    /* background-color: cadetblue; */
+}
+/* 相機img */
+.c-pic{
+    position: absolute;
+    width: 320px;
+    margin-top: 80px;
+    z-index: 2;
+    /* background-color: #fff; */
+}
+.c-pic2{
+    position: absolute;
+    width: 320px;
+    z-index: 2;
+    /* background-color: #fff; */
+}
+/* 個人img */
+.m-pic{
+    position: absolute;
+    width: 280px;
+    margin-top: 70px;
+    opacity: 0;
+    transition: .8s;
+}
+.m-pic2{
+    position: absolute;
+    width: 280px;
+    opacity: 0;
+    transition: .8s;
+}
+/* 姓名img */
+.m-n{
+    position: relative;
+    top: 200px;
+    width: 100px;
+    z-index: 3;
+}
+.m-n2{
+    position: relative;
+    top: -135px;
+    width: 100px;
+    z-index: 3;
+}
+
+.c-pic:hover+.m-pic{
+    margin-top: -140px;
+    opacity: 1;
+}
+.c-pic2:hover+.m-pic2{
+    margin-top: 210px;
+    opacity: 1;
+}
+.c-pic:hover~.m-n{
+    transform: scale(1.2);
+}
+
+.c-pic2:hover~.m-n2{
+    transform: scale(1.2);
+}
+
+
+/* 連絡表單 */
+.s2{
+    text-align: center;
+}
+.s2-1{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 40px 0px;
+    margin-bottom: 80px;
+}
+.map{
+    display: flex;
+    /* justify-content: center; */
+    align-items:center;
+}
+
+.map-bg{
+    /* position:absolute; */
+    width: 520px;
+    height: 420px;
+    margin-top: 80px;
+    background-color: rgb(66, 66, 66);
+}
+.map iframe{
+    width:550px; 
+    height:450px; 
+    margin-left: 20px;
+    border:0;
+    position: absolute;
+    /* opacity: 0.8; */
+    /* filter: grayscale(1); */
+}
+.map iframe:hover{
+    opacity: 1;
+    /* filter: grayscale(0); */
+}
+
+/* 連絡表單 */
+.m-cont{
+    width: 500px;
+    padding: 20px 30px;
+    margin-left: 10%;
+    background-color: #fff;
+}
+.m-cont h1{
+    font-family: 'Mukta', sans-serif;
+    letter-spacing: 2px;
+    font-size: 26px;
+    text-align: center;
+}
+.m-cont p{
+    font-family: 'Mukta', sans-serif;
+    font-size: 16px;
+    text-align: left;
+}
+.m-cont input{
+    font-family: 'Mukta', sans-serif;
+    font-size: 16px;
+    color: #202020;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #353535;
+    padding: 2px 0px;
+    margin-bottom: 20px;
+    outline: none;  /*點擊時不要出現邊框*/
+}
+.m-cont textarea{
+    font-family: 'Mukta', sans-serif;
+    font-size: 16px;
+    color: #353535;
+    resize: none;
+    width: 100%;
+    height: 150px;
+    border: 1px solid #353535;
+    outline: none;  /*點擊時不要出現邊框*/
+}
+::placeholder{
+    color: #000000;
+}
+.m-cont button{
+    font-family: 'Mukta', sans-serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    height: 40px;
+    width: 100%;
+    color: #fff;
+    background-color: #353535;
+    border: 1px solid #353535;
+    transition: .3s;
+    margin-top: 15px;
+    cursor: pointer;
+}
+.m-cont button:hover{
+    cursor: pointer;
+    color: #000;
+    background: none;
+}
+  
+
+@media screen and (max-width: 450px) {
+    .mem-t h1{
+        font-size: 22px;
+        padding: 0px 10px;
+    }
+    .mem-t:after { 
+        height: 12px;
+        top: 26px;
+    }
+    .team{
+        display: inline-block;
+        width: 100%;
+    }
+    .m-1{
+        height: 400px;
+    }
+    .c-pic{
+        width: 280px;
+        margin-top: 40px;
+    }
+    .c-pic2{
+        width: 280px;
+    }
+    .m-pic{
+        width: 230px;
+        margin-top: 70px;
+    }
+    .m-pic2{
+        width: 230px;
+    }
+    .m-n{
+        top: 150px;
+        width: 70px;
+    }
+    .m-n2{
+        top: -135px;
+        width: 70px;
+    }
+    .c-pic:hover+.m-pic{
+        margin-top: -130px;
+    }
+    .c-pic2:hover+.m-pic2{
+        margin-top: 160px;
+    }
+    .s2-1{
+        display: inline-block;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 20px 0px 0px 0px;
+        margin-bottom: 80px;
+    }
+    .map-bg{
+        width: 350px;
+        height: 280px;
+        margin: 50px 0px 0px 3%;
+        background-color: rgb(66, 66, 66);
+    }
+    .map iframe{
+        width: 360px; 
+        height:300px; 
+        margin-left: 6%;
+    }
+    .m-cont{
+        width: 80%;
+        padding: 20px 0px;
+        margin:auto;
+    }
+    .m-cont h1{
+        font-size: 20px;
+    }
+    .m-cont p{
+        font-size: 14px;
+    }
+    .m-cont input{
+        font-size: 14px;
+    }
+    .m-cont textarea{
+        font-size: 14px;
+        height: 120px;
+    }
+    .m-cont button{
+        font-size: 12px;
+    }
+    
+}
