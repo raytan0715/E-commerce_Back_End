@@ -595,9 +595,19 @@
     <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4">
 
         <p>&copy; 2024 Company, Inc. All rights reserved.</p>
+        <%
+        ServletContext context = getServletContext();
+        Integer counter = (Integer) context.getAttribute("counter");
+        if (counter == null) {
+            counter = 0;
+        }
+        counter++;
+        context.setAttribute("counter", counter);
+        %>
 
         <!-- 可自行更動網頁瀏覽人數設定 -->
-        <p> 網頁瀏覽人數：999人</p>
+        <p> 網頁瀏覽人數：<%= counter %>人</p>
+
     </div>
 
     </div>
