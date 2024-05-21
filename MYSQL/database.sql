@@ -10,6 +10,12 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+DROP DATABASE IF EXISTS FinalProject;
+#purchase sales stock
+
+CREATE DATABASE FinalProject CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE FinalProject;
 --
 --
 
@@ -20,7 +26,7 @@ CREATE TABLE `cart` (
   `productID` varchar(45) NOT NULL,
   PRIMARY KEY (`cartID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+#/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `cart`
@@ -49,6 +55,7 @@ CREATE TABLE `inventoryquantity` (
   `LngredientList` varchar(1000) NOT NULL,
   `AllergyList` varchar(100) NOT NULL,
   `ProductDetails` varchar(300) NOT NULL,
+  `Producturl` varchar(50),
   PRIMARY KEY (`ProductID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -70,7 +77,11 @@ INSERT INTO `inventoryquantity` VALUES
 ░搭配帶勁Q彈的麵條
 ░不容錯過的農心泡麵代表作-辛拉麵
 ░韓國家家戶戶必備的拉麵
-░老饕們可以嘗試看看😋'),
+░老饕們可以嘗試看看😋'
+,
+'
+https://i.imgur.com/FuGLtVt.jpeg'),
+
 (0002,'泡麵','No Brand 經典炸醬拉麵135g克 X 5 X 1PC包',179,352,'2024.12.04',
 '
 麵粉、醋酸澱粉、棕櫚油、小麥麩、鹽、大豆卵磷脂、脂肪酸聚合甘油脂、碳酸鉀、碳酸鈉、 磷酸氫二鈉、多磷酸鈉、焦磷酸鈉、關華豆膠、檸檬酸、綠茶風味油(綠茶萃取物,大豆油) 調味醬包-炸醬(小麥粉、焦糖、大豆、鹽)、水、洋蔥、大豆油、糖、麥芽糊精、L-麩酸鈉、普通焦糖色素、牛骨萃取物、大豆蛋白粉、奶精(椰子油、棕櫚仁油、酯肪酸甘油脂、二氧化矽、磷酸鈉)、炸醬粉(小麥粉、焦糖、大豆)、洋蔥粉、鹽、果糖、 調味粉(麥芽糊精、酵母萃取物、糖、5-次黃嘌呤核苷磷酸二鈉、5-鳥嘌呤核苷磷酸二鈉、琥珀酸二鈉、鹽)、5-次黃嘌呤核苷磷酸二鈉、5-鳥嘌呤核苷磷酸二鈉、檸檬酸、酵母粉、維生素B1、大豆蛋白粉、乾燥高麗菜、乾燥洋蔥
@@ -89,7 +100,9 @@ INSERT INTO `inventoryquantity` VALUES
 *本產品含有小麥、大豆、堅果等製品，過敏者請謹慎食用*
 *本產品與小麥、花生、鯖魚、蝦、蟹、番茄、雞蛋、核桃、雞肉、章魚、等製品同一生產線，過敏者請謹慎食用*
 容量：135g*5包入
-'),
+',
+'./picture/material/productPic/instant noodles/Instant_noodles_2.jpg'),
+
 (0003,'泡麵','OTTOGI 不倒翁 粗麵條版Q拉麵',225,663,'2024.09.20',
 '
 小麥粉（小麥）、化製澱粉、棕櫚油、精鹽、麩質、品質改良劑（酸度調節劑）、蛋殼粉、蔬菜萃取物、維生素B2、綠茶風味油
@@ -102,7 +115,8 @@ INSERT INTO `inventoryquantity` VALUES
 ░麵條Q彈耐煮不易軟爛
 ░韓國家家戶戶必備的拉麵
 ░Q拉麵 粗麵條版，更Q 更好吃喔~~
-'),
+',
+'./picture/material/productPic/instant noodles/Instant_noodles_3.png'),
 (0004,'泡麵','paldo 八道 韓式香辣冷拌麵',330,244,'2024.07.30',
 '
 麵條：小麥粉,棕櫚油,馬鈴薯澱粉,鹽,乳化劑(葵花籽油,大豆卵磷脂),碳酸鉀,碳酸鈉,磷酸鈉,關華豆膠,芥花油
@@ -113,7 +127,8 @@ INSERT INTO `inventoryquantity` VALUES
 每份重量 130g
 每份數量 5包
 這款是韓國代表性的冷拌麵第一名，只要是提到冷拌麵，非這款不可了！！含有8%蘋果汁的醬包，嚐起來有蘋果的香甜味，略帶辛辣、酸甜，麵條較薄而柔軟，與韓國道地涼麵如出一徹！！
-'),
+',
+'../Page/picture/material/productPic/instant noodles/Instant_noodles_4.png'),
 (0005,'泡麵','OTTOGI 不倒翁 米其林等級炸醬麵725g (5包/袋)',169,384,'2024.09.16',
 '
 麵：小麥粉（小麥）、馬鈴薯澱粉、棕櫚油、化製澱粉、燕麥膳食纖維、品質改良劑（酸度調節劑）、鹽、乳化油脂、蔬菜風味液、蛋殼粉、調味大蒜萃取液、綠茶風味油、維生素B2／調味包：醇香炸醬粉、糖、植物性油脂、濃醇炸醬粉、炒炸醬粉、蔥風味油、醬油調味粉、調味粉、烘烤洋蔥粉、烤洋蔥粉、洋蔥風味油、鹽、增味劑、洋蔥調味油、炒洋蔥調味粉、植物性奶油、營養強化劑、複方添加劑1（磷酸三鈣、碳酸鈣）、洋蔥調味油、複方添加劑2（酵母萃取物、葵花油）、醇香調味粉、大豆蛋白、乾燥洋蔥、乾燥高麗菜、調味蛋白、炸馬鈴薯塊、乾燥胡蘿蔔
@@ -130,7 +145,7 @@ INSERT INTO `inventoryquantity` VALUES
 ★ 韓國知名食品品牌不倒翁，推出的人氣新品「米其林等級炸醬麵」
 ★ 特調炸醬與洋蔥、大蔥、香油的完美組合，突破你對炸醬麵的想像
 ★ 不僅方便又兼顧美味讓需要節省時間的你也能輕鬆吃到米其林料理
-'),
+','./picture/material/productPic/instant noodles/Instant_noodles_5.jpg'),
 (0006,'泡麵','SAMYANG 三養 4種起司風味火辣雞肉風味鐵板炒麵',150,242,'2024.09.22',
 '
 麵體：小麥粉、醋酸澱粉、棕櫚油、小麥蛋白、鹽、大豆油、卵磷脂、脂肪酸聚合甘油酯、碳酸鈉、關華豆膠、維他命B2、抗氧化劑(維生素E)、綠茶風味油(大豆油、綠茶)、檸檬酸
@@ -150,7 +165,7 @@ INSERT INTO `inventoryquantity` VALUES
 ⭐️香濃起司 最火紅韓國泡麵 搶購商品
 ★ 本商品連結所有選項皆不含固態肉類成分、原始型態之蛋類成分、生鮮類型之海鮮成分。
 ★ 商品內容以實物為主，圖片僅供參考
-'),
+','./picture/material/productPic/instant noodles/Instant_noodles_6.jpg'),
 (0007,'泡麵','Nongshim 農心 韓國境內版 非油炸辛拉麵  4包入',270,51,'2024.09.30',
 '
 麵:小麥粉,馬鈴薯澱粉,鹽,品質改良劑(多磷酸鉀,碳酸鉀,碳酸鈉,磷酸二氫鈉),抗氧化劑(維生素E),大豆卵磷脂,營養添加劑(菸鹼醯胺,還原鐵)。
@@ -166,7 +181,7 @@ INSERT INTO `inventoryquantity` VALUES
 ░韓國家家戶戶必備的拉麵
 ░老饕們可以嘗試看看😋
 ⭕以實際包裝資訊為主⭕
-'),
+','../Page/picture/material/productPic/instant noodles/Instant_noodles_7.jpg'),
 (0008,'泡麵','SAMYANG 三養 火辣雞肉風味鐵板炒麵 粉紅醬風味',170,156,'2024.09.15',
 '
 【麵體】小麥粉,醋酸澱粉,棕櫚油,小麥麵筋,食鹽,甘油熱量532大卡 蛋白質12公克 脂肪16公克 飽和脂肪8公克 反式脂肪0公克 碳水化合物85公克 糖7公克
@@ -180,7 +195,7 @@ INSERT INTO `inventoryquantity` VALUES
 ░韓國三養食品經典火辣雞肉風味鐵板炒麵，挑戰饕客味蕾
 ░嗆辣醬汁完美裹附Ｑ彈帶勁麵體，老饕必嘗辣味首選。
 ⭕以實際包裝資訊為主⭕
-'),
+','../Page/picture/material/productPic/instant noodles/Instant_noodles_8.png'),
 (0101,'飲料/酒','LOTTE 樂天 Milkis 優格碳酸飲 250ml',15,324,'2026.02.16',
 '
 水、白砂糖、二氧化碳、脫脂奶粉、檸檬酸、優格香料、乳清粉、可溶性大豆纖維
@@ -193,7 +208,7 @@ INSERT INTO `inventoryquantity` VALUES
 👉🏼「優格風味碳酸飲」👈🏼推薦給您！
 酸甜滑順超清爽，無咖因小孩也可飲用
 冷藏飲用風味更佳，冰箱必囤個幾罐😋
-'),
+','../Page/picture/material/productPic/drinks/lotte1.jpg'),
 (0102,'飲料/酒','韓國LOTTE樂天 七星汽水210ml',20,842,'2026.01.08',
 '
 水,白砂糖,二氧化碳,檸檬酸,檸檬及萊姆香料
@@ -205,7 +220,7 @@ INSERT INTO `inventoryquantity` VALUES
 口感喝起來跟雪碧、黑松汽水相似
 帶點檸檬味的清新感
 到韓國旅遊~必喝飲料之一
-'),
+','../Page/picture/material/productPic/drinks/lotte2.jpg'),
 (0103,'飲料/酒','韓國進口卡曼橘原液NFC果汁無添加濃縮VC維C原漿100%飲料大容量1L',320,100,'2025.03.26',
 '
 100%無添加卡曼橘原汁
@@ -223,7 +238,7 @@ INSERT INTO `inventoryquantity` VALUES
 ✨爆炸多的VC含量，是檸檬的30倍!! 
 ✨去黃提亮! 冷白皮請繞道🫣
 ✨清爽酸甜的卡曼橘沒有添加物,只榨取100%原液，天然無糖低卡🍊🍊🍊
-'),
+','../Page/picture/material/productPic/drinks/lemon.jpg'),
 (0104,'飲料/酒','【韓味不二】香蕉牛奶 (200ml)',25,354,'2025.11.14',
 '
 牛奶、水、糖、脫脂奶粉、乳清粉、香蕉汁、香蕉香料、香草香料、脂肪酸甘油脂、鹿角菜膠、關華豆膠、食用色素(食用黃色4號、食用黃色5號)、小麥
@@ -237,7 +252,7 @@ INSERT INTO `inventoryquantity` VALUES
 🍎香蕉牛奶🍎
 到韓國旅遊必喝的香蕉牛奶
 濃醇又可口，讓人一瓶接一瓶
-'),
+','../Page/picture/material/productPic/drinks/banana.jpg'),
 (0105,'飲料/酒','韓國海太水梨汁238ml',30,264,'2025.8.30',
 '
 純淨水、果糖糖漿、水梨泥、香料(水梨)、DL-蘋果酸、抗氧化劑(維生素C)
@@ -248,7 +263,7 @@ INSERT INTO `inventoryquantity` VALUES
 ★可以冰箱冷藏後飲用，一飲超暢快的說～ 
 ★韓國旅遊必喝必買品，韓國水梨製作，喝的到水梨果肉 
 ★吃過韓國水梨的千萬不能錯過水梨汁！喝過的人都超級推薦！
-'),
+','../Page/picture/material/productPic/drinks/juice.jpg'),
 (0106,'飲料/酒','韓國 NAMYANG 養樂多碳酸飲 400ml',59,460,'2025.12.11',
 '
 碳酸水、果糖、乳酸
@@ -257,8 +272,8 @@ INSERT INTO `inventoryquantity` VALUES
 '️＼商品介紹／
 🔥韓國現在IG瘋傳打卡的熱門飲料就是他🔥
 喝起來清爽可口，冰鎮過後口感更佳。
-'),
-(0107,'飲料/酒','【韓味不二】韓國無加糖零卡風味氣泡水350ml/罐 (檸檬) ',59,520,'2025.02.28',
+','../Page/picture/material/productPic/drinks/yakult.png'),
+(0107,'飲料/酒','韓國無加糖零卡風味氣泡水350ml/罐 (檸檬) ',59,520,'2025.02.28',
 '
 水,二氧化碳,赤藻糖醇(甜味劑),檸檬酸,複方香料(檸檬香料,天然檸檬香料,橘子香料,丙二醇,酒精,三乙酸甘油酯),DL-蘋果酸,檸檬酸鈉,甜味劑(蔗糖素),甜味劑(醋磺內酯鉀),甜味劑(甜菊醣苷)
 ',
@@ -267,7 +282,7 @@ INSERT INTO `inventoryquantity` VALUES
 
 ▶ 沒負擔 0Kcal
 ▶ 香甜清爽水果風味
-'),
+','../Page/picture/material/productPic/drinks/sparkling.jpg'),
 (0108,'飲料/酒','【真露】青葡萄燒酎360ml，6瓶/組',1190,120,'2025.05.10',
 '
 酒精度數：13%
@@ -280,7 +295,7 @@ INSERT INTO `inventoryquantity` VALUES
 青葡萄果香濃郁芳香
 淡甜滋味喝起來口感清爽
 非常適合初喝酒的朋友或者喜歡品嘗水果酒的人飲用
-'),
+','../Page/picture/material/productPic/drinks/alcohol1.jpg'),
 (0201,'零食/糖果','LOTTE 樂天 Zero零糖低卡巧克力派24入',178,438,'2026.01.14',
 '
 小麥粉（小麥）、D-山梨糖醇17％、聚乙二醇糖漿8％、起酥油I（加工油脂（交酯化棕櫚核仁油）、植物性油脂（棕櫚油）、脂肪酸甘油酯、卵磷脂、混合濃縮生育醇）、起酥油II（加工油脂（交酯化棕櫚核仁油）、食用牛脂、棕櫚油、硬質棕櫚油、卵磷脂）、全蛋液、水、起酥油III（菜籽油、脂肪酸丙二醇酯、脂肪酸甘油酯、卵磷脂、混合濃縮生育醇）、可可塊（可可豆）、小麥蛋白、穀類加工品、其他加工品、複方添加劑I（化製澱粉、糊精）、複方添加劑II（化製澱粉、糊精）、可可粉I、加工起司、酸度調節劑3種、甘油、蛋白粉、可可粉II、食用酒精、果蔬加工品、乳清蛋白粉、奶油、複方添加劑III（食用酒精、水、乳酸、脂肪酸甘油酯、乳酸鈉）、鹽、一般蒸餾酒、香料5種、咖啡、乳化劑2種、香料製劑（丙二醇、N-葡萄糖基乙醇胺、單寧酸、咖啡萃取物、水、N-乳糖基乙醇胺）、甜味劑（蔗糖素、醋磺內酯鉀）、香草醛
@@ -291,7 +306,7 @@ INSERT INTO `inventoryquantity` VALUES
 ░吃起來完全不甜膩
 ░每顆65卡，吃沒有負擔
 ░擔心糖分攝取太多又怕胖可以嘗試看看
-'),
+','../Page/picture/material/productPic/snacks/snacks_1.png'),
 (0202,'零食/糖果','GEMEZ Enaak 韓式小雞麵 雞汁味  盒裝24入',239,438,'2025.04.27',
 '
 小麥粉，棕欄油，樹薯澱粉，辣椒調味粉（糖，鹽，辣椒粉，L-麩酸鈉，蒜粉，紅椒，二氧化矽），大蒜，醬油［水，鹽，大豆，L-麩酸鈉，小麥，糖，5-次黃嘌呤核苷磷酸二鈉，5-鳥嘌呤核苷磷酸二鈉，防腐劑（苯甲酸鈉川 麩酸鈉，珠蔥，糖，魚醛（鯷魚，鹽，糖，水），鹽，碳酸鈉，關華豆膠，胡椒，多碗酸鈉，甜味劑（蔗糖素
@@ -301,7 +316,7 @@ INSERT INTO `inventoryquantity` VALUES
 ░亞洲狂銷熱賣小雞點心麵
 ░攜帶超方便香脆點心麵
 ░好吃涮嘴，一口接一口
-'),
+','../Page/picture/material/productPic/snacks/snacks_2.png'),
 (0203,'零食/糖果','ORION 好麗友 預感非油炸香烤洋芋片 洋蔥口味 2盒 204g',558,213,'2025.03.20',
 '
 馬鈴薯粉［馬鈴薯、乳化劑（單酸甘油酯）、調味劑（檸檬酸）］、混合植物油軟質棕櫚油、棕櫚油、椰子油、酯化硬質棕櫚油、葵花油）、玉米澱粉、白糖、炒洋蔥風味粉｛調味洋蔥粉（洋蔥、葡萄糖、精製鹽、砂糖、小麥澱粉、洋蔥香料）、乳清粉、酵母抽出物、砂糖、棕櫚油、糊精、品質改良劑（磷酸氫二鉀）、磷酸鈣、L-麩酸鈉、5-次黃嘌呤核苷磷酸二鈉、5-鳥嘌呤核苷磷酸二鈉］、調製洋蔥粉［洋蔥、糊精、食鹽、磷酸鈣、乳糖、乳脂、乾酪素鈉、品質改良劑（磷酸氫二鉀）、洋蔥粉（洋蔥、糊精、葡萄糖）、乾燥洋蔥粉［（洋蔥、乳清粉、二氧化矽、檸檬酸、糊精、甜味劑（阿斯巴甜、甜菊醣苷）、葡萄糖、醋酸］｝、玉米粉、乳製品混和粉［大豆卵磷脂、乳清粉、乳糖、乾酪素鈉、品質改良劑（二氧化矽）］、碳酸氫鈉、磷酸鈣、炸洋蔥（洋蔥、葵花油）、全脂奶粉、食鹽、乾燥蔥片、酵素製劑（甘油、水、天冬醯胺酵素）、香濃馬鈴薯風味粉［果糖、玉米澱粉、葡萄糖粉、乙基麥芽醇（香料）、馬鈴薯香料）
@@ -313,7 +328,7 @@ INSERT INTO `inventoryquantity` VALUES
 ・脆感滿點，爽口不油膩
 ・鹹甜完美配搭的洋蔥口味
 ・來自韓國的味覺時尚
-'),
+','../Page/picture/material/productPic/snacks/snacks_3.png'),
 (0204,'零食/糖果','Orion 好麗友 陽光波浪脆餅 大蒜麵包風味',179,135,'2025.10.06',
 '
 玉米、全麥、植物油（軟質棕櫚油、菜籽油）、米、燕麥粉、大蒜麵包風味調料［白砂糖、防潮糖粉、食鹽、餅乾粉（大蒜粉）、酵母萃取粉、阿斯巴甜（甜味劑／含有苯丙胺酸）］、白砂糖、麵包粉、穀類加工品
@@ -323,7 +338,7 @@ INSERT INTO `inventoryquantity` VALUES
 ・嚴選原料製成
 ・穀物自然香氣
 ・口感香脆難忘
-'),
+','../Page/picture/material/productPic/snacks/snacks_4.png'),
 (0205,'零食/糖果','Nongshim 農心 原味洋蔥圈(80g)',55,371,'2024.11.27',
 '
 小麥粉（小麥）、玉米澱粉（玉米）、米糠油、化製澱粉、棕櫚油、洋蔥風味基底粉［砂糖、纖維素粉、精鹽、膳食纖維、洋蔥萃取物粉（洋蔥萃取物基底粉、維生素B2）］、洋蔥濃縮液、洋蔥培根風味調料、馬鈴薯澱粉
@@ -333,7 +348,7 @@ INSERT INTO `inventoryquantity` VALUES
 韓國洋蔥圈餅乾第一品牌
 無與倫比的酥脆口感
 居家/辦公/追劇必備零食
-'),
+','../Page/picture/material/productPic/snacks/snacks_5.png'),
 (0206,'零食/糖果',' LOTTE 樂天 青葡萄果汁糖',75,438,'2024.11.01',
 '
 砂糖、水飴、青葡萄濃縮果汁1.947％（固型粉68％）、酸度調節劑I、酸度調節劑II、合成香料（青葡萄香I、青葡萄香II）、澱粉、複方添加劑（梔子藍色素、薑黃素、丙二醇）、混和食用油
@@ -346,7 +361,7 @@ INSERT INTO `inventoryquantity` VALUES
 超大顆的滿足滋味，每顆足足有8公克，是休閑時的最佳零食
 每顆糖果皆採獨立包裝，獨自享用外還可以跟朋友們分享
 韓國樂天製菓熱銷的葡萄糖果，韓國旅行必買伴手禮，與Anytime 三層薄荷糖並列Top
-'),
+','../Page/picture/material/productPic/snacks/snacks_6.png'),
 (0207,'零食/糖果','LOTTE 樂天 Anytime 薄荷三層糖',135,269,'2024.012.03',
 '
 甜味劑（麥芽糖醇糖漿.D-木糖醇.D-山梨醇），複方調味劑（含乳酸，乳酸鈉，水），香料，草本萃取物（含尤加利葉，百里查，鼠尾草，菩提菜，溥荷，大茴香，接骨木花），甜味劑（醋磺內酯鉀，蔗糖素），乳化劑（脂肪酸甘油酯），梔子藍色素
@@ -358,7 +373,7 @@ INSERT INTO `inventoryquantity` VALUES
 清涼的薄荷糖中間夾著細滑醇厚的奶香
 採用木醣醇製作，清新美味又不蛀牙
 韓國旅行必買伴手禮，與葡萄糖果並列
-'),
+','../Page/picture/material/productPic/snacks/snacks_7.jpg'),
 (0208,'零食/糖果','  LOTTE 樂天 Zero零糖低卡水果軟糖',75,213,'2025.02.16',
 '
 麥芽糖醇糖漿90％、明膠、酸度調節劑3種、複方添加劑I（丙二醇、酒精、香料、水、合成香料、三乙醯甘油）、合成香料、果膠、其他食用油加工品、甜味劑（三氯蔗糖、醋磺內酯鉀）、乳化劑、香料I（水蜜桃香）、香料II（奇異果香）、複方添加劑II（精製加工油脂、合成香料、酒精）
@@ -368,7 +383,7 @@ INSERT INTO `inventoryquantity` VALUES
 無糖，但很好吃！
 無糖&無含糖物質！
 保護環境的包裝材質
-')
+','../Page/picture/material/productPic/snacks/snacks_8.png')
 ;
 /*!40000 ALTER TABLE `inventoryquantity` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -395,11 +410,6 @@ CREATE TABLE `membership` (
 -- Dumping data for table `membership`
 --
 
-LOCK TABLES `membership` WRITE;
-/*!40000 ALTER TABLE `membership` DISABLE KEYS */;
-INSERT INTO `membership` VALUES (1,'11144209','JayPan','JayPan@gmail.com',955889701),(2,'11144239','Mina','Mina@gmail.com',985476321),(3,'11144275','Nathania','Nathania@gmail.com',957236589),(17,'11144789','曹雪芹','Snow@gmail.com',NULL);
-/*!40000 ALTER TABLE `membership` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `reviews`
@@ -420,70 +430,8 @@ CREATE TABLE `reviews` (
 -- Dumping data for table `reviews`
 --
 
-LOCK TABLES `reviews` WRITE;
-/*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-/*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `supplier`
 --
 
-DROP TABLE IF EXISTS `supplier`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-
-
---
--- Dumping data for table `supplier`
---
-
-LOCK TABLES `supplier` WRITE;
-/*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
-INSERT INTO `supplier` VALUES (100,'蒼海','桃園市中壢區日新路88號',7634455,'王昭君',85174569),(105,'團月','桃園市中壢區大仁五街66號',4569211,'娜可露露',96385271),(110,'周周','高雄市鳳山區五甲二路99號',7925222,'東方耀',74182935),(115,'文化','台北市萬華區忠孝西路9號',7778855,'白起',65412391);
-/*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `transactionrecord`
---
-
-DROP TABLE IF EXISTS `transactionrecord`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `transactionrecord` (
-  `ProductID` int NOT NULL,
-  `OrderID` int NOT NULL,
-  `TransactionDate` date NOT NULL,
-  `ProductName` varchar(45) NOT NULL,
-  `Quantity` int NOT NULL,
-  `Price` int NOT NULL,
-  `ShipmentStatus` varchar(45) NOT NULL,
-  ` Translator` varchar(45) DEFAULT NULL,
-  `PublicationDate` date DEFAULT NULL,
-  `SupplierID` int DEFAULT NULL,
-  `PublishingHouse` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`ProductID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `transactionrecord`
---
-
-LOCK TABLES `transactionrecord` WRITE;
-/*!40000 ALTER TABLE `transactionrecord` DISABLE KEYS */;
-INSERT INTO `transactionrecord` VALUES (1,0,'2023-02-18','小王子',10,173,'shipped','張家琪','2010-01-11',100,'蒼海'),(2,0,'2023-02-18','異鄉人',10,173,'shipped','張一喬','2009-09-11',100,'蒼海'),(3,0,'2023-02-18','深夜加油站遇見蘇格拉底',10,234,'shipped','韓良憶','2007-09-12',100,'蒼海'),(4,0,'2023-02-18','52赫茲的鯨魚們',10,300,'shipped','王蘊潔','2022-12-30',100,'蒼海'),(5,0,'2023-02-18','海風酒店',10,420,'shipped','無','2023-06-27',100,'蒼海'),(6,0,'2023-02-18','那些少女沒有抵達',10,355,'shipped','無','2023-08-25',105,'團月'),(7,0,'2023-02-18','秘密',10,355,'shipped','王蘊潔','2023-07-10',105,'團月'),(8,0,'2023-02-18','歪笑小說 ',10,237,'shipped','陳姿瑄','2015-01-31',105,'團月'),(9,0,'2023-02-18','我的文青時代',10,300,'shipped','無','2023-11-24',105,'團月'),(10,0,'2023-02-18','HTML&CSS：網站設計建置優化之道',10,458,'shipped','張雅芳','2012-05-21',105,'團月'),(11,0,'2023-02-18','網頁美編的救星！ 零基礎也能看得懂的 HTML & CSS 網頁設計',10,434,'shipped','吳嘉芳','2021-02-22',110,'周周'),(12,0,'2023-02-18','小水豚教你做網站! 輕鬆學好 HTML / CSS 網頁設計',10,458,'shipped','吳嘉芳','2023-06-14',110,'周周'),(13,0,'2023-02-18','Servlet&JSP技術手冊：邁向Spring Boot(第二版)',10,489,'shipped','無','2021-05-31',110,'周周'),(14,0,'2023-02-18','JSP 2.3動態網頁技術（第六版）',10,325,'shipped','無','2019-02-18',110,'周周'),(15,0,'2023-02-18','JSP程式設計領航寶典',10,371,'shipped','無','2002-05-01',110,'周周'),(16,0,'2023-02-18','春日遲',10,180,'shipped','無','2023-07-01',115,'文化'),(17,0,'2023-02-18','冬泳',10,316,'shipped','無','2023-11-08',115,'文化'),(18,0,'2023-02-18','你所不知道的必學前端Debug技巧',10,489,'shipped','無','2021-10-14',115,'文化'),(19,0,'2023-02-18','jQuery+AngularJS+Bootstrap前端開發實戰',10,474,'shipped','無','2017-10-01',115,'文化');
-/*!40000 ALTER TABLE `transactionrecord` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2024-01-05 23:31:50
