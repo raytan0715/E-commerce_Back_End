@@ -586,13 +586,16 @@
             </div>
         </div>
 
+        </div>
+
     </footer>
 
     <div class="separator_Footer"></div> <!-- 分隔線 -->
 
     <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4">
 
-      <p>&copy; 2024 Company, Inc. All rights reserved.</p>
+        <p>&copy; 2024 Company, Inc. All rights reserved.</p>
+
         <%
         ServletContext context = getServletContext();
         Integer counter = (Integer) context.getAttribute("counter");
@@ -608,26 +611,23 @@
 
     </div>
 
+    </div>
+
 </section>
 
-  <!-- Cookie 提示區域 -->
-  <div class="alert text-center cookiealert" role="alert">
-    &#x1F36A; 我們使用cookie來提供和改善服務！若繼續使用本網站，表示您同意我們使用cookie。 <a href="https://cookiesandyou.com/"
-      target="_blank">了解更多關於Cookie</a>
+<!-- Cookie 提示區域 -->
+<div class="alert text-center cookiealert" role="alert">
+    &#x1F36A; 我們使用cookie來提供和改善服務！若繼續使用本網站，表示您同意我們使用cookie。 <a href="https://cookiesandyou.com/" target="_blank">了解更多關於Cookie</a>
     <br><br>
-    <button type="button" class="btn btn-primary btn-sm acceptcookies"
-      style="background-color: rgb(138, 241, 138);color: #282929;">
-      同意
+    <button type="button" class="btn btn-primary btn-sm acceptcookies" style="background-color: rgb(138, 241, 138);color: #282929;">
+        同意
     </button>
-  </div>
-  <!--------->
+</div>
+<!--------->
 
-  <!-- Javascript 區域 -->
-  <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
-  <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
-    integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
-    crossorigin="anonymous"></script>
-</body>
+<!-- Javascript 區域 -->
+<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+<script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
 
 <!-- 添加 cookie提示 script -->
 <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>

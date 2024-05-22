@@ -37,10 +37,9 @@
                 String imageUrl = rs.getString("Producturl");
                 String productName = rs.getString("ProductName");
     %>
-                <div>
+                <div style="display: flex;">
                     <h2><%= productName %></h2>
-                    <img src="<%= imageUrl %>" alt="<%= productName %>">
-                    
+                    <img src="<%= imageUrl %>" alt="<%= productName %>" style="height: 100px;">    
                 </div>
     <%
             }
