@@ -453,7 +453,7 @@
 
       </section>
 
-      <div class="separator"></div> <!-- 分隔線 -->
+      <!-- <div class="separator"></div> 分隔線 -->
 
       <!-- 新品上架 
       ================================================== -->
@@ -535,7 +535,7 @@
 
       </section>
 
-      <div class="separator"></div> <!-- 分隔線 -->
+      <!-- <div class="separator"></div> 分隔線 -->
 
       <!-- 精選推薦 
       ================================================== -->
@@ -595,7 +595,7 @@
           </div>
       </section>
 
-      <div class="separator_Footer"></div> <!-- 分隔線 -->
+      
 
       <!-- 頁尾(含聯絡資訊) 
       ================================================== -->
@@ -626,7 +626,6 @@
       
         </footer>
 
-        <div class="separator_Footer"></div> <!-- 分隔線 -->
 
         <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top ">
 
