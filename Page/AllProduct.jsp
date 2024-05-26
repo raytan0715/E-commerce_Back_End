@@ -74,7 +74,7 @@
             <div class="col-sm navLogoCol" >
               <div class="navLogo" >
                 <!-- Logo 點擊回到主頁 -->
-                <a href="./index.html">
+                <a href="./index.jsp">
                 <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
                 </a>
               </div>

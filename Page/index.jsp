@@ -172,7 +172,7 @@
 
             <!-- ========== 會員登入註冊介面之 JS語法 ========== -->
             <!-- 導覽列 -->
-            <script src="javascript/h.js" charset="utf-8"></script>
+            <script src="./javascript/h.js" charset="utf-8"></script>
 
             <!--滑動頁面-->
             <script>
@@ -229,10 +229,10 @@
             <li class="nav-item dropdown">
                 <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">所有商品</a></li>
-                    <li><a class="dropdown-item" href="#">泡麵</a></li>
-                    <li><a class="dropdown-item" href="#">飲料</a></li>
-                    <li><a class="dropdown-item" href="#">零食糖果</a></li>
+                    <li><a class="dropdown-item" href="./AllProduct.jsp">所有商品</a></li>
+                    <li><a class="dropdown-item" href="./AllProduct.jsp#noodle">泡麵</a></li>
+                    <li><a class="dropdown-item" href="./AllProduct.jsp#drinks">飲料</a></li>
+                    <li><a class="dropdown-item" href="./AllProduct.jsp#snacks">零食糖果</a></li>
                 </ul>
             </li>
 
@@ -608,7 +608,6 @@
 
         <!-- 可自行更動網頁瀏覽人數設定 -->
         <p> 網頁瀏覽人數：<%= counter %>人</p>
-
     </div>
 
     </div>
@@ -623,11 +622,21 @@
         同意
     </button>
 </div>
+
 <!--------->
+<!-- 回到頂部按鈕 -->
+    <div class="slider">
+        <a href="#">
+            <div class="top">
+                <iconify-icon icon="iconoir:page-up"></iconify-icon>
+            </div>
+        </a>
+    </div>
 
 <!-- Javascript 區域 -->
-<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
-<script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
+<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+<script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
 
 <!-- 添加 cookie提示 script -->
 <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>

@@ -72,7 +72,7 @@
           <div class="col-sm navLogoCol">
             <div class="navLogo" >
               <!-- Logo 點擊回到登入後主頁 -->
-              <a href="./index_LoggedIn.html">
+              <a href="./index_LoggedIn.jsp">
               <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
               </a>
             </div>
