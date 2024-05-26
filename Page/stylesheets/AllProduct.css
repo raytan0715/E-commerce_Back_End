@@ -1,0 +1,298 @@
+/* 全局設定
+-------------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    font-family: "Noto Sans TC", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #ffffff;
+}
+
+.separator {
+    /* 基本分隔線設定 */
+    border-top: 1px solid #7b7b7b; /* 黑色分隔線，1px 寬度 */
+    width: 1180px; /* 線長度 */
+    margin: 30px auto; /* 與其他元素間距增大，中間對齊 */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+a { /* 圖卡連結移除下畫線設定 */
+    text-decoration: none; /* 移除下劃線 */
+    color: inherit; /* 保持文字顏色一致 */
+}
+
+/* 滑動至頂部按鈕 
+----------------------- */
+.slider {
+    position: fixed; /* 固定位置 */
+    bottom: 40px; /* 距離底部 40px */
+    right: 27px; /* 距離右邊 27px */
+    width: 50px;
+    height: 50px;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 保證在最上層 */
+}
+
+.top {
+    width: 42px;
+    height: 42px;
+    color: rgb(172, 186, 198);
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top:hover {
+    font-size: 60px;
+    bottom: 35px; 
+    right: 22px;
+    width: 70px;
+    height: 70px;
+    transition: 0.3s;
+    color: #333333;
+}
+
+/* 上方欄位 (工具欄)
+-------------------------------------------------- */
+.navbar-expand-lg {
+    background-color: #cec0b4;
+    height: auto;
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+.navOneRow {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.navLogo {
+    display: inline-block;
+    position: relative;
+    cursor: default;
+    width: 100%;
+}
+
+.navLogo img {
+    width: 105px;
+    height: auto; /* 自動計算高度，保持圖片比例 */
+    display: block; /* 設定為區塊元素 */
+    margin-left: 200px; /* 將左側邊距自動設置為最大化，使圖像水平向右對齊 */
+}
+
+.searchBarCol {
+    width: auto;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 20px;
+}
+
+.searchBar {
+    background-color: #ffffff;
+}
+
+.searchBar::placeholder {
+    /* 更改搜尋本字的顏色 */
+    color: #8b7e71;
+    font-weight: bold;
+}
+
+.searchBar.focused {
+    background-color: #ffffff; /* 修改為您想要的背景顏色 */
+    color: #8b7e71; /* 修改為您想要的文字顏色 */
+    font-weight: bold;
+}
+
+.BuyCart_and_Account {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 20px;
+}
+
+/* 工具列第二欄下拉式選單 */
+.navCol-2 {
+    list-style: none;
+    margin: 0;
+    border: 0;
+    background-color: #f7f7f7;
+    width: 100%;
+    margin-left: 0;
+}
+
+.dropdown-menu {
+    background: none;
+    border: 0;
+}
+
+.nav-link:hover {
+    background-color: #ece3d5;
+}
+
+.dropdown-item {
+    background-color: #eacfa8;
+    padding: 5px;
+    color: #3f3f3f;
+    text-align: justify;
+    font-weight: bold;
+    border: 1px solid #000; /* 添加邊框 */
+}
+
+.dropdown-item:hover {
+    background-color: #fef6ea;
+    color: #3f3f3f;
+}
+
+/* 商品頁面
+------------------------------ */
+.section-p1{
+    /*background-color:aqua;*/
+}
+
+.pro-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    margin: 0 90px;
+    /*background-color: #f3a583;*/
+    justify-content: left;
+    align-items: center;
+    text-decoration: none;
+}
+
+.product-title {
+    margin: 100px 80px 50px;
+    background-color: #8a6b5e;
+    color: white;
+    width: 200px;
+    text-align: center;
+    padding: 0 50px 1px 10px;
+    text-decoration: none;
+}
+
+.pro {
+    width: 22%;
+    min-width: 250px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    margin-right: 40px;
+    border: 2px solid #919191;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.02);
+    transition: 0.2s ease;
+    position: relative;
+    text-decoration: none;
+    /*background-color: aquamarine;*/
+}
+
+.pro:hover {
+    box-shadow: 5px 10px 10px 5px rgba(0, 0, 0, 0.15);
+}
+
+.pro img {
+    width: 100%;
+    height:auto;
+    border-radius: 5px;
+}
+
+.pro-name {
+    text-align: start;
+    padding: 0 8px;
+    text-decoration: none;
+    /*background-color: chartreuse;*/
+}
+
+.pro-name h5 {
+    color: #533008;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.pro-name p {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.cartButtonContainer {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 10px; /* 增加購物車按鈕與圖示按鈕之間的間隙 */
+    /*background-color: rgb(245, 162, 103);*/
+
+}
+
+.addToCart_Btn iconify-icon {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 10px;
+    background-color: #EEE4DA;
+    color: #533008;
+    font-weight: 500;
+    font-size: 25px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+/* 購物車數字按鈕 */
+.cart-button {
+    font-weight: 700;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #868686;
+    width: 135px;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: #eacfa8;
+}
+
+.cart-button input {
+    font-size: 16px;
+    background: none;
+    border: none;
+    color: #0e0c0c;
+    width: 40px;
+    height: 35px;
+    text-align: center;
+    padding: 2px 10px;
+}
+
+.cart-icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+

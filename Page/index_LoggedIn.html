@@ -15,9 +15,9 @@
     <meta name="generator" content="Hugo 0.122.0">
 
     <!-- 網頁標題 -->
-    <title> 吃貨道| 吃貨的專屬門道 </title> 
+    <title> 吃貨道| 吃貨的專屬門道 </title>
 
-    <!-- 引用 Bootstrap 套件---> 
+    <!-- 引用 Bootstrap 套件--->
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/masonry/">
@@ -42,14 +42,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 
-    <!-- 基本 css 樣式檔案 -->
+    <!-- css 樣式檔案 -->
     <link href="./stylesheets/index.css" rel="stylesheet">
 
     <!-- 登入註冊樣式檔  -->
-    <link rel="stylesheet" href="./stylesheets/LoginArea.css"> 
+    <link rel="stylesheet" href="./stylesheets/LoginArea.css">
 
     <!-- 購物車樣式檔 -->
     <link rel="stylesheet" href="./stylesheets/BuyCart.css">
+
+    <!-- cookie提示 網路引用樣式檔 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
 
   </head>
 
@@ -68,7 +71,7 @@
           <div class="col-sm navLogoCol" >
             <div class="navLogo" >
               <!-- Logo 點擊回到登入後主頁 -->
-              <a href="./index_LoggedIn.html">
+              <a href="index_LoggedIn.jsp">
               <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
               </a>
             </div>
@@ -218,13 +221,13 @@
             <!-- 【會員註冊登入】 -->
 
             <!-- 會員註冊與登入按鈕 -->
-            <button onclick="location.href='./memberPage.html'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
                OOO 您好！
             </button>
 
             <!-- 登出按鈕 -->
-            <button onclick="location.href='./index.html'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
               登出
             </button>
@@ -444,7 +447,8 @@
         </div>
 
       </section>
-<!--       <div class="separator"></div> 分隔線 -->
+
+      <!-- <div class="separator"></div> 分隔線 -->
 
       <!-- 新品上架 
       ================================================== -->
@@ -453,7 +457,7 @@
 
         <!-- 新品上架(圖片標題) -->
         <div class="NewArrivals_PictureTitle" >
-          <img src="/picture/material/indexPageMaterial/NewArrivalsTitle.png" alt="PitureForm_Of_Title">
+          <img src="./picture/material/indexPageMaterial/NewArrivalsTitle.png" alt="PitureForm_Of_Title">
         </div>
 
         <!-- 新品上架展示區容器 -->
@@ -586,7 +590,7 @@
           </div>
       </section>
 
-      <div class="separator_Footer"></div> <!-- 分隔線 -->
+      
 
       <!-- 頁尾(含聯絡資訊) 
       ================================================== -->
@@ -612,33 +616,37 @@
                 </div>
             </div>
         </div>
-
-            </div>
       
         </footer>
 
-        <div class="separator_Footer"></div> <!-- 分隔線 -->
 
         <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top ">
 
           <p>&copy; 2024 Company, Inc. All rights reserved.</p>
 
-          <!-- 可自行更動網頁瀏覽人數設定 -->
-          <p> 網頁瀏覽人數：999人</p>
+         <!-- 可自行更動網頁瀏覽人數設定 -->
+         <p> 網頁瀏覽人數：999人</p>
         </div>
 
-        </div>
 
       </section>
 
-      
-    
-
-    
+    <!-- Cookie 提示區域 -->
+      <div class="alert text-center cookiealert" role="alert">
+          &#x1F36A; 我們使用cookie來提供和改善服務！若繼續使用本網站，表示您同意我們使用cookie。 <a href="https://cookiesandyou.com/" target="_blank">了解更多關於Cookie</a>
+          <br><br>
+          <button type="button" class="btn btn-primary btn-sm acceptcookies" style="background-color: rgb(138, 241, 138);color: #282929;">
+              同意
+          </button>
+      </div>
+    <!--------->
 
     <!-- Javascript 區域 -->
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
+
+    <!-- 添加 cookie提示 script -->
+    <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
 
   </body>
   

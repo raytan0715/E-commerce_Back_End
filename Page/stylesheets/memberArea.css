@@ -1,8 +1,47 @@
+/* 全局設定 */
+
 body{
   font-family: "Noto Sans TC", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+}
+
+/* 滑動至頂部按鈕 
+----------------------- */
+.slider {
+  position: fixed; /* 固定位置 */
+  bottom: 40px; /* 距離底部 40px */
+  right: 27px; /* 距離右邊 27px */
+  width: 50px;
+  height: 50px;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 保證在最上層 */
+}
+
+.top {
+  width: 42px;
+  height: 42px;
+  color: rgb(172, 186, 198);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top:hover {
+  font-size: 60px;
+  bottom: 35px; 
+  right: 22px;
+  width: 70px;
+  height: 70px;
+  transition: 0.3s;
+  color: #333333;
 }
 
 /* 中間選單

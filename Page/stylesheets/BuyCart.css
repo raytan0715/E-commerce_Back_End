@@ -179,9 +179,9 @@
   
   .cp2 {
     position: absolute;
-    width: 105px;
+    width: 105px; /*105*/
     font-weight: 700;
-     background-color: rgb(188, 155, 111); 
+    background-color: rgb(188, 155, 111); 
     
   }
   

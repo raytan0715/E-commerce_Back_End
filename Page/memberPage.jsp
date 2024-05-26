@@ -207,10 +207,10 @@
                         <div class="cart-but row" >
 
                             <div class="col">
-                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="location.href='shop.html'">
+                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="location.href='./shop.html'">
                             </div>
                             <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='checkout.html'">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./checkout.html'">
                             </div>
 
                         </div>
@@ -444,18 +444,8 @@
 
           <p>&copy; 2024 Company, Inc. All rights reserved.</p>
 
-          <%
-          ServletContext context = getServletContext();
-          Integer counter = (Integer) context.getAttribute("counter");
-          if (counter == null) {
-              counter = 60;
-          }
-          counter++;
-          context.setAttribute("counter", counter);
-          %>
-  
           <!-- 可自行更動網頁瀏覽人數設定 -->
-          <p> 網頁瀏覽人數：<%= counter %>人</p>
+          <p> 網頁瀏覽人數：999人</p>
         </div>
 
         </div>

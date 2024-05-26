@@ -20,7 +20,6 @@
   }
   
   .separator{ /* 基本分隔線設定 */
-  
     border-top: 1px solid #7b7b7b; /* 黑色分隔線，1px 寬度 */
     width: 1180px; /* 線長度 */
     margin: 30px auto;  /* 與其他元素間距增大，中間對齊 */
@@ -31,14 +30,42 @@
     scroll-behavior: smooth;
   }
 
-  .separator_Footer{ /* 基本分隔線設定 */
-  
-    border-top: 1px solid #7b7b7b; /* 黑色分隔線，1px 寬度 */
-    width: 1300px; /* 線長度 */
-    margin: 30px auto;  /* 與其他元素間距增大，中間對齊 */
-    /*box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* 添加陰影效果 */
-  
-  }
+  /* 滑動至頂部按鈕 
+  ----------------------- */
+.slider {
+  position: fixed; /* 固定位置 */
+  bottom: 40px; /* 距離底部 40px */
+  right: 27px; /* 距離右邊 27px */
+  width: 50px;
+  height: 50px;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 保證在最上層 */
+}
+
+.top {
+  width: 42px;
+  height: 42px;
+  color: rgb(172, 186, 198);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top:hover {
+  font-size: 60px;
+  bottom: 35px; 
+  right: 22px;
+  width: 70px;
+  height: 70px;
+  transition: 0.3s;
+  color: #333333;
+}
   
   /* 上方欄位 (工具欄)
   -------------------------------------------------- */
@@ -54,27 +81,36 @@
     height:100%;
     margin: 0px;
   }
-  
+
+
+  .navLogoCol{ /* nav logo 容器 */
+    /*background-color: aqua;*/
+
+  }
   .navLogo{
     display: inline-block;
     position: relative;
     cursor: default;
     width: 100%;
+    /*background-color: #535758;*/
+    margin-left: 210px; /* 將左側邊距自動設置為最大化，使圖像水平向右對齊 */
+    width: 115px; /*設定和圖片寬度差不多寬*/
   }
   .navLogo img {
     width: 105px;
     height: auto; /* 自動計算高度，保持圖片比例 */
     display: block; /* 設定為區塊元素 */
-    margin-left: 200px; /* 將左側邊距自動設置為最大化，使圖像水平向右對齊 */
     /*padding-right: 25px;*/
+    /*background-color: #796146;*/
   }
   
-  .searchBarCol{
-    width: auto;
-  
+
+  .searchBarCol{ /* searchBar 搜尋欄容器 */
+    width: auto; /*搜尋欄位容器隨搜尋欄的寬度而自動改變*/
     display: flex;
     align-items: flex-end;
     padding-bottom: 20px;
+    /*background-color: brown;*/
   }
   
   .searchBar{
@@ -95,7 +131,6 @@
   }
   
   .BuyCart_and_Account{
-    
     display: flex;
     align-items: flex-end;
     padding-bottom: 20px;
@@ -116,7 +151,8 @@
   
   .dropdown-menu{
     background: none;
-      /*border: 1px solid #7b6b5e; /* 添加邊框 */
+    /*border: 1px solid #7b6b5e; /* 添加邊框 */
+    border: 0px;
   }
   
   .nav-link:hover{
@@ -137,10 +173,6 @@
     background-color: #fef6ea;
     color: #3f3f3f;
   }
-  
-  
-  
-  
   
   /* 圖片輪播
   -------------------------------------------------- */
@@ -175,60 +207,6 @@
     border: solid rgba(0, 0, 0, .15);
     border-width: 1px 0;
     box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-  }
-  
-  .b-example-vr {
-    flex-shrink: 0;
-    width: 1.5rem;
-    height: 100vh;
-  }
-  
-  .bi {
-    vertical-align: -.125em;
-    fill: currentColor;
-  }
-  
-  .nav-scroller {
-    position: relative;
-    z-index: 2;
-    height: 2.75rem;
-    overflow-y: hidden;
-  }
-  
-  .nav-scroller .nav {
-    display: flex;
-    flex-wrap: nowrap;
-    padding-bottom: 1rem;
-    margin-top: -1px;
-    overflow-x: auto;
-    text-align: center;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .btn-bd-primary {
-    --bd-violet-bg: #712cf9;
-    --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-  
-    --bs-btn-font-weight: 600;
-    --bs-btn-color: var(--bs-white);
-    --bs-btn-bg: var(--bd-violet-bg);
-    --bs-btn-border-color: var(--bd-violet-bg);
-    --bs-btn-hover-color: var(--bs-white);
-    --bs-btn-hover-bg: #6528e0;
-    --bs-btn-hover-border-color: #6528e0;
-    --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-    --bs-btn-active-color: var(--bs-btn-hover-color);
-    --bs-btn-active-bg: #5a23c8;
-    --bs-btn-active-border-color: #5a23c8;
-  }
-  
-  .bd-mode-toggle {
-    z-index: 1500;
-  }
-  
-  .bd-mode-toggle .dropdown-menu .active .bi {
-    display: block !important;
   }
   
   /* TrendingProduct 人氣排行 
@@ -304,6 +282,7 @@
     position: relative;
     background-color: rgb(255, 255, 255);
   }
+
   /* -------------- */
   
   .ResgisterForSale img{
@@ -434,74 +413,13 @@
   
   /* Footers 頁尾(含聯絡資訊) 
   -------------------------------------------------- */
+
+  .separator_Footer{ /* 基本分隔線設定 */
   
-  .bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+    border-top: 1px solid #7b7b7b; /* 黑色分隔線，1px 寬度 */
+    width: 1300px; /* 線長度 */
+    margin: 30px auto;  /* 與其他元素間距增大，中間對齊 */
+    /*box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* 添加陰影效果 */
+  
   }
   
-  .b-example-divider {
-    width: 100%;
-    height: 3rem;
-    background-color: rgba(0, 0, 0, .1);
-    border: solid rgba(0, 0, 0, .15);
-    border-width: 1px 0;
-    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-  }
-  
-  .b-example-vr {
-    flex-shrink: 0;
-    width: 1.5rem;
-    height: 100vh;
-  }
-  
-  .bi {
-    vertical-align: -.125em;
-    fill: currentColor;
-  }
-  
-  .nav-scroller {
-    position: relative;
-    z-index: 2;
-    height: 2.75rem;
-    overflow-y: hidden;
-  }
-  
-  .nav-scroller .nav {
-    display: flex;
-    flex-wrap: nowrap;
-    padding-bottom: 1rem;
-    margin-top: -1px;
-    overflow-x: auto;
-    text-align: center;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .btn-bd-primary {
-    --bd-violet-bg: #712cf9;
-    --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-  
-    --bs-btn-font-weight: 600;
-    --bs-btn-color: var(--bs-white);
-    --bs-btn-bg: var(--bd-violet-bg);
-    --bs-btn-border-color: var(--bd-violet-bg);
-    --bs-btn-hover-color: var(--bs-white);
-    --bs-btn-hover-bg: #6528e0;
-    --bs-btn-hover-border-color: #6528e0;
-    --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-    --bs-btn-active-color: var(--bs-btn-hover-color);
-    --bs-btn-active-bg: #5a23c8;
-    --bs-btn-active-border-color: #5a23c8;
-  }
-  
-  .bd-mode-toggle {
-    z-index: 1500;
-  }
-  
-  .bd-mode-toggle .dropdown-menu .active .bi {
-    display: block !important;
-  }

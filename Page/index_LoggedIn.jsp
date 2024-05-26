@@ -207,10 +207,10 @@
                         <div class="cart-but row" >
 
                             <div class="col">
-                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="location.href='shop.html'">
+                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="location.href='./shop.html'">
                             </div>
                             <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='checkout.html'">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./checkout.html'">
                             </div>
 
                         </div>
@@ -621,8 +621,6 @@
                 </div>
             </div>
         </div>
-
-            </div>
       
         </footer>
 
@@ -645,7 +643,6 @@
           <p> 網頁瀏覽人數：<%= counter %>人</p>
         </div>
 
-        </div>
 
       </section>
 
