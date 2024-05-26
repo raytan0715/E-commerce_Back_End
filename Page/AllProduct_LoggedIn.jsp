@@ -331,855 +331,261 @@
       <!-- 所有商品 
       ================================================== -->
 
-      <!-- 泡麵 -->
+      <!-- 產品產生 泡麵 -->
       <section id="noodle" class="section-p1">
 
-            <h2 class="product-title">泡麵</h2>
+        <h2 class="product-title">泡麵</h2>
 
-            <div class="pro-container">
+        
+        <div class="pro-container">
+          <%
+          Connection conn = null;
+          Statement stmt = null;
+          ResultSet rs = null;
+          PreparedStatement pstmt = null;
+    
+          try {
+              // 加載JDBC驅動
+              Class.forName("com.mysql.cj.jdbc.Driver");
+              String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+              String dbUsername = "root";
+              String dbPassword = "Ray_930715";
+    
+              // 建立連接
+              conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+    
+              if (conn.isClosed()) {
+                  out.println("連線建立失敗");
+              } else {
+                  // 選擇資料庫，創建聲明
+                  
+                  stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                  String sql = "SELECT * FROM inventoryquantity WHERE ProductType='泡麵'";
+                  rs = stmt.executeQuery(sql);
+    
+                  while (rs.next()) {
+                      String imageUrl = rs.getString("Producturl");
+                      String productName = rs.getString("ProductName");
+                      int productPrice = rs.getInt("Price");
+                      
+                      %>
+                    }
+          <!-- 泡麵商品圖卡jsp -->
+          <a href="./product.html"><!--尚未設計要怎麼點擊該區塊導向該商品的位置-->
 
-                <!-- 泡麵商品圖卡 01 -->
-                <a href="./product_LoggedIn.html">
+            <div class="pro">
 
-                    <div class="pro">
+              <img src="<%= imageUrl %>" alt="<%= productName %>">
 
-                        <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+                <div class="pro-name">
+                    <h5><%= productName %></h5>
+                    <p><%= productPrice %></p>
+                </div></a>
 
-                        <div class="pro-name">
-                            <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                            <p>NT$239</p>
-                        </div></a>
+                <!-- add cart container -->
+                <div class="cartButtonContainer">
 
-                        <!-- add cart container -->
-                        <div class="cartButtonContainer">
+                  <!-- cart-numberic button -->
+                  <div class="cart-button" data-min="1" data-max="50">
+                    <input type="button" class="min" value="&minus;"/>
+                    <input type="text" class="quantity" value="1"/>
+                    <input type="button" class="add" value="+"/>
+                  </div>
 
-                          <!-- cart-numberic button -->
-                          <div class="cart-button" data-min="1" data-max="50">
-                            <input type="button" class="min" value="&minus;"/>
-                            <input type="text" class="quantity" value="1"/>
-                            <input type="button" class="add" value="+"/>
-                          </div>
+                  <!-- addtocart icon button -->
+                  <div class="addToCart_Btn">
+                    <button type="button" class="cart-icon-button" onclick="showAlert()">
+                      <iconify-icon icon="iconoir:cart"></iconify-icon>
+                    </button>
+                  </div>
 
-                          <!-- addtocart icon button -->
-                          <div class="addToCart_Btn">
-                            <button type="button" class="cart-icon-button" onclick="showAlert()">
-                              <iconify-icon icon="iconoir:cart"></iconify-icon>
-                            </button>
-                          </div>
+                </div>
+            </div>
+            <%
+                    }
+                  }
+                } catch (Exception e) {
+                    e.printStackTrace();
+            %>
+                <p>Error: <%= e.getMessage() %></p>
+            <%
+                } finally {
+                    if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+                    if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+                    if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+                }
+            %>
+        </div>
+        
+  </section>
 
-                        </div>
+  
 
+  <div class="separator"></div> <!-- 分隔線 -->
+
+  <!-- 飲料/酒 -->
+  <section id="drinks" class="section-p2">
+
+    <h2 class="product-title">飲料/酒</h2>
+
+        <div class="pro-container">
+          <%
+                  
+          try {
+              // 加載JDBC驅動
+              Class.forName("com.mysql.cj.jdbc.Driver");
+              String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+              String dbUsername = "root";
+              String dbPassword = "Ray_930715";
+    
+              // 建立連接
+              conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+    
+              if (conn.isClosed()) {
+                  out.println("連線建立失敗");
+              } else {
+                  // 選擇資料庫，創建聲明
+                  
+                  stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                  String sql = "SELECT * FROM inventoryquantity WHERE ProductType='飲料/酒'";
+                  rs = stmt.executeQuery(sql);
+    
+                  while (rs.next()) {
+                      String imageUrl = rs.getString("Producturl");
+                      String productName = rs.getString("ProductName");
+                      int productPrice = rs.getInt("Price");
+                      %>
+                    
+            <!-- 飲料排行商品圖卡 產生jsp -->
+            <a href="./product.html"><!--尚未設計要怎麼點擊該區塊導向該商品的位置-->
+
+              <div class="pro">
+
+                <img src="<%= imageUrl %>" alt="<%= productName %>">
+
+                  <div class="pro-name">
+                      <h5><%= productName %></h5>
+                      <p><%= productPrice %></p>
+                  </div></a>
+
+                  <!-- add cart container -->
+                  <div class="cartButtonContainer">
+
+                    <!-- cart-numberic button -->
+                    <div class="cart-button" data-min="1" data-max="50">
+                      <input type="button" class="min" value="&minus;"/>
+                      <input type="text" class="quantity" value="1"/>
+                      <input type="button" class="add" value="+"/>
                     </div>
-                </a>
 
-                <!-- 泡麵商品圖卡 02 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
+                    <!-- addtocart icon button -->
+                    <div class="addToCart_Btn">
+                      <button type="button" class="cart-icon-button" onclick="showAlert()">
+                        <iconify-icon icon="iconoir:cart"></iconify-icon>
+                      </button>
+                    </div>
 
                   </div>
-                </a>
+                  
+              </div>
+              <%
+                        }
+                      }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                  %>
+                      <p>Error: <%= e.getMessage() %></p>
+                  <%
+                      } finally {
+                          if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+                          if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+                          if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+                      }
+                  %>
+             
+  </section>
 
-                <!-- 泡麵商品圖卡 03 -->
-                <a href="./product_LoggedIn.html">
+  <div class="separator"></div> <!-- 分隔線 -->
 
-                  <div class="pro">
+  <!-- 零食糖果 -->
+  <section id="snacks" class="section-p2">
 
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+    <h2 class="product-title">零食糖果</h2>
 
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 泡麵商品圖卡 04 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 泡麵商品圖卡 05 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 泡麵商品圖卡 06 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 泡麵商品圖卡 07 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 泡麵商品圖卡 08 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-            </div>
-      </section>
-
-      <div class="separator"></div> <!-- 分隔線 -->
-
-      <!-- 飲料 -->
-      <section id="drinks" class="section-p2">
-
-        <h2 class="product-title">飲料</h2>
-
-            <div class="pro-container">
+    <div class="pro-container">
+      <%
               
-                <!-- 飲料排行商品圖卡 01 -->
-                <a href="./AllProduct.jsp">
+      try {
+          // 加載JDBC驅動
+          Class.forName("com.mysql.cj.jdbc.Driver");
+          String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+          String dbUsername = "root";
+          String dbPassword = "Ray_930715";
 
-                  <div class="pro">
+          // 建立連接
+          conn = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+          if (conn.isClosed()) {
+              out.println("連線建立失敗");
+          } else {
+              // 選擇資料庫，創建聲明
+              
+              stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+              String sql = "SELECT * FROM inventoryquantity WHERE ProductType='零食/糖果'";
+              rs = stmt.executeQuery(sql);
 
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
+              while (rs.next()) {
+                  String imageUrl = rs.getString("Producturl");
+                  String productName = rs.getString("ProductName");
+                  int productPrice = rs.getInt("Price");
+                  %>
                 
-
-                <!-- 飲料排行商品圖卡 02 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 飲料排行商品圖卡 03 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 飲料排行商品圖卡 04 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!--飲料排行商品圖卡 05 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 飲料排行商品圖卡 06 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 飲料排行商品圖卡 07 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 飲料排行商品圖卡 08 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-            </div>
-      </section>
-
-      <div class="separator"></div> <!-- 分隔線 -->
-
-      <!-- 零食糖果 -->
-      <section id="snacks" class="section-p2">
-
-        <h2 class="product-title">零食糖果</h2>
-
-            <div class="pro-container">
-
-                <!-- 零食餅乾排行商品圖卡 01 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 零食餅乾排行商品圖卡 02 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 零食餅乾排行商品圖卡 03 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 零食餅乾排行商品圖卡 04 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!--零食餅乾排行商品圖卡 05 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                        </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!--零食餅乾排行商品圖卡 06 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                      </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 零食餅乾排行商品圖卡 07 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                      </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-                <!-- 零食餅乾排行商品圖卡 08 -->
-                <a href="./product_LoggedIn.html">
-
-                  <div class="pro">
-
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-
-                      <div class="pro-name">
-                          <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                          <p>NT$239</p>
-                      </div></a>
-
-                      <!-- add cart container -->
-                      <div class="cartButtonContainer">
-
-                        <!-- cart-numberic button -->
-                        <div class="cart-button" data-min="1" data-max="50">
-                          <input type="button" class="min" value="&minus;"/>
-                          <input type="text" class="quantity" value="1"/>
-                          <input type="button" class="add" value="+"/>
-                      </div>
-
-                        <!-- addtocart icon button -->
-                        <div class="addToCart_Btn">
-                          <button type="button" class="cart-icon-button" onclick="showAlert()">
-                            <iconify-icon icon="iconoir:cart"></iconify-icon>
-                          </button>
-                        </div>
-
-                      </div>
-
-                  </div>
-                </a>
-
-            </div>
+        <!-- 飲料排行商品圖卡 產生jsp -->
+        <a href="./product.html"><!--尚未設計要怎麼點擊該區塊導向該商品的位置-->
+
+          <div class="pro">
+
+            <img src="<%= imageUrl %>" alt="<%= productName %>">
+
+              <div class="pro-name">
+                  <h5><%= productName %></h5>
+                  <p><%= productPrice %></p>
+              </div></a>
+
+              <!-- add cart container -->
+              <div class="cartButtonContainer">
+
+                <!-- cart-numberic button -->
+                <div class="cart-button" data-min="1" data-max="50">
+                  <input type="button" class="min" value="&minus;"/>
+                  <input type="text" class="quantity" value="1"/>
+                  <input type="button" class="add" value="+"/>
+                </div>
+
+                <!-- addtocart icon button -->
+                <div class="addToCart_Btn">
+                  <button type="button" class="cart-icon-button" onclick="showAlert()">
+                    <iconify-icon icon="iconoir:cart"></iconify-icon>
+                  </button>
+                </div>
+
+              </div>
+              
+          </div>
+          <%
+                    }
+                  }
+                } catch (Exception e) {
+                    e.printStackTrace();
+              %>
+                  <p>Error: <%= e.getMessage() %></p>
+              <%
+                  } finally {
+                      if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+                      if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+                      if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+                  }
+              %>
 
         <!-- cart button quantity -->
         <script>
@@ -1264,8 +670,18 @@
 
           <p>&copy; 2024 Company, Inc. All rights reserved.</p>
 
+            <%
+          ServletContext context = getServletContext();
+          Integer counter = (Integer) context.getAttribute("counter");
+          if (counter == null) {
+              counter = 60;
+          }
+          counter++;
+          context.setAttribute("counter", counter);
+          %>
+
           <!-- 可自行更動網頁瀏覽人數設定 -->
-          <p> 網頁瀏覽人數：999人</p>
+          <p> 網頁瀏覽人數：<%= counter %>人</p>
         </div>
 
         </div>
