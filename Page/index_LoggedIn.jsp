@@ -646,6 +646,15 @@
 
       </section>
 
+       <!-- slider up -->
+       <section class="slider">
+        <a href="#">
+          <div class="top">
+              <iconify-icon icon="iconoir:page-up"></iconify-icon>
+          </div>
+        </a>
+    </section>
+
     <!-- Cookie 提示區域 -->
       <div class="alert text-center cookiealert" role="alert">
           &#x1F36A; 我們使用cookie來提供和改善服務！若繼續使用本網站，表示您同意我們使用cookie。 <a href="https://cookiesandyou.com/" target="_blank">了解更多關於Cookie</a>

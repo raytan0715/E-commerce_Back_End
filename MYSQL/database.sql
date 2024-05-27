@@ -383,7 +383,8 @@ https://i.imgur.com/FuGLtVt.jpeg'),
 無糖，但很好吃！
 無糖&無含糖物質！
 保護環境的包裝材質
-','https://i.imgur.com/MvRSCRh.jpeg')
+','https://i.imgur.com/MvRSCRh.jpeg'),
+(25,'飲料/酒','TEAZEN 玉米鬚茶','226','175','2025.05.14','玉米、玉米鬚、玉竹、水、碳水化合物、蛋白質。','請參考商品包裝或產品本身','★ 韓國原裝進口。★ 淡淡玄米香~ 清香可口。★ 口感細緻溫順，冷熱飲皆可。','https://i.imgur.com/y9MvQgm.png')
 ;
 /*!40000 ALTER TABLE `inventoryquantity` ENABLE KEYS */;
 UNLOCK TABLES;
