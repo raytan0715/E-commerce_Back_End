@@ -2,6 +2,7 @@
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>
+
 <!doctype html>
 
 <html lang="en" data-bs-theme="auto">
@@ -19,15 +20,15 @@
     <!-- 網頁標題 -->
     <title> 吃貨道| 吃貨的專屬門道 </title> 
 
-    <!-- 引用 Bootstrap 套件---> 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/masonry/">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/footers/">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
+   <!-- 引用 Bootstrap 套件--->
+   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
+   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/">
+   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/masonry/">
+   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/footers/">
+   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+   <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 使用font-awesome線上免下載圖標(icon) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -36,6 +37,9 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- header -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!-- header -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
@@ -44,9 +48,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 
-    
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
     <!-- css 樣式檔案 -->
     <link href="./stylesheets/product.css" rel="stylesheet">
+    
+    <!-- 購物車樣式檔 -->
+    <link rel="stylesheet" href="./stylesheets/BuyCart.css">
 
     <!-- 登入註冊樣式檔  -->
     <link rel="stylesheet" href="./stylesheets/LoginArea.css"> 
@@ -66,38 +78,36 @@
         <!-- 工具欄第一欄內容物容器 -->
         <div class="row navOneRow">
 
-            <!-- 圖標logo-->
-            <div class="col-sm navLogoCol" >
-              <div class="navLogo" >
-                <!-- Logo 點擊回到主頁 -->
-                <a href="index.jsp">
-                  <!-- 此處為要這樣做的話，如果沒有登入的話進來此處的話能這樣搞，跳回頁面。
-                    但是如果是已經登入的如果點擊這個圖片時會造成問題，因為設計上面我已經登入了結果回首頁變成沒有登入的樣子，很奇怪。-->
-                <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
-                </a>
-              </div>
+          <!-- 【圖標logo】-->
+          <div class="col-sm navLogoCol" >
+            <div class="navLogo" >
+              <!-- Logo 點擊回到登入後主頁 -->
+              <a href="index_LoggedIn.jsp">
+              <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
+              </a>
             </div>
+          </div>
           
 
-          <!-- 搜尋欄 -->
+         <!-- 【搜尋欄】 -->
           <div class="col-sm searchBarCol">
               
-              <form class="d-flex" style="width:750px;"> 
-                <input id="searchBar" class="form-control me-2 searchBar" type="search" placeholder="🔍 搜尋" aria-label="Search">
-                
-                <script>
-                  // 在輸入框獲得焦點時，添加特定的樣式
-                  document.getElementById("searchBar").addEventListener("focus", function() {
-                      this.classList.add("focused");
-                  });
+            <form class="d-flex" style="width:750px;"> 
+              <input id="searchBar" class="form-control me-2 searchBar" type="search" placeholder="🔍 搜尋" aria-label="Search">
+              
+              <script>
+                // 在輸入框獲得焦點時，添加特定的樣式
+                document.getElementById("searchBar").addEventListener("focus", function() {
+                    this.classList.add("focused");
+                });
 
-                  // 在輸入框獲得焦點時，移除特定的樣式
-                  document.getElementById("searchBar").addEventListener("blur", function() {
-                      this.classList.remove("focused");
-                  });
-                </script>
-              </form>
-            </div>
+                // 在輸入框獲得焦點時，移除特定的樣式
+                document.getElementById("searchBar").addEventListener("blur", function() {
+                    this.classList.remove("focused");
+                });
+              </script>
+            </form>
+          </div>
 
           <!-- 右側兩個按鈕欄位 -->
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
@@ -169,9 +179,51 @@
               </div>
             </div>
 
+          </nav>
+
+          <!-- 工具欄第二欄 -->
+          <nav class="navbar navbar-expand-lg navbar-black bg-black" aria-label="Tenth navbar example"> 
+    
+            <div class="container-fluid" style="background-color: #f7f7f7">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+              
+              <!-- 下拉式選單 -->
+              <div class="collapse navbar-collapse justify-content-md-center navCol-2" id="navbarsExample08">
+                <li class="nav-item dropdown">
+                  <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="./AllProduct_LoggedIn.html">所有商品</a></li>
+                    <li><a class="dropdown-item" href="./AllProduct_LoggedIn.html#noodle">泡麵</a></li>
+                    <li><a class="dropdown-item" href="./AllProduct_LoggedIn.html#drinks">飲料</a></li>
+                    <li><a class="dropdown-item" href="./AllProduct_LoggedIn.html#snacks">零食糖果</a></li>
+                  </ul>
+                </li>
+              
+                <li class="nav-item dropdown">
+                  <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">品牌理念</a></li>
+                    <li><a class="dropdown-item" href="#">成員介紹</a></li>
+                  </ul>
+                </li>
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="#FooterArea" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>
+                </li>
+              </div>
+              
+    
+            </div>
+          </nav>
+
             <!-- ========== 會員登入註冊介面之 JS語法 ========== -->
             <!-- 導覽列 -->
-            <script src="javascript/h.js" charset="utf-8"></script>
+            
+            <!-- JavaScript dependencies -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="./javascript/h.js" charset="utf-8"></script>
 
             <!--滑動頁面-->
             <script>
@@ -212,46 +264,7 @@
         </div>
 
         
-      </nav>
-
-      <!-- 工具欄第二欄 -->
-      <nav class="navbar navbar-expand-lg navbar-black bg-black" aria-label="Tenth navbar example"> 
-
-        <div class="container-fluid" style="background-color: #f7f7f7">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-          
-          <!-- 下拉式選單 -->
-          <div class="collapse navbar-collapse justify-content-md-center navCol-2" id="navbarsExample08"> 
-
-            <li class="nav-item dropdown">
-              <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html">所有商品</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#noodle">泡麵</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#drinks">飲料</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#snacks">零食糖果</a></li>
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">品牌理念</a></li>
-                <li><a class="dropdown-item" href="#">成員介紹</a></li>
-              </ul>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#FooterArea"  aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>
-            </li>
-
-          </div>
-
-        </div>
-      </nav>
-
+      
    
       <!-- 商品購買與介紹區域
       ================================================== -->
@@ -302,8 +315,8 @@
 
         <!-- 網頁當前路徑顯示 -->
         <div class="product-path">
-          <a href="index.html" class="path-link">首頁</a> &gt;
-          <a href="AllProduct.html" class="path-link">商品</a> &gt;
+          <a href="index.jsp" class="path-link">首頁</a> &gt;
+          <a href="AllProduct.jsp" class="path-link">商品</a> &gt;
           <a href="product.jsp?productId= <%= productId %>"  class="path-link"><%= productName %></a>
         </div>
 

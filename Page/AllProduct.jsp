@@ -3,7 +3,6 @@
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>|
 
-
 <!doctype html>
 
 <html lang="en" data-bs-theme="auto">
@@ -51,9 +50,6 @@
 
     <!-- 登入註冊樣式檔  -->
     <link rel="stylesheet" href="./stylesheets/LoginArea.css"> 
-
-    <!-- 購物車樣式檔 -->
-    <link rel="stylesheet" href="./stylesheets/BuyCart.css">
 
   </head>
 

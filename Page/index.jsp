@@ -172,7 +172,7 @@
 
             <!-- ========== 會員登入註冊介面之 JS語法 ========== -->
             <!-- 導覽列 -->
-            <script src="./javascript/h.js" charset="utf-8"></script>
+            <script src="javascript/h.js" charset="utf-8"></script>
 
             <!--滑動頁面-->
             <script>
@@ -226,15 +226,16 @@
         <!-- 下拉式選單 -->
         <div class="collapse navbar-collapse justify-content-md-center navCol-2" id="navbarsExample08">
 
-            <li class="nav-item dropdown">
+             <!-- 【商品瀏覽】 -->
+             <li class="nav-item dropdown">
                 <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="./AllProduct.jsp">所有商品</a></li>
-                    <li><a class="dropdown-item" href="./AllProduct.jsp#noodle">泡麵</a></li>
-                    <li><a class="dropdown-item" href="./AllProduct.jsp#drinks">飲料</a></li>
-                    <li><a class="dropdown-item" href="./AllProduct.jsp#snacks">零食糖果</a></li>
+                  <li><a class="dropdown-item" href="./AllProduct.jsp">所有商品</a></li>
+                  <li><a class="dropdown-item" href="./AllProduct.jsp">泡麵</a></li>
+                  <li><a class="dropdown-item" href="./AllProduct.jsp#drinks">飲料</a></li>
+                  <li><a class="dropdown-item" href="./AllProduct.jsp#snacks">零食糖果</a></li>
                 </ul>
-            </li>
+              </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
@@ -429,75 +430,78 @@
         <img src="./picture/material/indexPageMaterial/NewArrivalsTitle.png" alt="PitureForm_Of_Title">
     </div>
 
-    <!-- 新品上架展示區容器 -->
-    <div class="NewArrivals_CardContainer">
+   <!-- 新品上架展示區容器 -->
+<div class="NewArrivals_CardContainer">
 
-        <!-- 新品上架商品圖卡 01 -->
-        <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
+    <!-- 點擊導引至商品連結 -->
+        <%
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+  
+        try {
+            // 加載JDBC驅動
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+            String dbUsername = "root";
+            String dbPassword = "Ray_930715";
+  
+            // 建立連接
+            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+  
+            if (conn.isClosed()) {
+                out.println("連線建立失敗");
+            } else {
+                // 選擇資料庫，創建聲明
+                stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                String sql = "SELECT * FROM finalproject.inventoryquantity ORDER BY ProductID DESC LIMIT 3";
+                rs = stmt.executeQuery(sql);
 
-            <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+                while (rs.next()) {
+                    String productId = rs.getString("ProductID");
+                    String imageUrl = rs.getString("Producturl");
+                    String productName = rs.getString("ProductName");
+                    int productPrice = rs.getInt("Price");
+            %>
+    <!-- 新品上架商品圖卡 -->
+    <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
+        
 
-                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
+        
+        <a href="./product.jsp?productId=<%= productId %>" style="text-decoration: none; position: relative;">
+            <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
-                    <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
+                <!-- 商品圖片 -->
+                <img class="bd-placeholder-img card-img-top" src="<%= imageUrl %>" alt="<%= productName %>" width="100%" height="250" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
 
-                    <!-- 商品詳細資訊 -->
-                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                        <h5 class="card-title" style="color: black;">Nongshim 農心 韓國境內版 辛拉麵 </h5>
-                        <p class="card-text" style="color: black;">一份5包 </p>
-                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$125</p>
-                    </div>
+                <!-- 商品詳細資訊 -->
+                <div class="card-body" style="background-color: rgb(255, 255, 255);">
+                    <h5 class="card-title" style="color: black;"><%= productName %> </h5>
+                    <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$<%= productPrice %></p>
                 </div>
-            </a>
-        </div>
-
-        <!-- 新品上架商品圖卡 02 -->
-        <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
-
-            <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
-
-                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
-
-                    <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/drinks/yakult.png" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
-
-                    <!-- 商品詳細資訊 -->
-                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                        <h5 class="card-title" style="color: black;">韓國 NAMYANG 養樂多碳酸飲 </h5>
-                        <p class="card-text" style="color: black;">一瓶(400ml) </p>
-                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$59</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <!-- 新品上架商品圖卡 03 -->
-        <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
-
-            <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
-
-                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
-
-                    <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/snacks/snacks_1.PNG" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
-
-                    <!-- 商品詳細資訊 -->
-                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                        <h5 class="card-title" style="color: black;">LOTTE 樂天 Zero零糖低卡巧克力派 </h5>
-                        <p class="card-text" style="color: black;">一份24入 </p>
-                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$178</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-
+                
+            </div>
+            
+        </a>
+               
     </div>
+    <%
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    %>
+    <p>Error: <%= e.getMessage() %></p>
+    <%
+    } finally {
+        if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+        if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+    }
+    %>
+</div>
 
-</section>
 
 <div class="separator"></div> <!-- 分隔線 -->
 
@@ -560,19 +564,8 @@
 </section>
 
 
-<!-- 頁尾(含聯絡資訊)
-================================================== -->
-
+<!-- Footer 頁尾部分 -->
 <jsp:include page="./footer.jsp" />
-
- <!-- slider up -->
- <section class="slider">
-    <a href="#">
-      <div class="top">
-          <iconify-icon icon="iconoir:page-up"></iconify-icon>
-      </div>
-    </a>
-</section>
 
 <!-- Cookie 提示區域 -->
 <div class="alert text-center cookiealert" role="alert">
@@ -582,12 +575,11 @@
         同意
     </button>
 </div>
-
+<!--------->
 
 <!-- Javascript 區域 -->
-<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
-<script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
+<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+<script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
 
 <!-- 添加 cookie提示 script -->
 <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
