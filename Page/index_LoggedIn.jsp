@@ -302,12 +302,12 @@
           <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" style="background-color: #535758;height:5px"></button>
           <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" style="background-color: #535758;height:5px"></button>
         </div>
-
         <!-- 輪播圖片區 - 大容器-->
         <div class="carousel-inner" style="background-color: aliceblue;">
 
           <!-- 輪播圖片區 - 小容器(圖片01)-->
           <div class="carousel-item active">
+            <a href="./product_LoggedIn.jsp?productId=18" style="text-decoration: none; position: relative;">
               <div class="d-flex justify-content-center align-items-center">
                   <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel01.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
                   <!-- original height: 512px-->
@@ -317,10 +317,12 @@
                   <div class="carousel-caption text-start">
                   </div>
               </div>
+            </a>
           </div>
 
           <!-- 輪播圖片區 - 小容器(圖片02)-->
           <div class="carousel-item">
+            <a href="./product_LoggedIn.jsp?productId=4" style="text-decoration: none; position: relative;">
               <div class="d-flex justify-content-center align-items-center">
                   <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel02.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
                   <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
@@ -329,11 +331,12 @@
                   <div class="carousel-caption">
                   </div>
               </div>
-
+            </a>
           </div>
 
           <!-- 輪播圖片區 - 小容器(圖片03)-->
           <div class="carousel-item">
+            <a href="./product_LoggedIn.jsp?productId=12" style="text-decoration: none; position: relative;">
               <div class="d-flex justify-content-center align-items-center">
                   <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel03.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
                   <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
@@ -342,9 +345,11 @@
                   <div class="carousel-caption text-end">
                   </div>
               </div>
+            </a>
           </div>
 
       </div>
+      
 
       <!-- 上一張圖片的按鈕 -->
       <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev"  style="width: 115px;background-color: #969391;">
@@ -358,168 +363,167 @@
           <span class="visually-hidden">Next</span>
       </button>
 
-</div>
+      </div>
+          
+      <!-- 人氣排行 (圖卡區)
+      ================================================== -->
 
-<!-- 人氣排行 (圖卡區)
-================================================== -->
+      <section class="TrendingProduct">
 
-<section class="TrendingProduct">
+        <!-- 人氣排行(圖片標題) -->
+        <div class="TrendingProduct_PictureTitle" >
+            <img src="./picture/material/indexPageMaterial/TrendingTitle.png" alt="PitureForm_Of_Title">
+        </div>
 
-  <!-- 人氣排行(圖片標題) -->
-  <div class="TrendingProduct_PictureTitle" >
-      <img src="./picture/material/indexPageMaterial/TrendingTitle.png" alt="PitureForm_Of_Title">
-  </div>
+        <!-- 人氣排行商品展示區容器 -->
+        <div class="TrendingProduct_CardContainer">
+            <%
+            // JDBC 變數宣告
+            Connection conn = null;
+            Statement stmt = null;
+            ResultSet rs = null;
+            int[] productIds = {18, 4, 12};  // 需要查詢的商品ID
+        
+            // 順序圖標的陣列
+            String[] rankingImages = {"firstPlace.png", "secondPlace.png", "thirdPlace.png"};
+        
+            try {
+                // 加載JDBC驅動
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+                String dbUsername = "root";
+                String dbPassword = "Ray_930715";
+        
+                // 建立連接
+                conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+        
+                if (conn.isClosed()) {
+                    out.println("連線建立失敗");
+                } else {
+                    stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                    
+                    // 遍歷 productIds 查詢商品資訊
+                    for (int i = 0; i < productIds.length; i++) {
+                        String sql = "SELECT * FROM finalproject.inventoryquantity WHERE ProductID = " + productIds[i];
+                        rs = stmt.executeQuery(sql);
+        
+                        if (rs.next()) {
+                            String productId = rs.getString("ProductID");
+                            String imageUrl = rs.getString("Producturl");
+                            String productName = rs.getString("ProductName");
+                            int productPrice = rs.getInt("Price");
+            %>
 
-  <!-- 人氣排行商品展示區容器 -->
-  <div class="TrendingProduct_CardContainer">
+            <!-- 人氣排行商品圖卡-->
+            <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
 
-      <!-- 人氣排行商品圖卡 01-->
+                <!-- 點擊導引至商品連結 -->
+                <a href="./product_LoggedIn.jsp?productId=<%= productId %>" style="text-decoration: none; position: relative;">
+
+                    <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
+
+                        <!-- 排名圖標 -->
+                        <img src="./picture/material/indexPageMaterial/<%= rankingImages[i] %>" alt="RankingImage" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
+
+                        <!-- 商品圖片 -->
+                        <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="<%= imageUrl %>" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
+
+                        <!-- 商品詳細資訊 -->
+                        <div class="card-body" style="background-color: rgb(255, 255, 255);">
+                            <h5 class="card-title" style="color: black;"><%= productName %></h5>
+                            <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">NT$<%= productPrice %></p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <%
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+            %>
+                <p>Error: <%= e.getMessage() %></p>
+            <%
+                } finally {
+                    if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+                    if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+                    if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+                }
+            %>
+
+        </div>
+
+        <div class="ResgisterForSale">
+            <img src="./picture/material/indexPageMaterial/RegisterForSales.png" alt="Piture_Of_ResgisterForSale">
+        </div>
+
+      </section>
+
+      <div class="separator"></div> <!-- 分隔線 -->
+
+      <!-- 新品上架
+      ================================================== -->
+
+      <section class="NewArrivals">
+
+        <!-- 新品上架(圖片標題) -->
+        <div class="NewArrivals_PictureTitle" >
+            <img src="./picture/material/indexPageMaterial/NewArrivalsTitle.png" alt="PitureForm_Of_Title">
+        </div>
+
+        <!-- 新品上架展示區容器 -->
+        <div class="NewArrivals_CardContainer">
+
+        <!-- 點擊導引至商品連結 -->
+            <%
+
+            try {
+                // 加載JDBC驅動
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+                String dbUsername = "root";
+                String dbPassword = "Ray_930715";
+
+                // 建立連接
+                conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+                if (conn.isClosed()) {
+                    out.println("連線建立失敗");
+                } else {
+                    // 選擇資料庫，創建聲明
+                    stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                    String sql = "SELECT * FROM finalproject.inventoryquantity ORDER BY ProductID DESC LIMIT 3";
+                    rs = stmt.executeQuery(sql);
+
+                    while (rs.next()) {
+                        String productId = rs.getString("ProductID");
+                        String imageUrl = rs.getString("Producturl");
+                        String productName = rs.getString("ProductName");
+                        int productPrice = rs.getInt("Price");
+                %>
+      <!-- 新品上架商品圖卡 -->
       <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
+          
 
-          <!-- 點擊導引至商品連結 -->
-          <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
-
+          
+          <a href="./product_LoggedIn.jsp?productId=<%= productId %>" style="text-decoration: none; position: relative;">
               <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
-                  <!-- 排名圖標 -->
-                  <img src="./picture/material/indexPageMaterial/firstPlace.png" alt="FirstPlacePic" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
-
                   <!-- 商品圖片 -->
-                  <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/snacks/snacks_2.PNG" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
+                  <img class="bd-placeholder-img card-img-top" src="<%= imageUrl %>" alt="<%= productName %>" width="100%" height="250" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
 
                   <!-- 商品詳細資訊 -->
                   <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                      <h5 class="card-title" style="color: black;">GEMEZ Enaak 韓式小雞麵 雞汁味</h5>
-                      <p class="card-text" style="color: black;">一盒裝 24入 </p>
-                      <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$239</p>
-                  </div>
-              </div>
-          </a>
-      </div>
-
-      <!-- 人氣排行商品圖卡 02 -->
-      <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
-
-          <!-- 點擊導引至商品連結 -->
-          <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
-
-              <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
-
-                  <!-- 排名圖標 -->
-                  <img src="./picture/material/indexPageMaterial/secondPlace.png" alt="FirstPlacePic" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
-
-                  <!-- 商品圖片 -->
-                  <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/instant noodles/Instant_noodles_4.png" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
-
-                  <!-- 商品詳細資訊 -->
-                  <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                      <h5 class="card-title" style="color: black;">paldo 八道 韓式香辣冷拌麵</h5>
-                      <p class="card-text" style="color: black;">一份3袋 每袋5包 </p>
-                      <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$330</p>
-                  </div>
-              </div>
-          </a>
-      </div>
-
-      <!-- 人氣排行商品圖卡 03 -->
-      <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
-
-          <!-- 點擊導引至商品連結 -->
-          <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
-
-              <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
-
-                  <!-- 排名圖標 -->
-                  <img src="./picture/material/indexPageMaterial/thirdPlace.png" alt="FirstPlacePic" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
-
-                  <!-- 商品圖片 -->
-                  <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/drinks/banana.jpg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
-
-                  <!-- 商品詳細資訊 -->
-                  <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                      <h5 class="card-title" style="color: black;">【韓味不二】香蕉牛奶</h5>
-                      <p class="card-text" style="color: black;">一瓶(200ml) </p>
-                      <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$25</p>
-                  </div>
-              </div>
-          </a>
-      </div>
-
-  </div>
-
-  <div class="ResgisterForSale">
-      <img src="./picture/material/indexPageMaterial/RegisterForSales.png" alt="Piture_Of_ResgisterForSale">
-  </div>
-
-</section>
-
-<div class="separator"></div> <!-- 分隔線 -->
-
-<!-- 新品上架
-================================================== -->
-    <section class="NewArrivals">
-
-      <!-- 新品上架(圖片標題) -->
-      <div class="NewArrivals_PictureTitle" >
-          <img src="./picture/material/indexPageMaterial/NewArrivalsTitle.png" alt="PitureForm_Of_Title">
-      </div>
-
-      <!-- 新品上架展示區容器 -->
-      <div class="NewArrivals_CardContainer">
-
-      <!-- 點擊導引至商品連結 -->
-          <%
-          Connection conn = null;
-          Statement stmt = null;
-          ResultSet rs = null;
-          PreparedStatement pstmt = null;
-
-          try {
-              // 加載JDBC驅動
-              Class.forName("com.mysql.cj.jdbc.Driver");
-              String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
-              String dbUsername = "root";
-              String dbPassword = "Ray_930715";
-
-              // 建立連接
-              conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-
-              if (conn.isClosed()) {
-                  out.println("連線建立失敗");
-              } else {
-                  // 選擇資料庫，創建聲明
-                  stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                  String sql = "SELECT * FROM finalproject.inventoryquantity ORDER BY ProductID DESC LIMIT 3";
-                  rs = stmt.executeQuery(sql);
-
-                  while (rs.next()) {
-                      String productId = rs.getString("ProductID");
-                      String imageUrl = rs.getString("Producturl");
-                      String productName = rs.getString("ProductName");
-                      int productPrice = rs.getInt("Price");
-              %>
-          <!-- 新品上架商品圖卡 -->
-          <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
-              
-
-              
-              <a href="./product.jsp?productId=<%= productId %>" style="text-decoration: none; position: relative;">
-                  <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
-
-                      <!-- 商品圖片 -->
-                      <img class="bd-placeholder-img card-img-top" src="<%= imageUrl %>" alt="<%= productName %>" width="100%" height="250" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-
-                      <!-- 商品詳細資訊 -->
-                      <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                          <h5 class="card-title" style="color: black;"><%= productName %> </h5>
-                          <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$<%= productPrice %></p>
-                      </div>
-                      
+                      <h5 class="card-title" style="color: black;"><%= productName %> </h5>
+                      <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$<%= productPrice %></p>
                   </div>
                   
-              </a>
-                  
-          </div>
+              </div>
+              
+          </a>
+              
+        </div>
           <%
                   }
               }
@@ -534,10 +538,10 @@
               if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
           }
           %>
-      </div>
-    </section>
+      </section>
 
-      <!-- <div class="separator"></div> 分隔線 -->
+
+<div class="separator"></div> <!-- 分隔線 -->
 
       <!-- 精選推薦 
       ================================================== -->
@@ -562,7 +566,7 @@
               <p class="card-text" style="color: #535758;font-size: large;">炎炎夏日，來一杯冰飲，一起歡聚「飲冰」食光。</p>
               
               <!-- 了解更多按鈕 -->
-              <a href="#" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+              <a href="./AllProduct_LoggedIn.jsp#drinks" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
           </div>
 
@@ -577,7 +581,7 @@
               <p class="card-text" style="color: #535758;font-size: large;">夜色昏暗，明月當天，還在挑燈夜戰嗎？給宵夜時間的你。</p>
               
               <!-- 了解更多按鈕 -->
-              <a href="#" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+              <a href="./AllProduct_LoggedIn.jsp#noodle" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
           </div>
 
@@ -592,7 +596,7 @@
               <p class="card-text" style="color: #535758;font-size: large;">不飢不餓，但還是想滿足口腹之慾？這裡有各類點心輕食提供給你。</p>
               
               <!-- 了解更多按鈕 -->
-              <a href="#" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+              <a href="./AllProduct_LoggedIn.jsp#snacks" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
           </div>
       </section>
