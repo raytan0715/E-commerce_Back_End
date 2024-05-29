@@ -346,6 +346,7 @@
         <img src="./picture/material/indexPageMaterial/TrendingTitle.png" alt="PitureForm_Of_Title">
     </div>
 
+    
     <!-- 人氣排行商品展示區容器 -->
     <div class="TrendingProduct_CardContainer">
         <%
@@ -353,36 +354,35 @@
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
-    
+
         // 順序圖標的陣列
         String[] rankingImages = {"firstPlace.png", "secondPlace.png", "thirdPlace.png"};
-        int[] productIds = {18, 4, 12};  // 需要查詢的商品ID
-    
+
         try {
             // 加載JDBC驅動
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
             String dbUsername = "root";
             String dbPassword = "Ray_930715";
-    
+
             // 建立連接
             conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-    
+
             if (conn.isClosed()) {
                 out.println("連線建立失敗");
             } else {
                 stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 
-                // 遍歷 productIds 查詢商品資訊
-                for (int i = 0; i < productIds.length; i++) {
-                    String sql = "SELECT * FROM finalproject.inventoryquantity WHERE ProductID = " + productIds[i];
-                    rs = stmt.executeQuery(sql);
-    
-                    if (rs.next()) {
-                        String productId = rs.getString("ProductID");
-                        String imageUrl = rs.getString("Producturl");
-                        String productName = rs.getString("ProductName");
-                        int productPrice = rs.getInt("Price");
+                // 查詢庫存數量最少的商品
+                String sql = "SELECT * FROM finalproject.inventoryquantity ORDER BY Quantity ASC LIMIT 3";
+                rs = stmt.executeQuery(sql);
+
+                int i = 0;
+                while (rs.next() && i < rankingImages.length) {
+                    String productId = rs.getString("ProductID");
+                    String imageUrl = rs.getString("Producturl");
+                    String productName = rs.getString("ProductName");
+                    int productPrice = rs.getInt("Price");
         %>
 
         <!-- 人氣排行商品圖卡-->
@@ -391,36 +391,37 @@
             <!-- 點擊導引至商品連結 -->
             <a href="./product.jsp?productId=<%= productId %>" style="text-decoration: none; position: relative;">
 
-                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
+                <div class="card" style="width: 330px; height: 420px; position: relative; background-color: rgb(255, 255, 255);">
 
                     <!-- 排名圖標 -->
                     <img src="./picture/material/indexPageMaterial/<%= rankingImages[i] %>" alt="RankingImage" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
 
                     <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="<%= imageUrl %>" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
+                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="<%= imageUrl %>" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <rect width="100%" height="100%" fill="#868e96"/></img>
 
                     <!-- 商品詳細資訊 -->
                     <div class="card-body" style="background-color: rgb(255, 255, 255);">
                         <h5 class="card-title" style="color: black;"><%= productName %></h5>
-                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">NT$<%= productPrice %></p>
+                        <p class="card-text" style="font-size: large; font-weight: bold; color: rgb(207, 15, 53);">NT$<%= productPrice %></p>
                     </div>
                 </div>
             </a>
         </div>
         <%
-                        }
-                    }
+                    i++;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         %>
             <p>Error: <%= e.getMessage() %></p>
         <%
-            } finally {
-                if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
-                if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
-                if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
-            }
+        } finally {
+            if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+            if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+            if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+        }
         %>
 
     </div>

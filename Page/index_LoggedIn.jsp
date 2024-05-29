@@ -382,36 +382,35 @@
             Connection conn = null;
             Statement stmt = null;
             ResultSet rs = null;
-            int[] productIds = {18, 4, 12};  // 需要查詢的商品ID
-        
+    
             // 順序圖標的陣列
             String[] rankingImages = {"firstPlace.png", "secondPlace.png", "thirdPlace.png"};
-        
+    
             try {
                 // 加載JDBC驅動
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
                 String dbUsername = "root";
                 String dbPassword = "Ray_930715";
-        
+    
                 // 建立連接
                 conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-        
+    
                 if (conn.isClosed()) {
                     out.println("連線建立失敗");
                 } else {
                     stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                     
-                    // 遍歷 productIds 查詢商品資訊
-                    for (int i = 0; i < productIds.length; i++) {
-                        String sql = "SELECT * FROM finalproject.inventoryquantity WHERE ProductID = " + productIds[i];
-                        rs = stmt.executeQuery(sql);
-        
-                        if (rs.next()) {
-                            String productId = rs.getString("ProductID");
-                            String imageUrl = rs.getString("Producturl");
-                            String productName = rs.getString("ProductName");
-                            int productPrice = rs.getInt("Price");
+                    // 查詢庫存數量最少的商品
+                    String sql = "SELECT * FROM finalproject.inventoryquantity ORDER BY Quantity ASC LIMIT 3";
+                    rs = stmt.executeQuery(sql);
+    
+                    int i = 0;
+                    while (rs.next() && i < rankingImages.length) {
+                        String productId = rs.getString("ProductID");
+                        String imageUrl = rs.getString("Producturl");
+                        String productName = rs.getString("ProductName");
+                        int productPrice = rs.getInt("Price");
             %>
 
             <!-- 人氣排行商品圖卡-->
@@ -437,21 +436,20 @@
                 </a>
             </div>
             <%
-                            }
-                        }
+                        i++;
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             %>
                 <p>Error: <%= e.getMessage() %></p>
             <%
-                } finally {
-                    if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
-                    if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
-                    if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
-                }
+            } finally {
+                if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+                if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+                if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+            }
             %>
-
         </div>
 
         <div class="ResgisterForSale">
