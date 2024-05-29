@@ -84,7 +84,7 @@
         <div class="col-sm searchBarCol">
 
             <form class="d-flex" action="./SearchProduct.jsp" method="get" style="width:750px;">
-              <input id="searchBar" class="form-control me-2 searchBar" name="query" type="search" placeholder="🔍 搜尋" aria-label="Search">
+              <input id="searchBar" class="form-control me-2 searchBar" name="keyword" type="search" placeholder="🔍 搜尋" aria-label="Search">
           
               <script>
                   // 在輸入框獲得焦點時，添加特定的樣式
@@ -271,9 +271,11 @@
 
     <!-- 輪播圖片區 - 大容器-->
     <div class="carousel-inner" style="background-color: aliceblue;">
-
+        
         <!-- 輪播圖片區 - 小容器(圖片01)-->
         <div class="carousel-item active">
+            <!-- 點擊導引至該商品連結 -->
+            <a href="./product.html" style="text-decoration: none; position: relative;">
             <div class="d-flex justify-content-center align-items-center">
                 <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel01.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
                 <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
@@ -282,10 +284,15 @@
                 <div class="carousel-caption text-start">
                 </div>
             </div>
+            </a>
         </div>
+
+
 
         <!-- 輪播圖片區 - 小容器(圖片02)-->
         <div class="carousel-item">
+            <!-- 點擊導引至該商品連結 -->
+            <a href="./product.html" style="text-decoration: none; position: relative;">
             <div class="d-flex justify-content-center align-items-center">
                 <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel02.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
                 <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
@@ -294,11 +301,13 @@
                 <div class="carousel-caption">
                 </div>
             </div>
-
+            </a>
         </div>
 
         <!-- 輪播圖片區 - 小容器(圖片03)-->
         <div class="carousel-item">
+            <!-- 點擊導引至該商品連結 -->
+            <a href="./product.html" style="text-decoration: none; position: relative;">
             <div class="d-flex justify-content-center align-items-center">
                 <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel03.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
                 <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
@@ -307,6 +316,7 @@
                 <div class="carousel-caption text-end">
                 </div>
             </div>
+            </a>
         </div>
 
     </div>
@@ -530,7 +540,7 @@
                 <p class="card-text" style="color: #535758;font-size: large;">炎炎夏日，來一杯冰飲，一起歡聚「飲冰」食光。</p>
 
                 <!-- 了解更多按鈕 -->
-                <a href="#" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+                <a href="./AllProduct.jsp#drinks" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
         </div>
 
@@ -545,7 +555,7 @@
                 <p class="card-text" style="color: #535758;font-size: large;">夜色昏暗，明月當天，還在挑燈夜戰嗎？給宵夜時間的你。</p>
 
                 <!-- 了解更多按鈕 -->
-                <a href="#" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+                <a href="./AllProduct.jsp#noodle" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
         </div>
 
@@ -560,7 +570,7 @@
                 <p class="card-text" style="color: #535758;font-size: large;">不飢不餓，但還是想滿足口腹之慾？這裡有各類點心輕食提供給你。</p>
 
                 <!-- 了解更多按鈕 -->
-                <a href="#" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+                <a href="./AllProduct.jsp#snacks" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
         </div>
 </section>

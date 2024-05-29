@@ -93,7 +93,7 @@
          <div class="col-sm searchBarCol">
 
           <form class="d-flex" action="./SearchProduct.jsp" method="get" style="width:750px;">
-            <input id="searchBar" class="form-control me-2 searchBar" name="query" type="search" placeholder="🔍 搜尋" aria-label="Search">
+            <input id="searchBar" class="form-control me-2 searchBar" name="keyword" type="search" placeholder="🔍 搜尋" aria-label="Search">
         
             <script>
                 // 在輸入框獲得焦點時，添加特定的樣式
@@ -584,6 +584,7 @@
     <!-- Javascript 區域 -->
     <!-- <script src="./assets/dist/js/bootstrap.bundle.min.js"></script> -->
     <!-- 我先註解，我發現加上這個好像會使得下拉式選單無法正常開啟 -->
+
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
 

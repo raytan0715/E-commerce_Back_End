@@ -87,7 +87,7 @@
           <div class="col-sm searchBarCol">
 
             <form class="d-flex" action="./SearchProduct_LoggedIn.jsp" method="get" style="width:750px;">
-              <input id="searchBar" class="form-control me-2 searchBar" name="query" type="search" placeholder="🔍 搜尋" aria-label="Search">
+              <input id="searchBar" class="form-control me-2 searchBar" name="keyword" type="search" placeholder="🔍 搜尋" aria-label="Search">
           
               <script>
                   // 在輸入框獲得焦點時，添加特定的樣式

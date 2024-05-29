@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
-<%@ page import="java.sql.*" %>|
+<%@ page import="java.sql.*" %>
 <!doctype html>
 
 <html lang="en" data-bs-theme="auto">
@@ -83,7 +83,7 @@
           <div class="col-sm searchBarCol">
 
             <form class="d-flex" action="./SearchProduct_LoggedIn.jsp" method="get" style="width:750px;">
-              <input id="searchBar" class="form-control me-2 searchBar" name="query" type="search" placeholder="🔍 搜尋" aria-label="Search">
+              <input id="searchBar" class="form-control me-2 searchBar" name="keyword" type="search" placeholder="🔍 搜尋" aria-label="Search">
           
               <script>
                   // 在輸入框獲得焦點時，添加特定的樣式
@@ -380,7 +380,7 @@
 
                 <div class="pro-name">
                     <h5><%= productName %></h5>
-                    <p><%= productPrice %></p>
+                    <p>NT$<%= productPrice %></p>
                 </div></a>
 
                 <!-- add cart container -->
@@ -467,7 +467,7 @@
 
                   <div class="pro-name">
                       <h5><%= productName %></h5>
-                      <p><%= productPrice %></p>
+                      <p>NT$<%= productPrice %></p>
                   </div></a>
 
                   <!-- add cart container -->
@@ -553,7 +553,7 @@
 
                   <div class="pro-name">
                       <h5><%= productName %></h5>
-                      <p><%= productPrice %></p>
+                      <p>NT$<%= productPrice %></p>
                   </div></a>
 
                   <!-- add cart container -->
