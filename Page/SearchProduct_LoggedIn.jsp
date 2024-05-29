@@ -331,265 +331,97 @@
       <!-- 所有商品 
       ================================================== -->
 
-      <!-- 產品產生 泡麵 -->
-      <section id="noodle" class="section-p1">
+     <!-- 搜尋產品產生 -->
+     <section id="noodle" class="section-p1">
+      <h2 class="product-title">搜尋結果</h2>
+      <div class="pro-container">
+        <%
+          String keyword = request.getParameter("keyword");
+          if (keyword != null && !keyword.trim().isEmpty()) {
+            Connection conn = null;
+            PreparedStatement pstmt = null;
+            ResultSet rs = null;
+            boolean hasResults = false;
 
-        <h2 class="product-title">泡麵</h2>
-
-        
-        <div class="pro-container">
-          <%
-          Connection conn = null;
-          Statement stmt = null;
-          ResultSet rs = null;
-          PreparedStatement pstmt = null;
-    
-          try {
-              // 加載JDBC驅動
+            try {
               Class.forName("com.mysql.cj.jdbc.Driver");
               String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
               String dbUsername = "root";
               String dbPassword = "Ray_930715";
-    
-              // 建立連接
               conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-    
-              if (conn.isClosed()) {
-                  out.println("連線建立失敗");
-              } else {
-                  // 選擇資料庫，創建聲明
-                  
-                  stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                  String sql = "SELECT * FROM inventoryquantity WHERE ProductType='泡麵'";
-                  rs = stmt.executeQuery(sql);
 
-                  while (rs.next()) {
-                    String productId = rs.getString("ProductID");
-                    String imageUrl = rs.getString("Producturl");
-                    String productName = rs.getString("ProductName");
-                    int productPrice = rs.getInt("Price");
-                      
-                      %>
-                    }
-          <!-- 泡麵商品圖卡jsp -->
-          <a href="./product_LoggedIn.jsp?productId=<%= productId %>">
+              String sql = "SELECT * FROM inventoryquantity WHERE ProductName LIKE ?";
+              pstmt = conn.prepareStatement(sql);
+              pstmt.setString(1, "%" + keyword + "%");
+              rs = pstmt.executeQuery();
 
-            <div class="pro">
+              while (rs.next()) {
+                hasResults = true;
+                String productId = rs.getString("ProductID");
+                String imageUrl = rs.getString("Producturl");
+                String productName = rs.getString("ProductName");
+                int productPrice = rs.getInt("Price");
+        %>
+                <!-- 泡麵商品圖卡jsp -->
+            <a href="./product.jsp?productId=<%= productId %>">
 
-              <img src="<%= imageUrl %>" alt="<%= productName %>">
+              <div class="pro">
 
-                <div class="pro-name">
-                    <h5><%= productName %></h5>
-                    <p><%= productPrice %></p>
-                </div></a>
+                <img src="<%= imageUrl %>" alt="<%= productName %>">
 
-                <!-- add cart container -->
-                <div class="cartButtonContainer">
+                  <div class="pro-name">
+                      <h5><%= productName %></h5>
+                      <p><%= productPrice %></p>
+                  </div></a>
 
-                  <!-- cart-numberic button -->
-                  <div class="cart-button" data-min="1" data-max="50">
-                    <input type="button" class="min" value="&minus;"/>
-                    <input type="text" class="quantity" value="1"/>
-                    <input type="button" class="add" value="+"/>
+                  <!-- add cart container -->
+                  <div class="cartButtonContainer">
+
+                    <!-- cart-numberic button -->
+                    <div class="cart-button" data-min="1" data-max="50">
+                      <input type="button" class="min" value="&minus;"/>
+                      <input type="text" class="quantity" value="1"/>
+                      <input type="button" class="add" value="+"/>
+                    </div>
+
+                    <!-- addtocart icon button -->
+                    <div class="addToCart_Btn">
+                      <button type="button" class="cart-icon-button" onclick="showAlert()">
+                        <iconify-icon icon="iconoir:cart"></iconify-icon>
+                      </button>
+                    </div>
+
                   </div>
+              </div>
+              <%
+              }
 
-                  <!-- addtocart icon button -->
-                  <div class="addToCart_Btn">
-                    <button type="button" class="cart-icon-button" onclick="showAlert()">
-                      <iconify-icon icon="iconoir:cart"></iconify-icon>
-                    </button>
-                  </div>
-
-                </div>
-            </div>
-            <%
-                    }
-                  }
-                } catch (Exception e) {
-                    e.printStackTrace();
-            %>
-                <p>Error: <%= e.getMessage() %></p>
-            <%
-                } finally {
-                    if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
-                    if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
-                    if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
-                }
-            %>
-        </div>
-        
-  </section>
+              if (!hasResults) {
+        %>
+                <h3 style="color: #281805;">查無此資料</h3>
+                <button onclick="window.location.href='./index.jsp';" class="btn btn-primary">回到首頁</button>
+        <%
+              }
+            } catch (Exception e) {
+              e.printStackTrace();
+            } finally {
+              if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+              if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
+              if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+            }
+          } else {
+        %>
+            <h3 style="color: #281805;">查無此資料</h3>>
+            <button onclick="window.location.href='./index.jsp';" class="btn btn-primary">回到首頁</button>
+        <%
+          }
+        %>
+      </div>
+    </section>
 
   
 
   <div class="separator"></div> <!-- 分隔線 -->
-
-  <!-- 飲料/酒 -->
-  <section id="drinks" class="section-p2">
-
-    <h2 class="product-title">飲料/酒</h2>
-
-        <div class="pro-container">
-          <%
-                  
-          try {
-              // 加載JDBC驅動
-              Class.forName("com.mysql.cj.jdbc.Driver");
-              String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
-              String dbUsername = "root";
-              String dbPassword = "Ray_930715";
-    
-              // 建立連接
-              conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-    
-              if (conn.isClosed()) {
-                  out.println("連線建立失敗");
-              } else {
-                  // 選擇資料庫，創建聲明
-                  
-                  stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                  String sql = "SELECT * FROM inventoryquantity WHERE ProductType='飲料/酒'";
-                  rs = stmt.executeQuery(sql);
-    
-                  while (rs.next()) {
-                      String productId = rs.getString("ProductID");
-                      String imageUrl = rs.getString("Producturl");
-                      String productName = rs.getString("ProductName");
-                      int productPrice = rs.getInt("Price");
-                      %>
-                    
-            <!-- 飲料排行商品圖卡 產生jsp -->
-            <a href="./product_LoggedIn.jsp?productId=<%= productId %>">
-
-              <div class="pro">
-
-                <img src="<%= imageUrl %>" alt="<%= productName %>">
-
-                  <div class="pro-name">
-                      <h5><%= productName %></h5>
-                      <p><%= productPrice %></p>
-                  </div></a>
-
-                  <!-- add cart container -->
-                  <div class="cartButtonContainer">
-
-                    <!-- cart-numberic button -->
-                    <div class="cart-button" data-min="1" data-max="50">
-                      <input type="button" class="min" value="&minus;"/>
-                      <input type="text" class="quantity" value="1"/>
-                      <input type="button" class="add" value="+"/>
-                    </div>
-
-                    <!-- addtocart icon button -->
-                    <div class="addToCart_Btn">
-                      <button type="button" class="cart-icon-button" onclick="showAlert()">
-                        <iconify-icon icon="iconoir:cart"></iconify-icon>
-                      </button>
-                    </div>
-
-                  </div>
-                  
-              </div>
-              <%
-                        }
-                      }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                  %>
-                      <p>Error: <%= e.getMessage() %></p>
-                  <%
-                      } finally {
-                          if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
-                          if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
-                          if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
-                      }
-                  %>
-            </div>
-  </section>
-
-  <div class="separator"></div> <!-- 分隔線 -->
-
-  <!-- 零食糖果 -->
-  <section id="snacks" class="section-p2">
-
-    <h2 class="product-title">零食糖果</h2>
-
-    <div class="pro-container">
-      <%
-                  
-          try {
-              // 加載JDBC驅動
-              Class.forName("com.mysql.cj.jdbc.Driver");
-              String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
-              String dbUsername = "root";
-              String dbPassword = "Ray_930715";
-    
-              // 建立連接
-              conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-    
-              if (conn.isClosed()) {
-                  out.println("連線建立失敗");
-              } else {
-                  // 選擇資料庫，創建聲明
-                  
-                  stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                  String sql = "SELECT * FROM inventoryquantity WHERE ProductType='零食/糖果'";
-                  rs = stmt.executeQuery(sql);
-    
-                  while (rs.next()) {
-                          String productId = rs.getString("ProductID");
-                          String imageUrl = rs.getString("Producturl");
-                          String productName = rs.getString("ProductName");
-                          int productPrice = rs.getInt("Price");
-                      %>
-                    
-            <!-- 飲料排行商品圖卡 產生jsp -->
-            <a href="./product_LoggedIn.jsp?productId=<%= productId %>">
-
-
-              <div class="pro">
-
-                <img src="<%= imageUrl %>" alt="<%= productName %>">
-
-                  <div class="pro-name">
-                      <h5><%= productName %></h5>
-                      <p><%= productPrice %></p>
-                  </div></a>
-
-                  <!-- add cart container -->
-                  <div class="cartButtonContainer">
-
-                    <!-- cart-numberic button -->
-                    <div class="cart-button" data-min="1" data-max="50">
-                      <input type="button" class="min" value="&minus;"/>
-                      <input type="text" class="quantity" value="1"/>
-                      <input type="button" class="add" value="+"/>
-                    </div>
-
-                    <!-- addtocart icon button -->
-                    <div class="addToCart_Btn">
-                      <button type="button" class="cart-icon-button" onclick="showAlert()">
-                        <iconify-icon icon="iconoir:cart"></iconify-icon>
-                      </button>
-                    </div>
-
-                  </div>
-                  
-              </div>
-              <%
-                        }
-                      }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                  %>
-                      <p>Error: <%= e.getMessage() %></p>
-                  <%
-                      } finally {
-                          if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
-                          if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
-                          if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
-                      }
-                  %>
 
         <!-- cart button quantity -->
         <script>

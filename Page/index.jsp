@@ -83,23 +83,24 @@
         <!-- 搜尋欄 -->
         <div class="col-sm searchBarCol">
 
-            <form class="d-flex" style="width:750px;">
-                <input id="searchBar" class="form-control me-2 searchBar" type="search" placeholder="🔍 搜尋" aria-label="Search">
-
-                <script>
-                    // 在輸入框獲得焦點時，添加特定的樣式
-                    document.getElementById("searchBar").addEventListener("focus", function() {
-                        this.classList.add("focused");
-                    });
-
-                    // 在輸入框獲得焦點時，移除特定的樣式
-                    document.getElementById("searchBar").addEventListener("blur", function() {
-                        this.classList.remove("focused");
-                    });
-                </script>
-            </form>
-        </div>
-
+            <form class="d-flex" action="./SearchProduct.jsp" method="get" style="width:750px;">
+              <input id="searchBar" class="form-control me-2 searchBar" name="query" type="search" placeholder="🔍 搜尋" aria-label="Search">
+          
+              <script>
+                  // 在輸入框獲得焦點時，添加特定的樣式
+                  document.getElementById("searchBar").addEventListener("focus", function() {
+                      this.classList.add("focused");
+                  });
+          
+                  // 在輸入框失去焦點時，移除特定的樣式
+                  document.getElementById("searchBar").addEventListener("blur", function() {
+                      this.classList.remove("focused");
+                  });
+              </script>
+          </form>
+            
+          </div>
+        
         <!-- 右側兩個按鈕欄位 -->
         <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
 
@@ -430,8 +431,8 @@
         <img src="./picture/material/indexPageMaterial/NewArrivalsTitle.png" alt="PitureForm_Of_Title">
     </div>
 
-   <!-- 新品上架展示區容器 -->
-<div class="NewArrivals_CardContainer">
+    <!-- 新品上架展示區容器 -->
+    <div class="NewArrivals_CardContainer">
 
     <!-- 點擊導引至商品連結 -->
         <%
@@ -464,43 +465,44 @@
                     String productName = rs.getString("ProductName");
                     int productPrice = rs.getInt("Price");
             %>
-    <!-- 新品上架商品圖卡 -->
-    <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
-        
+        <!-- 新品上架商品圖卡 -->
+        <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
+            
 
-        
-        <a href="./product.jsp?productId=<%= productId %>" style="text-decoration: none; position: relative;">
-            <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
+            
+            <a href="./product.jsp?productId=<%= productId %>" style="text-decoration: none; position: relative;">
+                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
-                <!-- 商品圖片 -->
-                <img class="bd-placeholder-img card-img-top" src="<%= imageUrl %>" alt="<%= productName %>" width="100%" height="250" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <!-- 商品圖片 -->
+                    <img class="bd-placeholder-img card-img-top" src="<%= imageUrl %>" alt="<%= productName %>" width="100%" height="250" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
 
-                <!-- 商品詳細資訊 -->
-                <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                    <h5 class="card-title" style="color: black;"><%= productName %> </h5>
-                    <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$<%= productPrice %></p>
+                    <!-- 商品詳細資訊 -->
+                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
+                        <h5 class="card-title" style="color: black;"><%= productName %> </h5>
+                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$<%= productPrice %></p>
+                    </div>
+                    
                 </div>
                 
-            </div>
-            
-        </a>
-               
-    </div>
-    <%
+            </a>
+                
+        </div>
+        <%
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        %>
+        <p>Error: <%= e.getMessage() %></p>
+        <%
+        } finally {
+            if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+            if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+            if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-    %>
-    <p>Error: <%= e.getMessage() %></p>
-    <%
-    } finally {
-        if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
-        if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
-        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
-    }
-    %>
-</div>
+        %>
+    </div>
+</section>
 
 
 <div class="separator"></div> <!-- 分隔線 -->

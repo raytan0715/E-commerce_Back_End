@@ -79,194 +79,267 @@
         <div class="row navOneRow">
 
           <!-- 【圖標logo】-->
-          <div class="col-sm navLogoCol" >
+          <div class="col-sm navLogoCol">
             <div class="navLogo" >
               <!-- Logo 點擊回到登入後主頁 -->
-              <a href="index.jsp">
+              <a href="./index_LoggedIn.jsp">
               <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
               </a>
             </div>
           </div>
           
 
-         <!-- 搜尋欄 -->
-         <div class="col-sm searchBarCol">
+          <!-- 搜尋欄 -->
+          <div class="col-sm searchBarCol">
 
-          <form class="d-flex" action="./SearchProduct.jsp" method="get" style="width:750px;">
-            <input id="searchBar" class="form-control me-2 searchBar" name="query" type="search" placeholder="🔍 搜尋" aria-label="Search">
-        
-            <script>
-                // 在輸入框獲得焦點時，添加特定的樣式
-                document.getElementById("searchBar").addEventListener("focus", function() {
-                    this.classList.add("focused");
-                });
-        
-                // 在輸入框失去焦點時，移除特定的樣式
-                document.getElementById("searchBar").addEventListener("blur", function() {
-                    this.classList.remove("focused");
-                });
-            </script>
-        </form>
+            <form class="d-flex" action="./SearchProduct_LoggedIn.jsp" method="get" style="width:750px;">
+              <input id="searchBar" class="form-control me-2 searchBar" name="query" type="search" placeholder="🔍 搜尋" aria-label="Search">
           
-        </div>
+              <script>
+                  // 在輸入框獲得焦點時，添加特定的樣式
+                  document.getElementById("searchBar").addEventListener("focus", function() {
+                      this.classList.add("focused");
+                  });
+          
+                  // 在輸入框失去焦點時，移除特定的樣式
+                  document.getElementById("searchBar").addEventListener("blur", function() {
+                      this.classList.remove("focused");
+                  });
+              </script>
+          </form>
+            
+          </div>
 
           <!-- 右側兩個按鈕欄位 -->
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
 
-            <!-- 購物車按鈕 --> 
-            <!-- 未登入前統一先要求登入後再購物 -->
-            <button type="button" class="btn btn-light" style="width: auto;height:auto;" onclick="showAlert()">
-              <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
-              <script>
-                function showAlert() {
-                  alert("🔔 購買前請先登入！🔔");
-                }
-              </script>
-            </button>
-            
-            <!-- 會員註冊登入按鈕 -->
-            <button onclick="document.getElementById('id01').style.display='block'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
-              <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size: 22px;"></i>
-              會員註冊/登入
-            </button>
+            <!-- 【購物車】 -->
+            <div id="cart">
 
-              <!-- 會員註冊登入頁面 --> 
-              <div id="id01" class="modal">
+              <!-- 購物車按鈕 --> 
+                <button onclick="openNav()".style.display='block' type="button" class="btn btn-light" style="width: auto;height:auto;">
+                    <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
+                </button>
+              
+              <!-- 旁邊顯示之購物車界面 -->
+              <div id="mySidebar" class="sidebar">
 
-                  <div class="container_Login" id="container">
+                  <!-- 購物車頁面右邊之大叉叉-->
+                  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-                    <div class="form-container sign-up-container">
+                  <div class="sidebarinner">
 
-                        <!-- 註冊頁面 -->
-                        <form action="#">
-                            <h1 style="color: #281805;font-weight: 900; bolder;padding-bottom: 15px;font-weight: 800;">註冊新會員</h1>
-                            <input type="text" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="姓名" />
-                            <input type="number" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電話" />
-                            <input type="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" />
-                            <input type="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" />
-                            <button style="background-color: #a59e94;color: #ffffff;border: 0px;">註冊</button>
-                        </form>
-                    </div>
-                    
-                    <div class="form-container sign-in-container">
+                      <!-- 購物車表單 -->
+                      <form action="">
 
-                        <!-- 登入頁面 -->
-                        <form action="#">
-                            <h1 style="color: #281805;font-weight: 900; bolder;padding-bottom: 15px;">登入</h1>
-                            <input type="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" />
-                            <input type="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" />
-                            <button style="background-color: #a59e94;color: #ffffff;border: 0px;">登入</button>
-                        </form>
+                          <!-- 購物車商品之單頁 商品01 -->
+                          <div class="cart-p">
+                              <img src="./picture/material/productPic/snacks/snacks_2.PNG">
+                              <div>
 
-                    </div>
+                                  <div class="cp1">   <!--商品名稱-->
+                                      <h1>GEMEZ Enaak 韓式小雞麵 雞汁味</h1>
+                                      <p>一盒裝 24入</p>
+                                  </div>
 
-                    <!-- 轉換登入與註冊"文字提示" -->
-                    <div class="overlay-container">
+                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input class="BuyCart_quantity" type="text" value="1"/>
+                                    <input class="add" type="button" value="+"/> 
+                                  </div>
+                            
+                              </div>
 
-                        <div class="overlay">
-                            <div class="overlay-panel overlay-left">
-                                <h1 style="font-weight: 900;">已註冊會員</h1>
-                                <p style="font-size: 20px;">馬上登入！</p>
-                                <button class="registerLoginBtn" id="signIn">前往登入</button>
+                              <div class="cp3">   <!-- 商品價格 -->
+                                  <p>$239</p>
+                              </div>
+
+                              <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+
+                          </div>
+
+                          <!-- 購物車商品之單頁 商品02 -->
+                          <div class="cart-p">
+
+                              <img src="./picture/material/productPic/drinks/banana.jpg">
+                              <div>
+                                  <div class="cp1">   <!--商品名稱-->
+                                      <h1>【韓味不二】香蕉牛奶</h1>
+                                      <p>一瓶(200ml)</p>
+                                  </div>
+                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input class="BuyCart_quantity" type="text" value="1"/>
+                                    <input class="add" type="button" value="+"/> 
+                                </div>                            
+                              </div>
+
+                              <div class="cp3">   <!-- 商品價格 -->
+                                  <p>$25</p>
+                              </div>
+
+                              <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+
+                          </div>
+
+                          <!-- 購物車商品之單頁 商品03 -->
+                          <div class="cart-p">
+
+                            <img src="./picture/material/productPic/drinks/banana.jpg">
+                            <div>
+                                <div class="cp1">   <!--商品名稱-->
+                                    <h1>【韓味不二】香蕉牛奶</h1>
+                                    <p>一瓶(200ml)</p>
+                                </div>
+                                <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                  <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                  <input class="BuyCart_quantity" type="text" value="1"/>
+                                  <input class="add" type="button" value="+"/> 
+                              </div>
                             </div>
-                            <div class="overlay-panel overlay-right">
-                                <h1 style="font-weight: 900;">還沒成為會員嗎？</h1>
-                                <p style="font-size: 20px;">立即註冊加入會員吧！</p>
-                                <button class="registerLoginBtn" id="signUp">前往註冊</button>
+
+                            <div class="cp3">   <!-- 商品價格 -->
+                                <p>$25</p>
                             </div>
+
+                            <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+
                         </div>
 
-                    </div>
+                        <!-- 購買數量增減控制 -->
+                        <script>
+                          document.addEventListener("DOMContentLoaded", function() {
+                              document.body.addEventListener('click', function(event) {
+                                  if (event.target.classList.contains('min') || event.target.classList.contains('add')) {
+                                      const cp2 = event.target.closest('.cp2');
+                                      const quantityInput = cp2.querySelector('.BuyCart_quantity');
+                                      let currentValue = parseInt(quantityInput.value);
+                      
+                                      const min = parseInt(cp2.getAttribute('data-min'));
+                                      const max = parseInt(cp2.getAttribute('data-max'));
+                      
+                                      if (event.target.classList.contains('min') && currentValue > min) {
+                                          quantityInput.value = currentValue - 1;
+                                      }
+                      
+                                      if (event.target.classList.contains('add') && currentValue < max) {
+                                          quantityInput.value = currentValue + 1;
+                                      }
+                                  }
+                              });
+                      
+                              // 避免非數值資料輸入進數量欄位
+                              document.querySelectorAll('.BuyCart_quantity').forEach(input => {
+                                  input.addEventListener('input', function() {
+                                      let value = this.value.replace(/[^0-9]/g, '');
+                                      const cp2 = this.closest('.cp2');
+                                      const max = parseInt(cp2.getAttribute('data-max'));
+                      
+                                      // 數量欄位限制購買數量，當輸入超過最大數量，則予以提醒。
+                                      if (value > max) {
+                                          alert(`最多只能購買 ${max} 個`);
+                                          this.value = '';
+                                      } else {
+                                          this.value = value;
+                                      }
+                                  });
+                              });
+                          });
+                      </script>
+
+                        
+                          
+                        <!-- 計算總價 -->
+                        <div class="cart-total">
+                            <p>總金額<p>
+                            <p class="r">$289</p>
+                        </div>
+
+                        <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
+                        <div class="cart-but row" >
+
+                            <div class="col">
+                              <!-- 繼續購物時，就關閉當前購物車視窗 -->
+                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
+                            </div>
+                            <div class="col">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./checkout.html'">
+                            </div>
+
+                        </div>
+
+                      </form>
+
+                  </div>
+
               </div>
+
             </div>
 
-          </nav>
+            <!-- 【會員註冊登入】 -->
 
-          <!-- 工具欄第二欄 -->
-          <nav class="navbar navbar-expand-lg navbar-black bg-black" aria-label="Tenth navbar example"> 
-    
-            <div class="container-fluid" style="background-color: #f7f7f7">
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <!-- 會員註冊與登入按鈕 -->
+            <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+              <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
+               OOO 您好！
             </button>
-              
-              <!-- 下拉式選單 -->
-              <div class="collapse navbar-collapse justify-content-md-center navCol-2" id="navbarsExample08">
-                <li class="nav-item dropdown">
-                  <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="./AllProduct.jsp">所有商品</a></li>
-                    <li><a class="dropdown-item" href="./AllProduct.jsp#noodle">泡麵</a></li>
-                    <li><a class="dropdown-item" href="./AllProduct.jsp#drinks">飲料</a></li>
-                    <li><a class="dropdown-item" href="./AllProduct.jsp#snacks">零食糖果</a></li>
-                  </ul>
-                </li>
-              
-                <li class="nav-item dropdown">
-                  <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">品牌理念</a></li>
-                    <li><a class="dropdown-item" href="#">成員介紹</a></li>
-                  </ul>
-                </li>
-              
-                <li class="nav-item">
-                  <a class="nav-link" href="#FooterArea" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>
-                </li>
-              </div>
-              
-    
-            </div>
-          </nav>
 
-            <!-- ========== 會員登入註冊介面之 JS語法 ========== -->
-            <!-- 導覽列 -->
-            
-            <!-- JavaScript dependencies -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- 登出按鈕 -->
+            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+              <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
+              登出
+            </button>
+
+            <!-- 購物車所需js檔 -->
             <script src="./javascript/h.js" charset="utf-8"></script>
 
-            <!--滑動頁面-->
-            <script>
-                let b1 = document.getElementById('b1');
-                let btt1 = document.getElementById('btt1');
-
-                window.addEventListener('scroll',function(){
-                    let value = window.scrollY;
-                    b1.style.top = value *1 + 'px';
-                    btt1.style.top = value *0.5 + 'px';
-                })
-            </script>
-            <!--幻燈片-->
-            <script>
-                var myIndex = 0;
-                carousel();
-
-                function carousel() {
-                var i;
-                var x = document.getElementsByClassName("mySlides");
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";  
-                }
-                myIndex++;
-                if (myIndex > x.length) {myIndex = 1}    
-                x[myIndex-1].style.display = "block";  
-                setTimeout(carousel, 4000); // Change image every 2 seconds
-                }
-            </script>
-            <!-- 滑動特效 -->
-            <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-            <script>
-                AOS.init({duration:1000,once:true});
-            </script>
-            <!-- ==================== -->
-
           </div>
+
         </div>
 
         
-      
+      </nav>
+
+      <!-- 工具欄第二欄 -->
+      <nav class="navbar navbar-expand-lg navbar-black bg-black" aria-label="Tenth navbar example"> 
+
+        <div class="container-fluid" style="background-color: #f7f7f7">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+          
+          <!-- 下拉式選單 -->
+          <div class="collapse navbar-collapse justify-content-md-center navCol-2" id="navbarsExample08"> 
+
+            <li class="nav-item dropdown">
+              <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp">所有商品</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#noodle">泡麵</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#drinks">飲料</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#snacks">零食糖果</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">品牌理念</a></li>
+                <li><a class="dropdown-item" href="#">成員介紹</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#FooterArea"  aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>
+            </li>
+
+          </div>
+
+        </div>
+      </nav>
+
    
+
       <!-- 商品購買與介紹區域
       ================================================== -->
 
@@ -316,9 +389,9 @@
 
         <!-- 網頁當前路徑顯示 -->
         <div class="product-path">
-          <a href="./index.jsp" class="path-link">首頁</a> &gt;
-          <a href="./AllProduct.jsp" class="path-link">商品</a> &gt;
-          <a href="./product.jsp?productId= <%= productId %>"  class="path-link"><%= productName %></a>
+          <a href="./index_LoggedIn.jsp" class="path-link">首頁</a> &gt;
+          <a href="./AllProduct_LoggedIn.jsp" class="path-link">商品</a> &gt;
+          <a href="./product_LoggedIn.jsp?productId= <%= productId %>"  class="path-link"><%= productName %></a>
         </div>
 
         <!-- 商品基本內容顯示容器(標題、圖片、價格、數量、計數器、購買按鈕)-->
@@ -343,9 +416,9 @@
 
               <!-- 商品數量增減按鈕 -->
               <div class="quantityButton" data-min="1" data-max="30">   <!-- 數量增減 data-min最低數量;data-max 最多數量 -->
-                <input id="min" type="button" value="&minus;" class="min"/> <!-- ' &minus; '是減號 -->
-                <input id="quantity" type="text" value="1" class="quantity"/>
-                <input id="add" type="button" value="+" class="add"/>
+                <input type="button" value="&minus;" class="min"/> <!-- ' &minus; '是減號 -->
+                <input  type="text" value="1" class="quantity"/>
+                <input  type="button" value="+" class="add"/>
               </div>
 
               <!-- 商品購買按鈕容器 -->
@@ -353,21 +426,10 @@
 
                 <button type="button" class="btn" onclick="showAlert()">
                   加入購物車
-                  <script>
-                    function showAlert() {
-                      alert("🔔 購買前請先登入！🔔");
-                    }
-                  </script>
                 </button>
 
-                
-                <button type="button" class="btn" onclick="showAlert()">
+                <button type="button" class="btn" onclick=""> <!-- 導引至結帳區 -->
                   立即購買
-                  <script>
-                    function showAlert() {
-                      alert("🔔 購買前請先登入！🔔");
-                    }
-                  </script>
                 </button>
 
               </div>
@@ -460,6 +522,7 @@
         %>
       </section>
 
+
       <div class="separator"></div> <!-- 分隔線 -->
 
       <!-- 商品留言評價區域
@@ -476,7 +539,7 @@
 
             <label for="fname">姓名</label><br>
 
-            <input type="text" id="fname" name="fname"><br>
+            <input type="text" id="fname" name="fname" class="CommentNameInput"><br>
 
             <p>留言</p>
             <textarea name="message" rows="10" cols="30" style="height: 200px;resize: none; "></textarea>
@@ -576,10 +639,17 @@
         </a>
       </div>
 
-
-     <!-- footer頁尾(含聯絡資訊) 
+      <!-- footer頁尾(含聯絡資訊) 
       ================================================== -->
       <jsp:include page="./footer.jsp" />
+
+    <!-- Javascript 區域 -->
+    <script>
+      function showAlert() {
+        alert("✅ 已加入購物車！");
+      }
+    </script>
+
 
     <!-- Javascript 區域 -->
     <!-- <script src="./assets/dist/js/bootstrap.bundle.min.js"></script> -->

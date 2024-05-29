@@ -83,25 +83,26 @@
           </div>
           
 
-          <!-- 【搜尋欄】 -->
+          <!-- 搜尋欄 -->
           <div class="col-sm searchBarCol">
-              
-              <form class="d-flex" style="width:750px;"> 
-                <input id="searchBar" class="form-control me-2 searchBar" type="search" placeholder="🔍 搜尋" aria-label="Search">
-                
-                <script>
+
+            <form class="d-flex" action="./SearchProduct_LoggedIn.jsp" method="get" style="width:750px;">
+              <input id="searchBar" class="form-control me-2 searchBar" name="query" type="search" placeholder="🔍 搜尋" aria-label="Search">
+          
+              <script>
                   // 在輸入框獲得焦點時，添加特定的樣式
                   document.getElementById("searchBar").addEventListener("focus", function() {
                       this.classList.add("focused");
                   });
-
-                  // 在輸入框獲得焦點時，移除特定的樣式
+          
+                  // 在輸入框失去焦點時，移除特定的樣式
                   document.getElementById("searchBar").addEventListener("blur", function() {
                       this.classList.remove("focused");
                   });
-                </script>
-              </form>
-            </div>
+              </script>
+          </form>
+            
+          </div>
 
           <!-- 右側兩個按鈕欄位 -->
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
@@ -359,181 +360,182 @@
 
 </div>
 
+<!-- 人氣排行 (圖卡區)
+================================================== -->
 
-      <!-- 人氣排行 (圖卡區) 
-      ================================================== -->
-      
-      <section class="TrendingProduct">
+<section class="TrendingProduct">
 
-        <!-- 人氣排行(圖片標題) -->
-        <div class="TrendingProduct_PictureTitle" >
-          <img src="./picture/material/indexPageMaterial/TrendingTitle.png" alt="PitureForm_Of_Title">
-        </div>
+  <!-- 人氣排行(圖片標題) -->
+  <div class="TrendingProduct_PictureTitle" >
+      <img src="./picture/material/indexPageMaterial/TrendingTitle.png" alt="PitureForm_Of_Title">
+  </div>
 
-        <!-- 人氣排行商品展示區容器 -->
-        <div class="TrendingProduct_CardContainer">
+  <!-- 人氣排行商品展示區容器 -->
+  <div class="TrendingProduct_CardContainer">
 
-          <!-- 人氣排行商品圖卡 01-->
-          <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
+      <!-- 人氣排行商品圖卡 01-->
+      <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
 
-            <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+          <!-- 點擊導引至商品連結 -->
+          <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
 
-                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
+              <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
-                    <!-- 排名圖標 -->
-                    <img src="./picture/material/indexPageMaterial/firstPlace.png" alt="FirstPlacePic" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
-                    
-                    <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/snacks/snacks_2.PNG" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
-                    
-                    <!-- 商品詳細資訊 -->
-                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                        <h5 class="card-title" style="color: black;">GEMEZ Enaak 韓式小雞麵 雞汁味</h5>
-                        <p class="card-text" style="color: black;">一盒裝 24入 </p>
-                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$239</p>
-                    </div>
-                </div>
-            </a>
-          </div>
-  
-          <!-- 人氣排行商品圖卡 02 -->
-          <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
+                  <!-- 排名圖標 -->
+                  <img src="./picture/material/indexPageMaterial/firstPlace.png" alt="FirstPlacePic" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
 
-            <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+                  <!-- 商品圖片 -->
+                  <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/snacks/snacks_2.PNG" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
 
-                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
+                  <!-- 商品詳細資訊 -->
+                  <div class="card-body" style="background-color: rgb(255, 255, 255);">
+                      <h5 class="card-title" style="color: black;">GEMEZ Enaak 韓式小雞麵 雞汁味</h5>
+                      <p class="card-text" style="color: black;">一盒裝 24入 </p>
+                      <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$239</p>
+                  </div>
+              </div>
+          </a>
+      </div>
 
-                    <!-- 排名圖標 -->
-                    <img src="./picture/material/indexPageMaterial/secondPlace.png" alt="FirstPlacePic" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
-                    
-                    <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/instant noodles/Instant_noodles_4.png" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
-                    
-                    <!-- 商品詳細資訊 -->
-                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                        <h5 class="card-title" style="color: black;">paldo 八道 韓式香辣冷拌麵</h5>
-                        <p class="card-text" style="color: black;">一份3袋 每袋5包 </p>
-                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$330</p>
-                    </div>
-                </div>
-            </a>
-          </div>
-  
-          <!-- 人氣排行商品圖卡 03 -->
-          <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
+      <!-- 人氣排行商品圖卡 02 -->
+      <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
 
-            <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+          <!-- 點擊導引至商品連結 -->
+          <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
 
-                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
+              <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
-                    <!-- 排名圖標 -->
-                    <img src="./picture/material/indexPageMaterial/thirdPlace.png" alt="FirstPlacePic" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
-                    
-                    <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/drinks/banana.jpg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
-                    
-                    <!-- 商品詳細資訊 -->
-                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                        <h5 class="card-title" style="color: black;">【韓味不二】香蕉牛奶</h5>
-                        <p class="card-text" style="color: black;">一瓶(200ml) </p>
-                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$25</p>
-                    </div>
-                </div>
-            </a>
-          </div>
+                  <!-- 排名圖標 -->
+                  <img src="./picture/material/indexPageMaterial/secondPlace.png" alt="FirstPlacePic" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
 
-        </div>
+                  <!-- 商品圖片 -->
+                  <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/instant noodles/Instant_noodles_4.png" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
 
-        <div class="ResgisterForSale">
-          <img src="./picture/material/indexPageMaterial/RegisterForSales.png" alt="Piture_Of_ResgisterForSale">
-        </div>
+                  <!-- 商品詳細資訊 -->
+                  <div class="card-body" style="background-color: rgb(255, 255, 255);">
+                      <h5 class="card-title" style="color: black;">paldo 八道 韓式香辣冷拌麵</h5>
+                      <p class="card-text" style="color: black;">一份3袋 每袋5包 </p>
+                      <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$330</p>
+                  </div>
+              </div>
+          </a>
+      </div>
 
-      </section>
+      <!-- 人氣排行商品圖卡 03 -->
+      <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
 
-      <!-- <div class="separator"></div> 分隔線 -->
+          <!-- 點擊導引至商品連結 -->
+          <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
 
-      <!-- 新品上架 
-      ================================================== -->
+              <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
-      <section class="NewArrivals">
+                  <!-- 排名圖標 -->
+                  <img src="./picture/material/indexPageMaterial/thirdPlace.png" alt="FirstPlacePic" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
 
-        <!-- 新品上架(圖片標題) -->
-        <div class="NewArrivals_PictureTitle" >
+                  <!-- 商品圖片 -->
+                  <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/drinks/banana.jpg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
+
+                  <!-- 商品詳細資訊 -->
+                  <div class="card-body" style="background-color: rgb(255, 255, 255);">
+                      <h5 class="card-title" style="color: black;">【韓味不二】香蕉牛奶</h5>
+                      <p class="card-text" style="color: black;">一瓶(200ml) </p>
+                      <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$25</p>
+                  </div>
+              </div>
+          </a>
+      </div>
+
+  </div>
+
+  <div class="ResgisterForSale">
+      <img src="./picture/material/indexPageMaterial/RegisterForSales.png" alt="Piture_Of_ResgisterForSale">
+  </div>
+
+</section>
+
+<div class="separator"></div> <!-- 分隔線 -->
+
+<!-- 新品上架
+================================================== -->
+    <section class="NewArrivals">
+
+      <!-- 新品上架(圖片標題) -->
+      <div class="NewArrivals_PictureTitle" >
           <img src="./picture/material/indexPageMaterial/NewArrivalsTitle.png" alt="PitureForm_Of_Title">
-        </div>
+      </div>
 
-        <!-- 新品上架展示區容器 -->
-        <div class="NewArrivals_CardContainer">
+      <!-- 新品上架展示區容器 -->
+      <div class="NewArrivals_CardContainer">
 
-          <!-- 新品上架商品圖卡 01 -->
-          <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
+      <!-- 點擊導引至商品連結 -->
+          <%
+          Connection conn = null;
+          Statement stmt = null;
+          ResultSet rs = null;
+          PreparedStatement pstmt = null;
 
-            <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+          try {
+              // 加載JDBC驅動
+              Class.forName("com.mysql.cj.jdbc.Driver");
+              String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+              String dbUsername = "root";
+              String dbPassword = "Ray_930715";
 
-                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
+              // 建立連接
+              conn = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-                    <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
-                    
-                    <!-- 商品詳細資訊 -->
-                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                        <h5 class="card-title" style="color: black;">Nongshim 農心 韓國境內版 辛拉麵 </h5>
-                        <p class="card-text" style="color: black;">一份5包 </p>
-                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$125</p>
-                    </div>
-                </div>
-            </a>
+              if (conn.isClosed()) {
+                  out.println("連線建立失敗");
+              } else {
+                  // 選擇資料庫，創建聲明
+                  stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                  String sql = "SELECT * FROM finalproject.inventoryquantity ORDER BY ProductID DESC LIMIT 3";
+                  rs = stmt.executeQuery(sql);
+
+                  while (rs.next()) {
+                      String productId = rs.getString("ProductID");
+                      String imageUrl = rs.getString("Producturl");
+                      String productName = rs.getString("ProductName");
+                      int productPrice = rs.getInt("Price");
+              %>
+          <!-- 新品上架商品圖卡 -->
+          <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative">
+              
+
+              
+              <a href="./product.jsp?productId=<%= productId %>" style="text-decoration: none; position: relative;">
+                  <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
+
+                      <!-- 商品圖片 -->
+                      <img class="bd-placeholder-img card-img-top" src="<%= imageUrl %>" alt="<%= productName %>" width="100%" height="250" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+
+                      <!-- 商品詳細資訊 -->
+                      <div class="card-body" style="background-color: rgb(255, 255, 255);">
+                          <h5 class="card-title" style="color: black;"><%= productName %> </h5>
+                          <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$<%= productPrice %></p>
+                      </div>
+                      
+                  </div>
+                  
+              </a>
+                  
           </div>
-  
-          <!-- 新品上架商品圖卡 02 -->
-          <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
-
-            <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
-
-                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
-
-                    <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/drinks/yakult.png" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
-                    
-                    <!-- 商品詳細資訊 -->
-                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                        <h5 class="card-title" style="color: black;">韓國 NAMYANG 養樂多碳酸飲 </h5>
-                        <p class="card-text" style="color: black;">一瓶(400ml) </p>
-                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$59</p>
-                    </div>
-                </div>
-            </a>
-          </div>
-  
-          <!-- 新品上架商品圖卡 03 -->
-          <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
-
-            <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
-
-                <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
-
-                    <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="./picture/material/productPic/snacks/snacks_1.PNG" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
-                    
-                    <!-- 商品詳細資訊 -->
-                    <div class="card-body" style="background-color: rgb(255, 255, 255);">
-                        <h5 class="card-title" style="color: black;">LOTTE 樂天 Zero零糖低卡巧克力派 </h5>
-                        <p class="card-text" style="color: black;">一份24入 </p>
-                        <p class="card-text" style="font-size: large;font-weight: bold;color: rgb(207, 15, 53);">$178</p>
-                    </div>
-                </div>
-            </a>
-          </div>
-
-        </div>
-
-      </section>
+          <%
+                  }
+              }
+          } catch (Exception e) {
+              e.printStackTrace();
+          %>
+          <p>Error: <%= e.getMessage() %></p>
+          <%
+          } finally {
+              if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+              if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
+              if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+          }
+          %>
+      </div>
+    </section>
 
       <!-- <div class="separator"></div> 分隔線 -->
 
