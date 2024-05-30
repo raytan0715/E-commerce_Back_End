@@ -127,28 +127,26 @@
                 <div class="container_Login" id="container">
 
                     <div class="form-container sign-up-container">
-
                         <!-- 註冊頁面 -->
-                        <form action="#">
+                        <form method="post" action="./register.jsp">
                             <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;font-weight: 800;">註冊新會員</h1>
-                            <input type="text" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="姓名" />
-                            <input type="number" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電話" />
-                            <input type="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" />
-                            <input type="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" />
+                            <input type="text" name="username" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="姓名" required />
+                            <input type="number" name="phone" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電話" required />
+                            <input type="email" name="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" required />
+                            <input type="password" name="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" required />
+                            <input type="password" name="confirm_password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="確認密碼" required />
                             <button style="background-color: #a59e94;color: #ffffff;border: 0px;">註冊</button>
                         </form>
                     </div>
-
+                    
                     <div class="form-container sign-in-container">
-
                         <!-- 登入頁面 -->
-                        <form action="#">
+                        <form method="post" action="./login.jsp">
                             <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;">登入</h1>
-                            <input type="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" />
-                            <input type="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" />
+                            <input type="email" name="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" required />
+                            <input type="password" name="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" required />
                             <button style="background-color: #a59e94;color: #ffffff;border: 0px;">登入</button>
                         </form>
-
                     </div>
 
                     <!-- 轉換登入與註冊"文字提示" -->

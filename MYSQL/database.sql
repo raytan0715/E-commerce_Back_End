@@ -402,6 +402,8 @@ CREATE TABLE `membership` (
   `MemberName` varchar(45) NOT NULL,
   `MemberAccount` varchar(45) NOT NULL,
   `MemberPhone` int DEFAULT NULL,
+  `RegistrationDate` DATE NOT NULL,
+  `Address` varchar(100) NOT NULL,
   PRIMARY KEY (`MemberID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

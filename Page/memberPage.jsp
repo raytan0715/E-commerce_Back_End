@@ -2,6 +2,7 @@
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.io.*" %>
 
 <!doctype html>
 
@@ -76,7 +77,7 @@
           <div class="col-sm navLogoCol" >
             <div class="navLogo" >
               <!-- Logo 點擊回到登入後主頁 -->
-              <a href="index_LoggedIn.jsp">
+              <a href="./index_LoggedIn.jsp">
               <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
               </a>
             </div>
@@ -263,10 +264,10 @@
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">所有商品</a></li>
-                <li><a class="dropdown-item" href="#">泡麵</a></li>
-                <li><a class="dropdown-item" href="#">飲料</a></li>
-                <li><a class="dropdown-item" href="#">零食糖果</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp">所有商品</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#noodle">泡麵</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#drinks">飲料</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#snacks">零食糖果</a></li>
               </ul>
             </li>
 
