@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>
@@ -226,11 +226,53 @@
             </div>
 
             <!-- 【會員註冊登入】 -->
-
+            <%
+                // 獲取當前用戶的電子郵件
+                String email = (String) session.getAttribute("userEmail");
+            
+                // 設置資料庫連接相關變數
+                Connection conn = null;
+                PreparedStatement pstmt = null;
+                ResultSet rs = null;
+            
+                String userName = "";
+                String userPhone = "";
+                String userBirthday = "";
+                String userAddress = "";
+            
+                try {
+                    // 連接到 MySQL 資料庫
+                    String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    conn = DriverManager.getConnection(url, "root", "Ray_930715");
+            
+                    // 獲取用戶資料
+                    String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
+                    
+                    // 使用 PreparedStatement 防止 SQL 注入
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, email);
+            
+                    // 執行查詢操作
+                    rs = pstmt.executeQuery();
+            
+                    if (rs.next()) {
+                        userName = rs.getString("MemberName");
+                        userPhone = rs.getString("MemberPhone");
+                        userBirthday = rs.getString("BirthdayDate");
+                        userAddress = rs.getString("Address");
+                    }
+            
+                    // 關閉資料庫連接
+                    conn.close();
+                } catch (SQLException sExec) {
+                    out.println("SQL 錯誤: " + sExec.toString());
+                }
+            %>
             <!-- 會員註冊與登入按鈕 -->
             <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
-               OOO 您好！
+              <%= userName %> 您好！
             </button>
 
             <!-- 登出按鈕 -->
@@ -335,10 +377,10 @@
                                         <p style="color: #6e573a;font-weight: 1000;font-size: 20px; text-align: center;">基本資料</p>
                                         <form action="">
                                             <div class="mod-txt">
-                                                <input type="text" name="" id="AccountName" placeholder="Name" value="酷奇">
-                                                <input type="text" name="" id="AccountPhone" placeholder="Phone" value="0989524655">
-                                                <input type="date" name="birthday" id="AccountBirthday" placeholder="生日" value="" style="color: black;">
-                                                <input type="text" name="" id="AccountAddress" placeholder="地址：320桃園市中壢區中北路200號" value="">
+                                              <input type="text" name="username" id="AccountName" placeholder="Name" value="<%= userName %>">
+                                              <input type="text" name="phone" id="AccountPhone" placeholder="Phone" value="<%= userPhone %>">
+                                              <input type="date" name="birthday" id="AccountBirthday" placeholder="生日" value="<%= userBirthday %>" style="color: black;">
+                                              <input type="text" name="address" id="AccountAddress" placeholder="地址" value="<%= userAddress %>">
                                             </div>
                                             <input type="submit" value="更新資料" class="p-sub">
                                         </form>
@@ -348,8 +390,8 @@
                                         <p style="color: #6e573a;font-weight: 1000;font-size: 20px; text-align: center;">帳號密碼</p>
                                         <form action="">
                                             <div class="mod-txt">
-                                                <input type="text" name="" id="" placeholder="Email" value="abcabc@gmail.com">
-                                                <input type="text" name="" id="" placeholder="Password" value="*****">
+                                                <input type="text" name="email" id="" placeholder="Email" value="<%= email %>">
+                                                <input type="text" name="password" id="" placeholder="Password" value="*****">
                                             </div>
                                             <input type="submit" value="更新資料" class="p-sub">
                                         </form>

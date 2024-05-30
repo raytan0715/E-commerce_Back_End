@@ -31,15 +31,17 @@
 
             // 執行查詢操作
             rs = pstmt.executeQuery();
-
+            
             if (rs.next()) {
                 // 登入成功，設置會話屬性
                 session.setAttribute("userEmail", email);
-
-                // 重定向到 index.html
+                session.setAttribute("MemberID", rs.getInt("MemberID"));
+            
+                // 重定向到 memberPage.jsp
                 response.sendRedirect("./memberPage.jsp");
                 return;
-            } else {
+            }
+            else {
                 // 登入失敗，重定向到登入頁面並顯示錯誤消息
                 response.sendRedirect("login.jsp?error=Invalid email or password");
             }

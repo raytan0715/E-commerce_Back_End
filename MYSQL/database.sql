@@ -398,20 +398,20 @@ DROP TABLE IF EXISTS `membership`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `membership` (
   `MemberID` int NOT NULL AUTO_INCREMENT,
+  `MemberAccount` varchar(45) NOT NULL,
   `MemberPassword` varchar(45) NOT NULL,
   `MemberName` varchar(45) NOT NULL,
-  `MemberAccount` varchar(45) NOT NULL,
-  `MemberPhone` int DEFAULT NULL,
-  `RegistrationDate` DATE NOT NULL,
-  `Address` varchar(100) NOT NULL,
+  `MemberPhone` varchar(25) DEFAULT NULL,
+  `BirthdayDate` DATE DEFAULT NULL,
+  `Address` varchar(200) DEFAULT '桃園市中壢區中北路200號',
   PRIMARY KEY (`MemberID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-
---
--- Dumping data for table `membership`
---
+INSERT INTO `membership` VALUES
+(1,'11144155','12345','jay','11144155jay@gmail.com','0906692674','台北市信義區永吉路30巷101弄10號'),
+(2,'11144145','54321','alice','11144155jay@gmail.com','0901297374', '桃園市中壢區中北路200號');
+/*!40000 ALTER TABLE `membership` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 --

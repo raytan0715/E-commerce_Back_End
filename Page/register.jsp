@@ -2,6 +2,9 @@
 <%@ page import="java.io.*" %>
 
 <%
+    // 設置發送到資料庫的字符編碼為UTF-8
+    request.setCharacterEncoding("UTF-8");
+
     // 獲取表單參數
     String username = request.getParameter("username");
     String phone = request.getParameter("phone");
@@ -37,15 +40,21 @@
                 String sql = "INSERT INTO membership (MemberName, MemberPhone, MemberAccount, MemberPassword) VALUES (?, ?, ?, ?)";
                 
                 // 使用PreparedStatement防止SQL注入
-                pstmt = conn.prepareStatement(sql);
+                pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 pstmt.setString(1, username);  // 設置第一個參數：用戶名
-                pstmt.setInt(2, Integer.parseInt(phone));  // 設置第二個參數：手機號（轉換為整數）
+                pstmt.setString(2, phone);  // 設置第二個參數：手機號
                 pstmt.setString(3, email);  // 設置第三個參數：電子郵件
                 pstmt.setString(4, password);  // 設置第四個參數：密碼
-                pstmt.setDate(5, Date.valueOf(registrationDate)); //設置第五個參數:註冊日期
 
                 // 執行插入操作
                 pstmt.executeUpdate();
+
+                ResultSet rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                    int memberId = rs.getInt(1);
+                    // 設置會話屬性
+                    session.setAttribute("MemberID", memberId);
+                }
 
                 // 設置會話屬性
                 session.setAttribute("userEmail", email);
