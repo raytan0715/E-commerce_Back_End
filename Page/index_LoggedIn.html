@@ -6,7 +6,7 @@
 
   <head>
     
-    <script src="./assets/js/color-modes.js"></script>
+    <script src="../assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,9 +15,9 @@
     <meta name="generator" content="Hugo 0.122.0">
 
     <!-- 網頁標題 -->
-    <title> 吃貨道| 吃貨的專屬門道 </title>
+    <title> 吃貨道| 吃貨的專屬門道 </title> 
 
-    <!-- 引用 Bootstrap 套件--->
+    <!-- 引用 Bootstrap 套件---> 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/masonry/">
@@ -25,7 +25,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 使用font-awesome線上免下載圖標(icon) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -42,17 +42,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 
-    <!-- css 樣式檔案 -->
-    <link href="./stylesheets/index.css" rel="stylesheet">
+    <!-- 基本 css 樣式檔案 -->
+    <link href="stylesheets/index.css" rel="stylesheet">
 
     <!-- 登入註冊樣式檔  -->
-    <link rel="stylesheet" href="./stylesheets/LoginArea.css">
+    <link rel="stylesheet" href="stylesheets/LoginArea.css"> 
 
     <!-- 購物車樣式檔 -->
-    <link rel="stylesheet" href="./stylesheets/BuyCart.css">
-
-    <!-- cookie提示 網路引用樣式檔 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
+    <link rel="stylesheet" href="stylesheets/BuyCart.css">
 
   </head>
 
@@ -61,18 +58,18 @@
     <!-- 上方欄位 (工具欄)
     ================================================== -->
 
-      <!-- 共具欄第一欄 -->
+      <!-- 工具欄第一欄 -->
       <nav class="navbar navbar-expand-lg"> 
 
         <!-- 工具欄第一欄內容物容器 -->
         <div class="row navOneRow">
 
           <!-- 【圖標logo】-->
-          <div class="col-sm navLogoCol" >
+          <div class="col-sm navLogoCol">
             <div class="navLogo" >
               <!-- Logo 點擊回到登入後主頁 -->
-              <a href="index_LoggedIn.jsp">
-              <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
+              <a href="/index_LoggedIn.html">
+              <img src="/picture/material/navPic/navLogo.png" alt="navLogoPic">
               </a>
             </div>
           </div>
@@ -81,6 +78,7 @@
           <!-- 【搜尋欄】 -->
           <div class="col-sm searchBarCol">
               
+              <!-- style 設定搜尋欄的長度 -->
               <form class="d-flex" style="width:750px;"> 
                 <input id="searchBar" class="form-control me-2 searchBar" type="search" placeholder="🔍 搜尋" aria-label="Search">
                 
@@ -117,11 +115,12 @@
 
                   <div class="sidebarinner">
 
+                      <!-- 購物車表單 -->
                       <form action="">
 
                           <!-- 購物車商品之單頁 商品01 -->
                           <div class="cart-p">
-                              <img src="./picture/material/productPic/snacks/snacks_2.PNG">
+                              <img src="picture/material/productPic/snacks/snacks_2.PNG">
                               <div>
 
                                   <div class="cp1">   <!--商品名稱-->
@@ -129,11 +128,12 @@
                                       <p>一盒裝 24入</p>
                                   </div>
 
-                                  <div class="cp2">   <!-- 數量增減 -->
-                                    <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input id="quantity" type="text" value="1"/>
-                                    <input id="add" type="button" value="+"/> 
+                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input class="quantity" type="text" value="1"/>
+                                    <input class="add" type="button" value="+"/> 
                                   </div>
+                            
                               </div>
 
                               <div class="cp3">   <!-- 商品價格 -->
@@ -147,17 +147,17 @@
                           <!-- 購物車商品之單頁 商品02 -->
                           <div class="cart-p">
 
-                              <img src="./picture/material/productPic/drinks/banana.jpg">
+                              <img src="picture/material/productPic/drinks/banana.jpg">
                               <div>
                                   <div class="cp1">   <!--商品名稱-->
                                       <h1>【韓味不二】香蕉牛奶</h1>
                                       <p>一瓶(200ml)</p>
                                   </div>
-                                  <div class="cp2">   <!-- 數量增減 -->
-                                      <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                      <input id="quantity" type="text" value="1"/>
-                                      <input id="add" type="button" value="+"/> 
-                                  </div>
+                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input class="quantity" type="text" value="1"/>
+                                    <input class="add" type="button" value="+"/> 
+                                </div>                            
                               </div>
 
                               <div class="cp3">   <!-- 商品價格 -->
@@ -171,17 +171,17 @@
                           <!-- 購物車商品之單頁 商品03 -->
                           <div class="cart-p">
 
-                            <img src="./picture/material/productPic/drinks/banana.jpg">
+                            <img src="picture/material/productPic/drinks/banana.jpg">
                             <div>
                                 <div class="cp1">   <!--商品名稱-->
                                     <h1>【韓味不二】香蕉牛奶</h1>
                                     <p>一瓶(200ml)</p>
                                 </div>
-                                <div class="cp2">   <!-- 數量增減 -->
-                                    <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input id="quantity" type="text" value="1"/>
-                                    <input id="add" type="button" value="+"/> 
-                                </div>
+                                <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                  <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                  <input class="quantity" type="text" value="1"/>
+                                  <input class="add" type="button" value="+"/> 
+                              </div>
                             </div>
 
                             <div class="cp3">   <!-- 商品價格 -->
@@ -191,6 +191,49 @@
                             <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
 
                         </div>
+
+                        <!-- 購買數量增減控制 -->
+                        <script>
+                          document.addEventListener("DOMContentLoaded", function() {
+                              document.body.addEventListener('click', function(event) {
+                                  if (event.target.classList.contains('min') || event.target.classList.contains('add')) {
+                                      const cp2 = event.target.closest('.cp2');
+                                      const quantityInput = cp2.querySelector('.quantity');
+                                      let currentValue = parseInt(quantityInput.value);
+                      
+                                      const min = parseInt(cp2.getAttribute('data-min'));
+                                      const max = parseInt(cp2.getAttribute('data-max'));
+                      
+                                      if (event.target.classList.contains('min') && currentValue > min) {
+                                          quantityInput.value = currentValue - 1;
+                                      }
+                      
+                                      if (event.target.classList.contains('add') && currentValue < max) {
+                                          quantityInput.value = currentValue + 1;
+                                      }
+                                  }
+                              });
+                      
+                              // 避免非數值資料輸入進數量欄位
+                              document.querySelectorAll('.quantity').forEach(input => {
+                                  input.addEventListener('input', function() {
+                                      let value = this.value.replace(/[^0-9]/g, '');
+                                      const cp2 = this.closest('.cp2');
+                                      const max = parseInt(cp2.getAttribute('data-max'));
+
+                                      // 數量欄位限制購買數量，當輸入超過最大數量，則予以提醒。
+                                      if (value > max) {
+                                          alert(`最多只能購買 ${max} 個`);
+                                          this.value = '';
+                                      } else {
+                                          this.value = value;
+                                      }
+                                  });
+                              });
+                          });
+                      </script>
+
+                        
                           
                         <!-- 計算總價 -->
                         <div class="cart-total">
@@ -202,10 +245,11 @@
                         <div class="cart-but row" >
 
                             <div class="col">
-                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="location.href='./shop.html'">
+                              <!-- 繼續購物時，就關閉當前購物車視窗 -->
+                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
                             </div>
                             <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./checkout.html'">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='payment.html'">
                             </div>
 
                         </div>
@@ -221,19 +265,19 @@
             <!-- 【會員註冊登入】 -->
 
             <!-- 會員註冊與登入按鈕 -->
-            <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <button onclick="location.href='memberPage.html'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
                OOO 您好！
             </button>
 
             <!-- 登出按鈕 -->
-            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <button onclick="location.href='index.html'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
               登出
             </button>
 
             <!-- 購物車所需js檔 -->
-            <script src="./javascript/h.js" charset="utf-8"></script>
+            <script src="javascript/h.js" charset="utf-8"></script>
 
           </div>
 
@@ -253,18 +297,16 @@
           <!-- 下拉式選單 -->
           <div class="collapse navbar-collapse justify-content-md-center navCol-2" id="navbarsExample08"> 
 
-            <!-- 【商品瀏覽】 -->
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">所有商品</a></li>
-                <li><a class="dropdown-item" href="#">泡麵</a></li>
-                <li><a class="dropdown-item" href="#">飲料</a></li>
-                <li><a class="dropdown-item" href="#">零食糖果</a></li>
+                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html">所有商品</a></li>
+                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html#noodle">泡麵</a></li>
+                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html#drinks">飲料</a></li>
+                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html#snacks">零食糖果</a></li>
               </ul>
             </li>
 
-            <!-- 【關於我們】 -->
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
               <ul class="dropdown-menu">
@@ -273,7 +315,6 @@
               </ul>
             </li>
 
-            <!-- 【聯絡我們】 -->
             <li class="nav-item dropdown">
               <a class="nav-link" href="#FooterArea"  aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>
             </li>
@@ -292,9 +333,9 @@
 
         <!-- 圖片輪播區下方導引按鈕 -->
         <div class="carousel-indicators">
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="background-color: #282929;height:5px"></button>
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" style="background-color: #535758;height:5px"></button>
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" style="background-color: #535758;height:5px"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="background-color: #282929;height:5px"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" style="background-color: #535758;height:5px"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" style="background-color: #535758;height:5px"></button>
         </div>
 
         <!-- 輪播圖片區 - 大容器-->
@@ -302,19 +343,28 @@
 
           <!-- 輪播圖片區 - 小容器(圖片01)-->
           <div class="carousel-item active">
+
+            <!-- 點擊導引至該商品連結 -->
+            <a href="product_LoggedIn.html" style="text-decoration: none; position: relative;">
+
               <div class="d-flex justify-content-center align-items-center">
                   <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel01.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                  <!-- original height: 512px-->
                   <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
               </div>
               <div class="container">
                   <div class="carousel-caption text-start">
                   </div>
               </div>
+
+            </a>
           </div>
 
           <!-- 輪播圖片區 - 小容器(圖片02)-->
           <div class="carousel-item">
+
+            <!-- 點擊導引至該商品連結 -->
+            <a href="product_LoggedIn.html" style="text-decoration: none; position: relative;">
+
               <div class="d-flex justify-content-center align-items-center">
                   <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel02.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
                   <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
@@ -323,11 +373,17 @@
                   <div class="carousel-caption">
                   </div>
               </div>
+            
+            </a>
 
           </div>
 
           <!-- 輪播圖片區 - 小容器(圖片03)-->
           <div class="carousel-item">
+
+            <!-- 點擊導引至該商品連結 -->
+            <a href="./product_LoggedIn.html" style="text-decoration: none; position: relative;">
+
               <div class="d-flex justify-content-center align-items-center">
                   <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel03.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
                   <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
@@ -336,21 +392,23 @@
                   <div class="carousel-caption text-end">
                   </div>
               </div>
+            </a>
+
           </div>
 
       </div>
 
-      <!-- 上一張圖片的按鈕 -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev"  style="width: 115px;background-color: #969391;">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-      </button>
+    <!-- 上一張圖片的按鈕 -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"  aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
 
-      <!-- 下一張圖片的按鈕 -->
-      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next" style="width: 115px;background-color: #969391;">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-      </button>
+    <!-- 下一張圖片的按鈕 -->
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
 
 </div>
 
@@ -372,7 +430,7 @@
           <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
 
             <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+            <a href="./product_LoggedIn.html" style="text-decoration: none; position: relative;">
 
                 <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
@@ -396,7 +454,7 @@
           <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
 
             <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+            <a href="./product_LoggedIn.html" style="text-decoration: none; position: relative;">
 
                 <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
@@ -420,7 +478,7 @@
           <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
 
             <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+            <a href="./product_LoggedIn.html" style="text-decoration: none; position: relative;">
 
                 <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
@@ -448,7 +506,7 @@
 
       </section>
 
-      <!-- <div class="separator"></div> 分隔線 -->
+      <div class="separator"></div> <!-- 分隔線 -->
 
       <!-- 新品上架 
       ================================================== -->
@@ -467,7 +525,7 @@
           <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
 
             <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+            <a href="./product_LoggedIn.html" style="text-decoration: none; position: relative;">
 
                 <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
@@ -488,7 +546,7 @@
           <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
 
             <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+            <a href="./product_LoggedIn.html" style="text-decoration: none; position: relative;">
 
                 <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
@@ -509,7 +567,7 @@
           <div class="col-sm-6 col-lg-4 mb-4 card-hover position-relative"> 
 
             <!-- 點擊導引至商品連結 -->
-            <a href="https://www.youtube.com/" style="text-decoration: none; position: relative;">
+            <a href="./product_LoggedIn.html" style="text-decoration: none; position: relative;">
 
                 <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
@@ -530,7 +588,7 @@
 
       </section>
 
-      <!-- <div class="separator"></div> 分隔線 -->
+      <div class="separator"></div> <!-- 分隔線 -->
 
       <!-- 精選推薦 
       ================================================== -->
@@ -555,7 +613,7 @@
               <p class="card-text" style="color: #535758;font-size: large;">炎炎夏日，來一杯冰飲，一起歡聚「飲冰」食光。</p>
               
               <!-- 了解更多按鈕 -->
-              <a href="#" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+              <a href="./Allproduct_LoggedIn.html#drinks" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
           </div>
 
@@ -563,14 +621,14 @@
           <div class="col-sm-6 col-lg-4 mb-4 card card-btn position-relative" style="width: 330px;height:600px;background-color: #d1c9c0">
             
             <!-- 圖卡圖片-->
-            <img class="bd-placeholder-img card-img-top" width="100%" height="400" src="./picture/material/indexPageMaterial/Recommendation_nightFood.jpg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></svg>
+            <img class="bd-placeholder-img card-img-top" width="100%" height="400" src="/picture/material/indexPageMaterial/Recommendation_nightFood.jpg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></svg>
             
             <div class="card-body">
               <h5 class="card-title" style="font-weight:900;color: black;font-size: 25px;">深夜食光</h5>
               <p class="card-text" style="color: #535758;font-size: large;">夜色昏暗，明月當天，還在挑燈夜戰嗎？給宵夜時間的你。</p>
               
               <!-- 了解更多按鈕 -->
-              <a href="#" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+              <a href="./Allproduct_LoggedIn.html#noodle" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
           </div>
 
@@ -585,17 +643,26 @@
               <p class="card-text" style="color: #535758;font-size: large;">不飢不餓，但還是想滿足口腹之慾？這裡有各類點心輕食提供給你。</p>
               
               <!-- 了解更多按鈕 -->
-              <a href="#" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+              <a href="./Allproduct_LoggedIn.html#snacks" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
           </div>
       </section>
 
-      
+      <div class="separator_Footer"></div> <!-- 分隔線 -->
+
+      <!-- 回到頂部按鈕 -->
+      <div class="slider">
+        <a href="#">
+          <div class="top">
+              <iconify-icon icon="iconoir:page-up"></iconify-icon>
+          </div>
+        </a>
+      </div>
 
       <!-- 頁尾(含聯絡資訊) 
       ================================================== -->
 
-      <section id="FooterArea" class="Footer border-top container " style="background-color: #e6e6e6; width: 100%;color: #796146;">
+      <section id="FooterArea" class="Footer container " style="background-color: #e6e6e6; width: 100%;color: #796146;">
 
         <footer class="py-5">
 
@@ -616,37 +683,30 @@
                 </div>
             </div>
         </div>
+
+        </div>
       
         </footer>
 
+        <div class="separator_Footer"></div> <!-- 分隔線 -->
 
-        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top ">
+        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4">
 
           <p>&copy; 2024 Company, Inc. All rights reserved.</p>
 
-         <!-- 可自行更動網頁瀏覽人數設定 -->
-         <p> 網頁瀏覽人數：999人</p>
+          <!-- 可自行更動網頁瀏覽人數設定 -->
+          <p> 網頁瀏覽人數：999人</p>
         </div>
 
+        </div>
 
       </section>
 
-    <!-- Cookie 提示區域 -->
-      <div class="alert text-center cookiealert" role="alert">
-          &#x1F36A; 我們使用cookie來提供和改善服務！若繼續使用本網站，表示您同意我們使用cookie。 <a href="https://cookiesandyou.com/" target="_blank">了解更多關於Cookie</a>
-          <br><br>
-          <button type="button" class="btn btn-primary btn-sm acceptcookies" style="background-color: rgb(138, 241, 138);color: #282929;">
-              同意
-          </button>
-      </div>
-    <!--------->
 
     <!-- Javascript 區域 -->
-    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
-
-    <!-- 添加 cookie提示 script -->
-    <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
 
   </body>
   

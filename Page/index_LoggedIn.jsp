@@ -197,6 +197,48 @@
                             <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
 
                         </div>
+                        
+                        <!-- 購買數量增減控制 -->
+                        <script>
+                          document.addEventListener("DOMContentLoaded", function() {
+                              document.body.addEventListener('click', function(event) {
+                                  if (event.target.classList.contains('min') || event.target.classList.contains('add')) {
+                                      const cp2 = event.target.closest('.cp2');
+                                      const quantityInput = cp2.querySelector('.quantity');
+                                      let currentValue = parseInt(quantityInput.value);
+                      
+                                      const min = parseInt(cp2.getAttribute('data-min'));
+                                      const max = parseInt(cp2.getAttribute('data-max'));
+                      
+                                      if (event.target.classList.contains('min') && currentValue > min) {
+                                          quantityInput.value = currentValue - 1;
+                                      }
+                      
+                                      if (event.target.classList.contains('add') && currentValue < max) {
+                                          quantityInput.value = currentValue + 1;
+                                      }
+                                  }
+                              });
+                      
+                              // 避免非數值資料輸入進數量欄位
+                              document.querySelectorAll('.quantity').forEach(input => {
+                                  input.addEventListener('input', function() {
+                                      let value = this.value.replace(/[^0-9]/g, '');
+                                      const cp2 = this.closest('.cp2');
+                                      const max = parseInt(cp2.getAttribute('data-max'));
+
+                                      // 數量欄位限制購買數量，當輸入超過最大數量，則予以提醒。
+                                      if (value > max) {
+                                          alert(`最多只能購買 ${max} 個`);
+                                          this.value = '';
+                                      } else {
+                                          this.value = value;
+                                      }
+                                  });
+                              });
+                          });
+                      </script>
+                        
                           
                         <!-- 計算總價 -->
                         <div class="cart-total">
@@ -296,21 +338,20 @@
 
       <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel" data-bs-interval="3000">
 
-        <!-- 圖片輪播區下方導引按鈕 -->
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="background-color: #282929;height:5px"></button>
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" style="background-color: #535758;height:5px"></button>
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" style="background-color: #535758;height:5px"></button>
-        </div>
+      <!-- 圖片輪播區下方導引按鈕 -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="background-color: #282929;height:5px"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" style="background-color: #535758;height:5px"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" style="background-color: #535758;height:5px"></button>
+      </div>
         <!-- 輪播圖片區 - 大容器-->
         <div class="carousel-inner" style="background-color: aliceblue;">
 
           <!-- 輪播圖片區 - 小容器(圖片01)-->
           <div class="carousel-item active">
-            <a href="./product_LoggedIn.jsp?productId=18" style="text-decoration: none; position: relative;">
+            <a href="./product_LoggedIn.jsp?productId=18"  style="text-decoration: none; position: relative;">
               <div class="d-flex justify-content-center align-items-center">
                   <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel01.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                  <!-- original height: 512px-->
                   <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
               </div>
               <div class="container">
@@ -324,8 +365,8 @@
           <div class="carousel-item">
             <a href="./product_LoggedIn.jsp?productId=4" style="text-decoration: none; position: relative;">
               <div class="d-flex justify-content-center align-items-center">
-                  <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel02.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                  <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
+                <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel02.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
               </div>
               <div class="container">
                   <div class="carousel-caption">
@@ -338,8 +379,8 @@
           <div class="carousel-item">
             <a href="./product_LoggedIn.jsp?productId=12" style="text-decoration: none; position: relative;">
               <div class="d-flex justify-content-center align-items-center">
-                  <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel03.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                  <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
+                <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel03.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
               </div>
               <div class="container">
                   <div class="carousel-caption text-end">
@@ -599,18 +640,17 @@
           </div>
       </section>
 
-      <!-- Footer 頁尾部分 -->
-      <jsp:include page="./footer.jsp" />
-
-
-       <!-- slider up -->
-       <section class="slider">
+      <!-- 回到頂部按鈕 -->
+      <div class="slider">
         <a href="#">
           <div class="top">
               <iconify-icon icon="iconoir:page-up"></iconify-icon>
           </div>
         </a>
-    </section>
+      </div>
+
+      <!-- Footer 頁尾部分 -->
+      <jsp:include page="./footer.jsp" />
 
     <!-- Cookie 提示區域 -->
       <div class="alert text-center cookiealert" role="alert">

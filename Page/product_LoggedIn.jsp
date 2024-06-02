@@ -258,15 +258,16 @@
                         <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
                         <div class="cart-but row" >
 
-                            <div class="col">
-                              <!-- 繼續購物時，就關閉當前購物車視窗 -->
-                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
-                            </div>
-                            <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./checkout.html'">
-                            </div>
+                          <div class="col">
+                            <!-- 繼續購物時，就關閉當前購物車視窗 -->
+                            <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
+                          </div>
+                          <div class="col">
+                            <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
+                          </div>
 
-                        </div>
+                      </div>
+
 
                       </form>
 

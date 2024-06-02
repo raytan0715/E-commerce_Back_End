@@ -318,17 +318,17 @@
         </div>
         
     </div>
-
-    <!-- 上一張圖片的按鈕 -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev"  style="width: 115px;background-color: #969391;">
+    
+   <!-- 上一張圖片的按鈕 -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"  aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
 
     <!-- 下一張圖片的按鈕 -->
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next" style="width: 115px;background-color: #969391;"">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
     </button>
 
 </div>

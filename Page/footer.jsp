@@ -1,7 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
-<%@ page import="java.sql.*" %>
 
     <!-- Footer 頁尾部分 -->
 <section id="FooterArea" class="Footer border-top container" style="width: 100%;color: #796146;">
@@ -34,6 +33,7 @@
         counter++;
         context.setAttribute("counter", counter);
       %>
+      <p id="visitor-count-value" style="display: none;"><%= counter %></p>
       <p> 網頁瀏覽人數：<%= counter %>人</p>
     </div>
   </section>

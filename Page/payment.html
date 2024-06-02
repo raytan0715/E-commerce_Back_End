@@ -2,6 +2,8 @@
 
 <html lang="en" data-bs-theme="auto">
 
+  <!-- 此為登入後的介面 -->
+
   <head>
     
     <script src="../assets/js/color-modes.js"></script>
@@ -40,9 +42,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 
-    
-    <!-- css 樣式檔案 -->
-    <link href="stylesheets/product.css" rel="stylesheet">
+    <!-- 本html樣式檔 -->
+    <link href="stylesheets/payment.css" rel="stylesheet">
 
     <!-- 登入註冊樣式檔  -->
     <link rel="stylesheet" href="stylesheets/LoginArea.css"> 
@@ -57,9 +58,7 @@
     <!-- 上方欄位 (工具欄)
     ================================================== -->
 
-    <!-- 先為code寫上註解 不要急著修改-->
-
-      <!-- 共具欄第一欄 -->
+      <!-- 工具欄第一欄 -->
       <nav class="navbar navbar-expand-lg"> 
 
         <!-- 工具欄第一欄內容物容器 -->
@@ -131,7 +130,7 @@
 
                                   <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
                                     <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input class="BuyCart_quantity" type="text" value="1"/>
+                                    <input class="quantity" type="text" value="1"/>
                                     <input class="add" type="button" value="+"/> 
                                   </div>
                             
@@ -156,7 +155,7 @@
                                   </div>
                                   <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
                                     <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input class="BuyCart_quantity" type="text" value="1"/>
+                                    <input class="quantity" type="text" value="1"/>
                                     <input class="add" type="button" value="+"/> 
                                 </div>                            
                               </div>
@@ -180,7 +179,7 @@
                                 </div>
                                 <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
                                   <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                  <input class="BuyCart_quantity" type="text" value="1"/>
+                                  <input class="quantity" type="text" value="1"/>
                                   <input class="add" type="button" value="+"/> 
                               </div>
                             </div>
@@ -199,7 +198,7 @@
                               document.body.addEventListener('click', function(event) {
                                   if (event.target.classList.contains('min') || event.target.classList.contains('add')) {
                                       const cp2 = event.target.closest('.cp2');
-                                      const quantityInput = cp2.querySelector('.BuyCart_quantity');
+                                      const quantityInput = cp2.querySelector('.quantity');
                                       let currentValue = parseInt(quantityInput.value);
                       
                                       const min = parseInt(cp2.getAttribute('data-min'));
@@ -216,12 +215,12 @@
                               });
                       
                               // 避免非數值資料輸入進數量欄位
-                              document.querySelectorAll('.BuyCart_quantity').forEach(input => {
+                              document.querySelectorAll('.quantity').forEach(input => {
                                   input.addEventListener('input', function() {
                                       let value = this.value.replace(/[^0-9]/g, '');
                                       const cp2 = this.closest('.cp2');
                                       const max = parseInt(cp2.getAttribute('data-max'));
-                      
+
                                       // 數量欄位限制購買數量，當輸入超過最大數量，則予以提醒。
                                       if (value > max) {
                                           alert(`最多只能購買 ${max} 個`);
@@ -250,7 +249,7 @@
                               <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
                             </div>
                             <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.html'">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='payment.html'">
                             </div>
 
                         </div>
@@ -266,13 +265,13 @@
             <!-- 【會員註冊登入】 -->
 
             <!-- 會員註冊與登入按鈕 -->
-            <button onclick="location.href='./memberPage.html'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <button onclick="location.href='memberPage.html'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
                OOO 您好！
             </button>
 
             <!-- 登出按鈕 -->
-            <button onclick="location.href='./index.html'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <button onclick="location.href='index.html'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
               登出
             </button>
@@ -301,10 +300,10 @@
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html">所有商品</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#noodle">泡麵</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#drinks">飲料</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#snacks">零食糖果</a></li>
+                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html">所有商品</a></li>
+                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html#noodle">泡麵</a></li>
+                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html#drinks">飲料</a></li>
+                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html#snacks">零食糖果</a></li>
               </ul>
             </li>
 
@@ -325,275 +324,305 @@
         </div>
       </nav>
 
-   
-      <!-- 商品購買與介紹區域
-      ================================================== -->
 
-      <!-- 商品內容之大容器-->
-      <section class="desc-page">
+    <!-- 收件人與寄送資訊
+    ================================================== -->
 
-        <!-- 網頁當前路徑顯示 -->
-        <div class="product-path">
-          <a href="index_LoggedIn.html" class="path-link">首頁</a> &gt;
-          <a href="AllProduct_LoggedIn.html" class="path-link">商品</a> &gt;
-          <a href="product_LoggedIn.html" class="path-link">當前商品(名字)</a>
-        </div>
+    <section class="paymentArea"> <!-- paymentArea 為兩section之共用大容器 -->
 
-        <!-- 商品基本內容顯示容器(標題、圖片、價格、數量、計數器、購買按鈕)-->
-        <div id="product1" class="display">
+        <!-- 收件人與寄送資訊之容器 -->
+        <section class="payment-cont">
 
-          <!-- 商品圖片 -->
-          <div class="cont-img">
-              <img src="/picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
-          </div>
-
-          <!-- 商品之標題、價格、數量、計數器、購買按鈕顯示容器 -->
-          <div class="cont">
-
-              <!-- 商品標題 -->
-              <div class="cont-name">
-                  <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
-                  <h6>NT$239</h6>
-                  <!-- 可自行更動數量設定 -->
-                  <p>庫存數量：30</p>
-              </div>
-
-              <!-- 商品數量增減按鈕 -->
-              <div class="quantityButton" data-min="1" data-max="30">   <!-- 數量增減 data-min最低數量;data-max 最多數量 -->
-                <input type="button" value="&minus;" class="min"/> <!-- ' &minus; '是減號 -->
-                <input  type="text" value="1" class="quantity"/>
-                <input  type="button" value="+" class="add"/>
-              </div>
-
-              <!-- 商品購買按鈕容器 -->
-              <div class="addToCart">
-
-                <button type="button" class="btn" onclick="showAlert()">
-                  加入購物車
-                </button>
-
-                
-                <button type="button" class="btn" onclick=""> <!-- 導引至結帳區 -->
-                  立即購買
-                </button>
-
-              </div>
-
-              <!-- 購買數量增減控制 -->
-              <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    document.body.addEventListener('click', function(event) {
-                        if (event.target.classList.contains('min') || event.target.classList.contains('add')) {
-                            const quantityButton = event.target.closest('.quantityButton');
-                            const quantityInput = quantityButton.querySelector('.quantity');
-                            let currentValue = parseInt(quantityInput.value);
-                            
-                            const min = parseInt(quantityButton.getAttribute('data-min'));
-                            const max = parseInt(quantityButton.getAttribute('data-max'));
-
-                            if (event.target.classList.contains('min') && currentValue > min) {
-                                quantityInput.value = currentValue - 1;
-                            }
-
-                            if (event.target.classList.contains('add') && currentValue < max) {
-                                quantityInput.value = currentValue + 1;
-                            }
-                        }
-                    });
-
-                    // 避免非數值資料輸入進數量欄位
-                    document.querySelectorAll('.quantity').forEach(input => {
-                        input.addEventListener('input', function() {
-                            let value = this.value.replace(/[^0-9]/g, '');
-                            const quantityButton = this.closest('.quantityButton');
-                            const max = parseInt(quantityButton.getAttribute('data-max'));
-
-                            // 數量欄位限制購買數量，當輸入超過最大數量，則予以提醒。
-                            if (value > max) {
-                                alert(`最多只能購買 ${max} 個`);
-                                this.value = max;
-                            } else {
-                                this.value = value;
-                            }
-                        });
-                    });
-                });
-              </script>
-
-          </div>
-        
-        </div>
-
-        <div class="separator"></div> <!-- 分隔線 -->
-        
-        <!-- 商品介紹
-         ------------------------->
-
-        <div class="introduction">
-
-          <!-- 商品介紹 -->
-          <h4> &#92;商品介紹&sol;</h4>
-
-          <ul>
-            <li>純正韓國風味辛湯頭</li>
-            <li>搭配帶勁Q彈的麵條</li>
-            <li>不容錯過的農心泡麵代表作-辛拉麵</li>
-            <li>韓國家家戶戶必備的拉麵</li>
-            <li>老饕們可以嘗試看看 &#x1F60B;</li>
-          </ul>
-
-          <br>
-
-          <!-- 成分内容 -->
-          <h4> &#92;成分内容&sol;</h4>
-          <p>
-            調味包: <br> 牛肉調味粉(牛肉萃取粉. 洋蔥.胡椒.醬油).鹽.辛辣調味粉 (玉米澱粉.辣椒萃取粉.果糖)醬油調味粉(大豆小麥.鹽.糖.胺基乙酸).糖.調味醬粉(玉米糖漿.麵粉.辣椒.糖.鹽).調味牛肉粉(鹽，糖 玉米澱粉.牛肉萃取粉.洋蔥.大蒜).醬油粉(大豆.麥芽糊精).胡椒粉.辣椒風味粉(辣椒，蒜.洋蔥).5-次黃瞟哈校音碳酸二鈉. 5-鳥瞟哈核音磷酸納.琥珀酸二鈉.大豆蛋白.乾燥食材乾 蔥.乾青江菜.乾香菇.乾胡蘿蔔.乾辣椒.牛肉(產地:澳洲)
-          </p>
-
-          <br>
-
-          <!-- 過敏原資訊 -->
-          <h4> &#92;過敏原資訊&sol;</h4>
-          <p>
-            過敏原資訊：<br> 小麥粉.馬鈴薯澱粉.棕櫚 油.醋酸澱粉.碳酸鈣(蛋殼).鹽.蔬菜萃取液(香菇.蔥.薑.蘿蔔).碳酸鉀.碳酸鈉，檸檬酸.寡糖綠茶風味液(寡糖.綠茶萃取物).維生素B
-            <br>
-            <br>
-            &#10056;注意:本產品含有含麩質之穀物、大豆、蛋殼鈣及其製品,不適合對其過敏體質者食用。
-          </p>
-          <br>
-
-          <!-- 注意事項 -->
-          <div class="notice">
-            <iconify-icon icon="emojione:double-exclamation-mark"></iconify-icon>
-            <h5>注意事項</h5>
-            <iconify-icon icon="emojione:double-exclamation-mark"></iconify-icon>
-          </div>
-        
-          <h6>
-            &#128666;超商單筆限重為5公斤|宅配15公斤&#128230; <br><br>
-            &#128314;如購買多樣請務必留意重量及材積&#128314; <br><br>
-            &#128172;如有不清楚部分請透過店長客服詢問&#128587;
-          </h6>
-
-          </div>
-
-        </div>
-
-      <div class="separator"></div> <!-- 分隔線 -->
-
-      <!-- 商品留言評價區域
-      ================================================== -->
-
-      <section class="comment">
-
-        <!-- 左方填寫評論區域 -->
-        <div class="leftside">
-
-          <h5>留言評價</h5>
-
-          <form action="#" method="post">
-
-            <label for="fname">姓名</label><br>
-
-            <input type="text" id="fname" name="fname" class="CommentNameInput"><br>
-
-            <p>留言</p>
-            <textarea name="message" rows="10" cols="30" style="height: 200px;resize: none; "></textarea>
-            <br><br>
-
-            <!-- 星星評分部分 -->
-            <div class="star" id="star-rating">
-
-              <iconify-icon icon="ic:baseline-star" width="40" data-index="1" class="star-icon"></iconify-icon>
-              <iconify-icon icon="ic:baseline-star" width="40" data-index="2" class="star-icon"></iconify-icon>
-              <iconify-icon icon="ic:baseline-star" width="40" data-index="3" class="star-icon"></iconify-icon>
-              <iconify-icon icon="ic:baseline-star" width="40" data-index="4" class="star-icon"></iconify-icon>
-              <iconify-icon icon="ic:baseline-star" width="40" data-index="5" class="star-icon"></iconify-icon>
-              
+            <!-- 收件人與寄送資訊之標題 -->
+            <div class="payment-header">
+                <iconify-icon icon="mdi:truck-delivery-outline"></iconify-icon>
+                <h5>收件人/寄送資訊</h5>
             </div>
 
-            <input type="submit" value="送出">
+            <!-- 收件人與寄送資訊之容器2 -->
+            <div class="payment-info">
 
-          </form>
+                <form id="deliveryForm" class="needs-validation" novalidate>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label for="name" class="required">收件人姓名 :</label>
+                        <input type="text" class="form-control" id="name" placeholder="請輸入本名" required>
+                        
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label for="phone" class="required">收件人電話 :</label>
+                        <input type="tel" class="form-control" id="phone" placeholder="請輸入電話" required>
+                        
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label for="address" class="required">地址 :</label>
+                        <input type="text" class="form-control" id="address" placeholder="請輸入地址" required>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="delivery">寄送方式 :</label>
+                        <select id="delivery" class="option-control" required>
+                            <option value="" selected disabled>選擇寄送方式</option>
+                            <option value="7-11">7-11</option>
+                            <option value="全家">全家</option>
+                            <option value="萊爾富">萊爾富</option>
+                            <option value="OK">OK</option>
+                            <option value="宅配">宅配</option>
+                        </select>
+                        <select id="city" class="option-control" required>
+                            <option value="" selected disabled>縣市</option>
+                            <option value="台北市">台北市</option>
+                            <option value="新北市">新北市</option>
+                            <option value="桃園市">桃園市</option>
+                            <option value="台中市">台中市</option>
+                            <option value="台南市">台南市</option>
+                            <option value="高雄市">高雄市</option>
+                        </select>
+                        <select id="district" class="option-control" required>
+                            <option value="" selected disabled>區域</option>
+                        </select>
+                        <select id="store" required class="option-control">
+                            <option value="" selected disabled>門市</option>
+                            <option value="還中店">還中店</option>
+                            <option value="建國店">建國店</option>
+                            <option value="柏德店">柏德店</option>
+                            <option value="中北店">中北店</option>
+                            <option value="元智店">元智店</option>
+                        </select>
+
+                        <!-- 區域選擇設定 -->
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                const citySelect = document.getElementById("city");
+                                const districtSelect = document.getElementById("district");
+
+                                const districts = {
+                                    "台北市": ["中正區", "大同區", "中山區", "松山區", "大安區"],
+                                    "新北市": ["板橋區", "三重區", "中和區", "永和區", "新莊區"],
+                                    "桃園市": ["桃園區", "中壢區", "八德區", "平鎮區", "龜山區", "大溪區"],
+                                    "台中市": ["豐原區","大里區", "太平區", "東勢區", "沙鹿區", "梧棲區", "清水區", "大甲區", "霧峰區", "烏日區"],
+                                    "台南市": ["中西區", "東區", "南區", "北區", "安平區"],
+                                    "高雄市": ["新興區", "前金區", "苓雅區", "鹽埕區", "鼓山區"]
+                                };
+
+                                citySelect.addEventListener("change", function() {
+                                    const selectedCity = citySelect.value;
+                                    while (districtSelect.options.length > 1) {
+                                        districtSelect.remove(1);
+                                    }
+
+                                    if (districts[selectedCity]) {
+                                        districts[selectedCity].forEach(function(district) {
+                                            const option = document.createElement("option");
+                                            option.value = district;
+                                            option.text = district;
+                                            districtSelect.add(option);
+                                        });
+                                    }
+                                });
+                            });
+                        </script>
+
+                    </div>
+
+                    <fieldset class="fieldset-legend">
+                        <legend>訂單備註</legend>
+                        <textarea name="comment" rows="10" cols="30" style="height: 160px; width: 550px; resize: none;"></textarea>
+                    </fieldset>
+
+                </form>
+            </div>
+        </section>
+        
+    <!-- 付款資訊
+    ================================================== -->
+
+    <section class="payment-cont">
+
+        <!-- payment header -->
+        <div class="payment-header">
+            <iconify-icon icon="mdi:account-payment-outline"></iconify-icon>
+            <h5>付款資訊</h5>
+        </div>
+
+        <!-- payment information -->
+        <div class="payment-info">
+            <form id="paymentForm" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="payment-method">付款方式 :</label>
+                    <label><input type="radio" name="payment-method" value="貨到付款"> 貨到付款</label>
+                    <label><input type="radio" name="payment-method" value="線上付款" checked> 線上付款</label>
+                </div>
+
+                <div class="separator">
+                    <span class="separatorText">線上付款請填寫以下資訊</span>
+                </div>
+
+                <fieldset class="fieldset-legend" style="margin-top: 50px;">
+                    <legend>信用卡資訊</legend>
+                    <div class="paymentInfoInputs">
+                        <div class="form-group">
+                            <label for="credit-card">信用卡號碼</label>
+                            <input type="number" class="pay-form form-control" id="credit-card" placeholder="信用卡號碼" required style="margin-top: 10px;">
+                        </div>
+                        <div class="inline-inputs">
+                            <div class="form-group" style="width: 75%;">
+                                <label for="expiry-date">到期日<br>安全碼</label>
+                                <input type="text" class="pay-form form-control" id="expiry-date" style="width:60%;" placeholder="到期日 （MM/YY）" required>
+                            </div>
+                            <div class="form-group" style="width: 25%;">
+                                <input type="password" class="pay-form form-control" id="securitynum" style="text-align: center;" placeholder="安全碼" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardholder-name">持卡人姓名</label>
+                            <input type="text" class="pay-form form-control" id="cardholder-name" placeholder="持卡人姓名" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="smallnotes">*您的信用卡資訊會被嚴格保護*</div>
+            </form>
 
         </div>
-        
-        <!-- 星星js程式部分 -->
-        <script>
-          document.addEventListener("DOMContentLoaded", function() {
-            const starRatings = document.querySelectorAll(".star");
-        
-              starRatings.forEach((starRating) => {
-                const starIcons = starRating.querySelectorAll(".star-icon");
-        
-                  starIcons.forEach((starIcon) => {
-                      starIcon.addEventListener("click", function() {
-                        const clickedIndex = parseInt(this.getAttribute("data-index"));
-        
-                          starIcons.forEach((icon, index) => {
-                              if (index < clickedIndex) {
-                                  icon.setAttribute("icon", "ic:baseline-star");
-                                  icon.classList.add("selected");
-                              } else {
-                                  icon.setAttribute("icon", "ic:baseline-star");
-                                  icon.classList.remove("selected");
-                              }
-                          });
-        
-                        console.log("Selected Rating: " + clickedIndex);
-                      });
-                  });
-              });
+
+    </section>
+
+    <div class="submitarea">
+        <button id="submitButton" class="paymentbtn">結帳</button>
+    </div>
+
+    <script>
+
+    // 貨到付款與線上付款之信用卡欄位，必填與否設定
+    document.addEventListener('DOMContentLoaded', function() {
+      const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
+      const creditCardInputs = document.querySelectorAll('#credit-card, #expiry-date, #securitynum, #cardholder-name');
+
+      function updateRequiredAttributes() {
+        const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+        if (selectedPaymentMethod === '線上付款') {
+          creditCardInputs.forEach(input => {
+            input.setAttribute('required', 'required');
           });
-        </script>
-        
-        <!-- 右方顯示評論區域 -->
-        <div class="rightside">
+        } else {
+          creditCardInputs.forEach(input => {
+            input.removeAttribute('required');
+          });
+        }
+      }
 
-          <h5>評論</h5>
+      paymentMethodRadios.forEach(radio => {
+        radio.addEventListener('change', updateRequiredAttributes);
+      });
 
-          <!-- 評論顯示盒 - 大容器 -->
-          <div class="comment-box">
+      // Initialize the display based on the initial selection
+      updateRequiredAttributes();
+    });
+  
 
-            <!-- 評論顯示盒 小容器 -->
-            <div class="box-top">
+    // 到期日設置為預設格式(MM/YY)
+    document.getElementById('expiry-date').addEventListener('input', function (e) {
+        let input = e.target.value;
+        if (/[^0-9\/]/.test(input)) {
+            e.target.value = input.replace(/[^0-9\/]/g, '');
+            return;
+        }
+        if (input.length === 2 && !input.includes('/')) {
+            e.target.value = input + '/';
+        } else if (input.length === 3 && input[2] !== '/') {
+            e.target.value = input.slice(0, 2) + '/' + input[2];
+        }
+        if (input.length > 5) {
+            e.target.value = input.slice(0, 5);
+        }
+    });
+    
 
-              <!-- 用戶圖標 -->
-              <iconify-icon icon="mingcute:user-4-fill" width="55" style="font-size: 36px;"></iconify-icon>
+    /* 處理未填寫偵測事件 */
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        var invalidFields = form.querySelectorAll(':invalid');
+                        invalidFields.forEach(function(field) {
+                            var label = form.querySelector('label[for="' + field.id + '"]');
+                            if (label) {
+                                label.classList.add('invalid');
+                            }
+                            field.classList.add('is-invalid');
+                        });
+                    } else {
+                        var labels = form.querySelectorAll('label.invalid');
+                        labels.forEach(function(label) {
+                            label.classList.remove('invalid');
+                        });
+                        var invalidFields = form.querySelectorAll('.is-invalid');
+                        invalidFields.forEach(function(field) {
+                            field.classList.remove('is-invalid');
+                        });
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
 
-              <h6>酷寄</h6>
+    // Submit both forms on button click
+    document.getElementById('submitButton').addEventListener('click', function(event) {
+        const deliveryForm = document.getElementById('deliveryForm');
+        const paymentForm = document.getElementById('paymentForm');
+        let isValid = true;
 
-              <!-- 顯示評論之星星顯示區 -->
-              <div class="starcomment" id="star-comment">
+        if (!deliveryForm.checkValidity()) {
+            deliveryForm.classList.add('was-validated');
+            isValid = false;
+        }
 
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="1" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="2" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="3" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="4" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="5" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-              
-              </div>
+        if (!paymentForm.checkValidity()) {
+            paymentForm.classList.add('was-validated');
+            isValid = false;
+        }
 
-              <p>
-                辛拉麵麵條Q彈超好吃 !! ~~
-              </p>
+        /*警示仍有欄位未填妥*/
+        if (!isValid) {
+            alert("請填寫所有必填欄位");
+        } else {
+            deliveryForm.submit();
+            paymentForm.submit();
 
-            </div>
+            /*結帳成功後顯示成功訊息並導至主頁*/
+            alert("✅ 結帳成功");
+            window.location.href = 'index_LoggedIn.html';
+        }
 
-          </div>
+        // Prevent default form submission
+        event.preventDefault();
+    });
 
+    </script>
+
+    <style>
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+        .invalid {
+            color: #dc3545 !important;
+        }
+    </style>
+
+    <!-- 回到頂部按鈕 -->
+    <div class="slider">
+    <a href="#">
+        <div class="top">
+            <iconify-icon icon="iconoir:page-up"></iconify-icon>
         </div>
-          
-      </section>
-
-      <!-- 回到頂部按鈕 -->
-      <div class="slider">
-        <a href="#">
-          <div class="top">
-              <iconify-icon icon="iconoir:page-up"></iconify-icon>
-          </div>
-        </a>
-      </div>
+    </a>
+    </div>
 
       <!-- Footer 尾頁
       ================================================== -->
@@ -623,30 +652,22 @@
       
         </footer>
 
-        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top ">
+      <section id="FooterArea" class="Footer border-top container" style="background-color: #ffffff; width: 100%; color: #796146;">
 
+        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4">
+      
           <p>&copy; 2024 Company, Inc. All rights reserved.</p>
-
+      
           <!-- 可自行更動網頁瀏覽人數設定 -->
           <p> 網頁瀏覽人數：999人</p>
         </div>
-
-        </div>
-
+      
       </section>
 
     <!-- Javascript 區域 -->
-    <script>
-      function showAlert() {
-        alert("✅ 已加入購物車！");
-      }
-    </script>
-
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
-
-</body>
+    <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
 
   </body>
   
