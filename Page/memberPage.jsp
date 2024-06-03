@@ -11,6 +11,8 @@
   <!-- 此為登入後的介面 -->
 
   <head>
+    <!-- 引用google reCaptcha驗證機制 -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     
     <script src="./assets/js/color-modes.js"></script>
 
@@ -60,6 +62,12 @@
     <!-- 會員介面樣式檔 -->
     <link rel="stylesheet" href="./stylesheets/memberArea.css">
 
+    <script>
+      function onSubmit(token) {
+          document.getElementById("recaptchaResponse").value = token;
+          document.getElementById("loginForm").submit();
+      }
+      </script>
   </head>
 
   <body>
@@ -381,7 +389,9 @@
                                         <input type="date" name="birthday" id="AccountBirthday" placeholder="生日" value="<%= userBirthday %>" style="color: black;">
                                         <input type="text" name="address" id="AccountAddress" placeholder="地址" value="<%= userAddress %>">
                                       </div>
-                                      <input type="submit" value="更新資料" class="p-sub">
+                                      <!-- Google reCAPTCHA v2 -->
+                                      <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
+                                      <input type="submit" value="更新資料" class="p-sub" id="submitBtn1" disabled>
                                   </form>
                                 </div>
                               
@@ -392,15 +402,32 @@
                                             <input type="text" name="email" id="" placeholder="Email" value="<%= email %>">
                                             <input type="password" name="password" id="" placeholder="New Password">
                                         </div>
-                                        <input type="submit" value="更新資料" class="p-sub">
+                                        <!-- Google reCAPTCHA v2 -->
+                                        <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
+                                        <input type="submit" value="更新資料" class="p-sub" id="submitBtn2" disabled>
                                     </form>
                                     <h2 style="color: #6e573a;font-weight: 800;font-size: 16px;">*修改資料直接填入輸入格即可。*</h2>
                                 </div>
-                              
                               </div>
                              
                             </div>
-                            
+                            <script>
+                              var recaptchaChecked = false;
+
+                              function enableBtn() {
+                                  recaptchaChecked = true;
+                                  document.getElementById('submitBtn1').disabled = false;
+                                  document.getElementById('submitBtn2').disabled = false;
+                              }
+
+                              function checkRecaptcha() {
+                                  if (!recaptchaChecked) {
+                                      alert('請完成 reCAPTCHA 驗證');
+                                      return false;
+                                  }
+                                  return true;
+                              }
+                            </script>
 
                             <div class="record text" style="color: #6e573a;">
 

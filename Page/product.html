@@ -132,17 +132,17 @@
                     </div>
                     
                     <div class="form-container sign-in-container">
-
-                        <!-- 登入頁面 -->
-                        <form action="#">
-                            <h1 style="color: #281805;font-weight: 900; bolder;padding-bottom: 15px;">登入</h1>
-                            <input type="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" />
-                            <input type="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" />
-                            <button style="background-color: #a59e94;color: #ffffff;border: 0px;">登入</button>
-                        </form>
-
-                    </div>
-
+                      <!-- 登入頁面 -->
+                      <form method="post" action="./login.jsp">
+                          <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;">登入</h1>
+                          <input type="email" name="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" required />
+                          <input type="password" name="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" required />
+                          <!-- Google reCAPTCHA v2 -->
+                          <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI"></div>
+                          <button style="background-color: #a59e94;color: #ffffff;border: 0px;">登入</button>
+                      </form>
+                  </div>
+                  
                     <!-- 轉換登入與註冊"文字提示" -->
                     <div class="overlay-container">
 

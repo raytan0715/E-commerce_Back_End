@@ -39,7 +39,6 @@
                 
                 out.println("登入成功");
                 // 重定向到 memberPage.jsp
-                session loginnumber=
                 response.sendRedirect("./memberPage.jsp");
                 return;
             } else {

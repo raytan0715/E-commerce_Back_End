@@ -9,7 +9,9 @@
 <html lang="en" data-bs-theme="auto">
 
 <head>
-    
+  <!-- 引用google reCaptcha驗證機制 -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
   <script src="./assets/js/color-modes.js"></script>
 
   <meta charset="utf-8">
@@ -51,6 +53,14 @@
 
   <!-- 登入註冊樣式檔  -->
   <link rel="stylesheet" href="./stylesheets/LoginArea.css"> 
+
+  
+  <script>
+    function onSubmit(token) {
+        document.getElementById("recaptchaResponse").value = token;
+        document.getElementById("loginForm").submit();
+    }
+    </script>
 
 </head>
 
@@ -136,15 +146,23 @@
                       </form>
                     </div>
                   
-                  <div class="form-container sign-in-container">
+                    <div class="form-container sign-in-container">
                       <!-- 登入頁面 -->
                       <form method="post" action="./login.jsp">
                           <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;">登入</h1>
                           <input type="email" name="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" required />
                           <input type="password" name="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" required />
-                          <button style="background-color: #a59e94;color: #ffffff;border: 0px;">登入</button>
+                          <!-- Google reCAPTCHA v2 -->
+                          <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
+                          <button id="submitBtn" style="background-color: #a59e94;color: #ffffff;border: 0px;" disabled>登入</button>
                       </form>
                   </div>
+                  
+                  <script>
+                  function enableBtn() {
+                      document.getElementById('submitBtn').disabled = false;
+                  }
+                  </script>
 
 
                     <!-- 轉換登入與註冊"文字提示" -->
