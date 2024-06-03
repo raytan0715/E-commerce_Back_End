@@ -2,6 +2,14 @@
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+<%
+    // 初始化購物車
+    if (session.getAttribute("cart") == null) {
+        session.setAttribute("cart", new HashMap<String, Integer>());
+    }
+    Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
+%>
 
 <!doctype html>
 
@@ -114,6 +122,7 @@
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
 
             <!-- 【購物車】 -->
+            
             <div id="cart">
 
               <!-- 購物車按鈕 --> 
@@ -245,9 +254,63 @@
                                   });
                               });
                           });
+
+                          
+                          String action = request.getParameter("action");
+                          String product = request.getParameter("product");
+
+                          if ("add".equals(action)) {
+                              if (cart.containsKey(product)) {
+                                  cart.put(product, cart.get(product) + 1);
+                              } else {
+                                  cart.put(product, 1);
+                              }
+                          } else if ("remove".equals(action)) {
+                              if (cart.containsKey(product)) {
+                                  int quantity = cart.get(product) - 1;
+                                  if (quantity > 0) {
+                                      cart.put(product, quantity);
+                                  } else {
+                                      cart.remove(product);
+                                  }
+                              }
+                          } else if ("delete".equals(action)) {
+                              cart.remove(product);
+                          };
+                          
                       </script>
 
-                        
+                      <%
+                      if (cart.isEmpty()) {
+                          out.println("<p>您的購物車是空的。</p>");
+                      } else {
+                          for (Map.Entry<String, Integer> entry : cart.entrySet()) {
+                              String productName = entry.getKey();
+                              int quantity = entry.getValue();
+                      %>
+                              <div class="cart-item">
+                                  <span><%= productName %></span>
+                                  <span>數量: <%= quantity %></span>
+                                  <form action="product_LoggedIn.jsp" method="post" style="display:inline;">
+                                      <input type="hidden" name="product" value="<%= productName %>">
+                                      <input type="hidden" name="action" value="add">
+                                      <button type="submit">增加</button>
+                                  </form>
+                                  <form action="product_LoggedIn.jsp" method="post" style="display:inline;">
+                                      <input type="hidden" name="product" value="<%= productName %>">
+                                      <input type="hidden" name="action" value="remove">
+                                      <button type="submit">減少</button>
+                                  </form>
+                                  <form action="product_LoggedIn.jsp" method="post" style="display:inline;">
+                                      <input type="hidden" name="product" value="<%= productName %>">
+                                      <input type="hidden" name="action" value="delete">
+                                      <button type="submit">刪除</button>
+                                  </form>
+                              </div>
+                      <%
+                          }
+                      }
+                      %>
                           
                         <!-- 計算總價 -->
                         <div class="cart-total">
@@ -258,16 +321,15 @@
                         <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
                         <div class="cart-but row" >
 
-                          <div class="col">
-                            <!-- 繼續購物時，就關閉當前購物車視窗 -->
-                            <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
-                          </div>
-                          <div class="col">
-                            <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
-                          </div>
+                            <div class="col">
+                              <!-- 繼續購物時，就關閉當前購物車視窗 -->
+                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
+                            </div>
+                            <div class="col">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./checkout.html'">
+                            </div>
 
-                      </div>
-
+                        </div>
 
                       </form>
 

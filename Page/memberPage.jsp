@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.text.DecimalFormat" %>
-<%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*" %>
 
@@ -371,36 +371,36 @@
 
                             <div class="modify text">
 
-                                <div class="rr">
-
-                                    <div class="info">
-                                        <p style="color: #6e573a;font-weight: 1000;font-size: 20px; text-align: center;">基本資料</p>
-                                        <form action="">
-                                            <div class="mod-txt">
-                                              <input type="text" name="username" id="AccountName" placeholder="Name" value="<%= userName %>">
-                                              <input type="text" name="phone" id="AccountPhone" placeholder="Phone" value="<%= userPhone %>">
-                                              <input type="date" name="birthday" id="AccountBirthday" placeholder="生日" value="<%= userBirthday %>" style="color: black;">
-                                              <input type="text" name="address" id="AccountAddress" placeholder="地址" value="<%= userAddress %>">
-                                            </div>
-                                            <input type="submit" value="更新資料" class="p-sub">
-                                        </form>
-                                    </div>
-
-                                    <div class="acc" >
-                                        <p style="color: #6e573a;font-weight: 1000;font-size: 20px; text-align: center;">帳號密碼</p>
-                                        <form action="">
-                                            <div class="mod-txt">
-                                                <input type="text" name="email" id="" placeholder="Email" value="<%= email %>">
-                                                <input type="text" name="password" id="" placeholder="Password" value="*****">
-                                            </div>
-                                            <input type="submit" value="更新資料" class="p-sub">
-                                        </form>
-                                        <h2 style="color: #6e573a;font-weight: 800;font-size: 16px;">*修改資料直接填入輸入格即可。*</h2>
-                                    </div>
-
+                              <div class="rr">
+                                <div class="info">
+                                  <p style="color: #6e573a;font-weight: 1000;font-size: 20px; text-align: center;">基本資料</p>
+                                  <form action="./updateInfo.jsp" method="post">
+                                      <div class="mod-txt">
+                                        <input type="text" name="username" id="AccountName" placeholder="Name" value="<%= userName %>">
+                                        <input type="text" name="phone" id="AccountPhone" placeholder="Phone" value="<%= userPhone %>">
+                                        <input type="date" name="birthday" id="AccountBirthday" placeholder="生日" value="<%= userBirthday %>" style="color: black;">
+                                        <input type="text" name="address" id="AccountAddress" placeholder="地址" value="<%= userAddress %>">
+                                      </div>
+                                      <input type="submit" value="更新資料" class="p-sub">
+                                  </form>
                                 </div>
-
+                              
+                                <div class="acc" >
+                                    <p style="color: #6e573a;font-weight: 1000;font-size: 20px; text-align: center;">帳號密碼</p>
+                                    <form action="./updatePassword.jsp" method="post">
+                                        <div class="mod-txt">
+                                            <input type="text" name="email" id="" placeholder="Email" value="<%= email %>">
+                                            <input type="password" name="password" id="" placeholder="New Password">
+                                        </div>
+                                        <input type="submit" value="更新資料" class="p-sub">
+                                    </form>
+                                    <h2 style="color: #6e573a;font-weight: 800;font-size: 16px;">*修改資料直接填入輸入格即可。*</h2>
+                                </div>
+                              
+                              </div>
+                             
                             </div>
+                            
 
                             <div class="record text" style="color: #6e573a;">
 

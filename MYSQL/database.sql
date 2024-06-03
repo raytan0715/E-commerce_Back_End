@@ -407,11 +407,12 @@ CREATE TABLE `membership` (
   PRIMARY KEY (`MemberID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `membership` VALUES
-(1,'11144155','12345','jay','11144155jay@gmail.com','0906692674','台北市信義區永吉路30巷101弄10號'),
-(2,'11144145','54321','alice','11144155jay@gmail.com','0901297374', '桃園市中壢區中北路200號');
+INSERT INTO `membership` (`MemberID`, `MemberAccount`, `MemberPassword`, `MemberName`, `MemberPhone`, `BirthdayDate`, `Address`) VALUES
+(1, '11144139jay@gmail.com', '12345', 'jay', '0906692674', NULL, '台北市信義區永吉路30巷101弄10號'),
+(2, '11144154jay@gmail.com', '54321', 'alice', '0901297374', NULL, '桃園市中壢區中北路200號');
 /*!40000 ALTER TABLE `membership` ENABLE KEYS */;
 UNLOCK TABLES;
+
 
 
 --

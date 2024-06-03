@@ -36,13 +36,15 @@
                 // 登入成功，設置會話屬性
                 session.setAttribute("userEmail", email);
                 session.setAttribute("MemberID", rs.getInt("MemberID"));
-            
+                
+                out.println("登入成功");
                 // 重定向到 memberPage.jsp
+                session loginnumber=
                 response.sendRedirect("./memberPage.jsp");
                 return;
-            }
-            else {
+            } else {
                 // 登入失敗，重定向到登入頁面並顯示錯誤消息
+                out.println("登入失敗: 無效的電子郵件或密碼");
                 response.sendRedirect("login.jsp?error=Invalid email or password");
             }
         }
