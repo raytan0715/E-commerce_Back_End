@@ -133,12 +133,12 @@
                 會員註冊/登入
             </button>
 
-            <!-- 會員註冊登入頁面 -->
+            <!-- 會員註冊登入頁面 --> 
             <div id="id01" class="modal">
 
                 <div class="container_Login" id="container">
-
-                    <div class="form-container sign-up-container">
+  
+                      <div class="form-container sign-up-container">
                         <!-- 註冊頁面 -->
                         <form method="post" action="./register.jsp">
                             <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;font-weight: 800;">註冊新會員</h1>
@@ -147,12 +147,13 @@
                             <input type="email" name="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" required />
                             <input type="password" name="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" required />
                             <input type="password" name="confirm_password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="確認密碼" required />
-
-                            <button style="background-color: #a59e94;color: #ffffff;border: 0px;">註冊</button>
+                            <!-- Google reCAPTCHA v2 -->
+                            <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
+                            <button id="submitBtn1" style="background-color: #a59e94;color: #ffffff;border: 0px;" disabled>註冊</button>
                         </form>
-                    </div>
+                      </div>
                     
-                    <div class="form-container sign-in-container">
+                      <div class="form-container sign-in-container">
                         <!-- 登入頁面 -->
                         <form method="post" action="./login.jsp">
                             <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;">登入</h1>
@@ -160,15 +161,28 @@
                             <input type="password" name="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" required />
                             <!-- Google reCAPTCHA v2 -->
                             <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
-                            <button id="submitBtn" style="background-color: #a59e94;color: #ffffff;border: 0px;" disabled>登入</button>
+                            <button id="submitBtn2" style="background-color: #a59e94;color: #ffffff;border: 0px;" disabled>登入</button>
                         </form>
                     </div>
                     
                     <script>
-                    function enableBtn() {
-                        document.getElementById('submitBtn').disabled = false;
-                    }
-                    </script>
+                      var recaptchaChecked = false;
+                      
+                      function enableBtn() {
+                          recaptchaChecked = true;
+                          document.getElementById('submitBtn1').disabled = false;
+                          document.getElementById('submitBtn2').disabled = false;
+                      }
+                      
+                      function checkRecaptcha() {
+                          if (!recaptchaChecked) {
+                              alert('請完成 reCAPTCHA 驗證');
+                              return false;
+                          }
+                          return true;
+                      }
+                      </script>
+  
                               
 
                     <!-- 轉換登入與註冊"文字提示" -->
