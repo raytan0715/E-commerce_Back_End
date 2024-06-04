@@ -81,24 +81,25 @@
           
 
           <!-- 搜尋欄 -->
-          <div class="col-sm searchBarCol">
-              
-              <form class="d-flex" style="width:750px;"> 
-                <input id="searchBar" class="form-control me-2 searchBar" type="search" placeholder="🔍 搜尋" aria-label="Search">
-                
-                <script>
-                  // 在輸入框獲得焦點時，添加特定的樣式
-                  document.getElementById("searchBar").addEventListener("focus", function() {
-                      this.classList.add("focused");
-                  });
+        <div class="col-sm searchBarCol">
 
-                  // 在輸入框獲得焦點時，移除特定的樣式
-                  document.getElementById("searchBar").addEventListener("blur", function() {
-                      this.classList.remove("focused");
-                  });
-                </script>
-              </form>
-            </div>
+          <form class="d-flex" action="./SearchProduct.jsp" method="get" style="width:750px;">
+            <input id="searchBar" class="form-control me-2 searchBar" name="keyword" type="search" placeholder="🔍 搜尋" aria-label="Search">
+        
+            <script>
+                // 在輸入框獲得焦點時，添加特定的樣式
+                document.getElementById("searchBar").addEventListener("focus", function() {
+                    this.classList.add("focused");
+                });
+        
+                // 在輸入框失去焦點時，移除特定的樣式
+                document.getElementById("searchBar").addEventListener("blur", function() {
+                    this.classList.remove("focused");
+                });
+            </script>
+        </form>
+          
+        </div>
 
           <!-- 右側兩個按鈕欄位 -->
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">

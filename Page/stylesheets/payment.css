@@ -1,0 +1,715 @@
+/* 全局設定 */
+
+body{
+    font-family: "Noto Sans TC", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #fff;
+  }
+  
+  /* 滑動至頂部按鈕 
+  ----------------------- */
+  .slider {
+    position: fixed; /* 固定位置 */
+    bottom: 40px; /* 距離底部 40px */
+    right: 27px; /* 距離右邊 27px */
+    width: 50px;
+    height: 50px;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 保證在最上層 */
+  }
+  
+  .top {
+    width: 42px;
+    height: 42px;
+    color: rgb(172, 186, 198);
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .top:hover {
+    font-size: 60px;
+    bottom: 35px; 
+    right: 22px;
+    width: 70px;
+    height: 70px;
+    transition: 0.3s;
+    color: #333333;
+  }
+  
+    /* 上方欄位 (工具欄)
+  -------------------------------------------------- */
+  .navbar-expand-lg{
+    background-color: #cec0b4;
+    height:auto;
+    padding: 0px;
+    border: 0px;
+    margin: 0px;
+  }
+  .navOneRow{
+    width: 100%;
+    height:100%;
+    margin: 0px;
+  }
+
+
+  .navLogoCol{ /* nav logo 容器 */
+    /*background-color: aqua;*/
+
+  }
+  .navLogo{
+    display: inline-block;
+    position: relative;
+    cursor: default;
+    width: 100%;
+    /*background-color: #535758;*/
+    margin-left: 210px; /* 將左側邊距自動設置為最大化，使圖像水平向右對齊 */
+    width: 115px; /*設定和圖片寬度差不多寬*/
+  }
+  .navLogo img {
+    width: 105px;
+    height: auto; /* 自動計算高度，保持圖片比例 */
+    display: block; /* 設定為區塊元素 */
+    /*padding-right: 25px;*/
+    /*background-color: #796146;*/
+  }
+  
+
+  .searchBarCol{ /* searchBar 搜尋欄容器 */
+    width: auto; /*搜尋欄位容器隨搜尋欄的寬度而自動改變*/
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 20px;
+    /*background-color: brown;*/
+  }
+  
+  .searchBar{
+    background-color: #ffffff;
+  }
+  
+  .searchBar::placeholder { /*更改搜尋本字的顏色*/
+    color: #8b7e71; 
+    font-weight: bold;
+  
+  }
+  
+  .searchBar.focused {
+    background-color: #ffffff; /* 修改為您想要的背景顏色 */
+    color: #8b7e71; /* 修改為您想要的文字顏色 */
+    font-weight: bold;
+    
+  }
+  
+  .BuyCart_and_Account{
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 20px;
+  }
+
+  /* 工具列第二欄下拉式選單*/
+  
+  .navCol-2  {
+    list-style: none;
+    margin: 0px;
+    border: 0px;
+    background-color: #f7f7f7;
+    width: 100%;
+    margin-left: 0px;
+    
+  }
+  
+  
+  .dropdown-menu{
+    background: none;
+    /*border: 1px solid #7b6b5e; /* 添加邊框 */
+    border: 0px;
+  }
+  
+  .nav-link:hover{
+    background-color: #ece3d5;
+  }
+  
+  
+  .dropdown-item{
+    background-color: #eacfa8;
+    padding: 5px;
+    color:#3f3f3f;
+    text-align:justify;
+    font-weight: bold;
+    border: 1px solid #000; /* 添加邊框 */
+    
+  }
+  .dropdown-item:hover{
+    background-color: #fef6ea;
+    color: #3f3f3f;
+  }
+  
+  /* 中間選單
+  -------------------------------------------------- */
+  
+  .CategoryList_Container{
+    /*background-color: rgb(255, 159, 127);*/
+    display: flex;
+    justify-content: center; /* 水平排列靠中間對齊 */
+    margin-bottom: 15px;
+  }
+  
+  .list {
+    display: flex;
+    flex-direction: row; /* 改為水平排列 */
+    width: 50%;        
+    /*margin-bottom: 10px;*/
+    justify-content: center; /* 水平排列時靠左對齊 */
+    align-items:flex-end; /* 垂直方向居中對齊 */
+    /*background-color: rgb(225, 255, 0);*/
+  }
+  
+  .list label {
+    font-size: 18px;
+    letter-spacing: 2px;
+    line-height: 50px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    color: rgb(0, 0, 0);
+    z-index: 12;
+    /*margin-right: 10px;*/
+  }
+  
+  /* 原初樣式 */
+  .modify,
+  .record {
+      background-color: #ada090;
+      margin-right: 25px;
+      border-radius: 20px;
+      border: 0px;
+      cursor: pointer; /* 將鼠標光標改為手型 */
+      transition: background-color 0.3s; /* 添加過渡效果 */
+  }
+  
+  .modify .title,
+  .record .title {
+      color: #fff;
+      font-weight: 800;
+  }
+  
+  /* 當radio被選中時的樣式 - 目前這個沒有用可以忽略*/
+  #modify:checked + .modify,
+  #record:checked + .record {
+      background-color: #393939;
+      color: #bcbcbc;
+  }
+  
+  .modify:hover
+  .record:hover{
+    background-color: #393939;
+    color: #bcbcbc;
+  }
+  
+  #modify:checked~.text-content .modify,
+  #record:checked~.text-content .record {
+    display: block;
+  }
+  .content input {
+    display: none;
+  }
+  
+  /*---*/
+  
+  .content .text-content { 
+    width: 70%; /* 可以調整個人資料在容器中的位置 */
+    height: 100%;
+  }
+  .content .text {
+    display: none;
+  }
+  .content .text .title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .content .text p {
+    text-align: justify;
+  }
+  
+  
+  /* 個人與訂單資料
+  -------------------------------------------------- */
+  
+  .PersonalInfo_Container {
+    width: 100%;
+    height: 100%;
+    display: flex;             /*置中*/
+    justify-content: center;   /*置中*/
+    align-items: center;       /*置中*/
+    
+  }
+  
+  .container2 {
+    position: relative;
+    height: 500px;
+    width: 950px;
+    /*margin-top: 25px;*/
+    margin-bottom: 50px;
+    background-color: rgba(245, 245, 245, 0.932);
+    border-radius: 30px;
+    background-color: #f0ece8; /* 新增的样式 */
+    /*padding: 20px;          /* 新增的样式 */
+  }
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  
+  /*容器*/
+  .PersonalAndOrder_Container{
+    /*background-color: blue;*/
+    display: flex;
+    justify-content: center;
+  }
+  
+  .text-content input {
+    display: block;
+  }
+  .p-table {
+    position: absolute;
+    top: 80px;
+  }
+  .p-table td {
+    padding: 10px;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  
+  .t-left{
+    text-align: right;
+    margin-right: 30px;
+  }
+  
+  /* ========== 修改資料 ========== */
+  .rr {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 15%;
+  }
+  .rr .info{
+    margin-right: 50px;
+    text-align: center;
+  }
+  .rr p {
+    font-family: 'GenRyuMin-B';
+    letter-spacing: 1px;
+    font-size: 18px;
+  }
+  .mod-txt input{
+    width: 300px;
+    font-family: 'Mukta', sans-serif;
+    font-size: 16px;
+    color: #202020;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #202020;
+    padding: 2px 0px;
+    letter-spacing: 1px;
+    margin: 20px 0px;
+    outline: none;  /*點擊時不要出現邊框*/
+  }
+  
+  /* 送出按鈕 */
+  .p-sub {
+    font-size: 14px;
+    letter-spacing: 3px;
+    padding: 8px 40px;
+    color: #FFFFFF;
+    background-color: #353535;
+    border: 1px solid #353535;
+    cursor: pointer;
+    transition: .3s;
+    margin: 40px 0px 0px 75px;
+  }
+  .p-sub:hover{
+    cursor: pointer;
+    color: #000;
+    background: none;
+  }
+  
+  .acc h2{
+    font-size: 15px;
+    font-weight: normal;
+    letter-spacing: 2px;
+    margin-top: 125px;
+    margin-left: 20px;
+  }
+  
+  /* 訂單紀錄 */
+  .r-table{
+    position: absolute;
+    top: 15%;
+    width: 72%;
+    border-collapse: collapse;
+  }
+  .r-table th{
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding-bottom: 10px;
+    text-align: left;
+  }
+  .r-table td{
+    font-size: 16px;
+    letter-spacing: 1px;
+    padding: 5px 0px;
+  }
+  .r-table td span{
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+  
+  
+  
+  /* payment area ------- */
+
+
+  .paymentArea{
+    background-color: #fff;
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+
+  .payment-cont{
+    margin: 20px 200px 0 200px;
+    justify-content: center;
+  }
+  .payment-header{
+    display: flex;
+    flex-wrap: wrap;
+    border: solid 2px #ECE9B7;
+    box-shadow: inset 0px 2px 2px 0 #d0ce9f;
+    border-radius: 25px 25px 1px 1px;
+    background-color: #f6f3ba56;
+    width: 250px;
+    text-align: center;
+    justify-content: center;
+    height: 60px;
+  }
+
+  .payment-header iconify-icon{
+    font-size: 44px;
+    padding: 10px;
+    margin-top: -2px;
+    color: #462804;
+
+  }
+
+  .payment-header h5{
+    font-size: 20px;
+    padding-top: 7px;
+    text-align: center;
+    margin-left: 8px;
+    color: #462804;
+    font-weight: bold;
+  }
+
+
+
+  /* payment information */
+.payment-info{
+    border: solid 3px #ECE9B7;
+    margin-top: -3px;
+    border-radius: 1px 20px 20px 20px;
+    background-color: #f6f3ba44;
+    padding: 50px 80px 20px 60px;
+    box-shadow:  5px 3px 0 #ECE9B7,  6px 6px 4px rgba(0, 0, 0, 0.34);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*background-color: rgb(0, 90, 90);*/
+}
+
+.form-group {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: auto;
+    height: auto;
+    /*background-color: aqua;*/
+}
+
+.option-control{
+  font-size: 15px;
+  width: 150px;
+}
+
+
+.form-group label {
+    font-size: 20px;
+    color: #462804;
+    font-weight: bold;
+    margin-right: 15px; /* Add some space between the label and the input */
+    width: 30%; /* Adjust the width as needed */
+    text-align: right; /* Right justify the labels */
+}
+
+.form-control {
+    width: 90%; /* Ensure the input takes the remaining space */
+    height: 40px;
+    padding: 10px 30px;
+    height: 45px;
+    border: 1px solid #D9D9D9; /* Adjust border color */
+    border-radius: 5px;
+    font-size: 16px;
+    color: #462804; /* Adjust text color */
+    background-color: #D9D9D9; /* Adjust background color */
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    background-color: #D9D9D9; /* Ensure the background color stays the same on focus */
+    color: #462804; 
+}
+
+.form-control::placeholder {
+    color: #777169; /* Placeholder text color */
+}
+
+.input-container {
+    width: 100%; /* Make the container take the full width */
+}
+
+
+
+
+
+select {
+    padding: 4px auto 4px 10px;
+    border: 1px solid #170606;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    color: #42392F;
+    background-color: #fff;
+    width: 21%;
+    margin-right: 10px;
+    height: 25px;
+    box-sizing: border-box;
+
+  }
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    border: 3px solid #CEC0B3;
+    position: relative;
+    border-radius: 5px;
+    width: 580px;
+    justify-items: center;
+    text-align: center;
+  }
+
+  legend{
+    color: #462804;
+    top: -20px; /* Adjust this value to fit your design */
+    left: 25px;
+    font-weight: bold;
+    position: absolute;
+    background-color: rgb(254, 254, 237);
+    width: 130px;
+    text-align: center;
+  }
+
+  textarea{
+    background-color: #fff;
+    border: 1px solid #d5d5d5;
+    border-radius: 5px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    padding: 10px;
+    color: #42392F;
+  }
+
+  .form-group-pay{
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    margin-bottom: 30px;
+    margin-left: -20px;
+    margin-right: 50px;
+    justify-self: space-between;
+}
+
+.form-group-pay label{
+    font-size: 20px;
+    color: #462804;
+    font-weight: bold;
+    margin-right: 5px; /* Add some space between the label and the input */
+    width: 30%; /* Adjust the width as needed */
+    text-align: right; /* Right justify the labels */
+}
+
+/* .form-group-pay input{
+    background-color: white;
+    border: 1px solid #bdbdbd ;
+} */
+
+/* 基本分隔線設定 */
+.separator {
+    border-top: 1.8px solid #d9d4d4; /* 黑色分隔線，1px 寬度 */
+    width: 100%; /* 調整線長度，使用百分比或像素 */
+    max-width: 1180px; /* 最大寬度 */
+    margin: 30px auto; /* 與其他元素間距增大，中間對齊 */
+    position: relative;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.separatorText{
+    position: absolute;
+    color: #ababab;
+    top: -12px; /* Adjust this value to center the text vertically on the line */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fffee8;
+    padding: 0 10px;
+    font-size: 18px;
+}
+
+.paymentInfoInputs{
+  margin: 30px 30px 40px 30px;
+  width: 480px;
+  justify-content: center;
+  text-align: center;
+}
+
+.pay-form{
+    display: block;
+    margin-top: 20px;
+    width: 95%;
+    padding: 20px;
+    height: 50px;
+    border: 1px solid #D9D9D9; /* Adjust border color */
+    border-radius: 5px;
+    font-size: 16px;
+    color: #462804; /* Adjust text color */
+    background-color: #D9D9D9; /* Adjust background color */
+}
+
+.inline-inputs {
+  display: flex;
+  margin-top: 10px;
+  width: auto;
+  color: #462804; /* Adjust text color */
+}
+
+.inline-inputs .pay-form {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.fieldset-legend{
+  margin:50px;
+  margin-left: 150px;
+  width: 600px;
+  display: flex;
+}
+
+#date::placeholder {
+    color: #9a9389; /* Placeholder text color */
+}
+
+input[type="date"]::placeholder {
+    color: #777169; /* Change this to your desired color */
+    font-size: 14px; /* Change this to your desired font size */
+}
+
+.smallnotes{
+    position: flex;
+    color: #ababab;
+    left: 50%;
+    background-color: #fffee8;
+    text-align: center;
+    font-size: 18px;
+}
+
+.submitarea{
+    display: flex;
+    align-items: center;
+    margin: 30px auto 40px auto;
+    justify-content: center;
+}
+
+.paymentbtn{
+    background-color: #fffee8;
+    color: #462804;
+    box-shadow: inset 0px 4px 4px 0 #ccc997, 0 4px 4px rgba(0, 0, 0, 0.34);
+    width: 130px;
+    font-size: 20px;
+    font-weight: bold;
+    height: 60px;
+    border-radius: 10px;
+    border: none;
+
+}
+
+
+
+/* radio part */
+.custom-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.custom-radio input[type="radio"] {
+    display: none;
+}
+
+.custom-radio label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.custom-radio label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+}
+
+.custom-radio input[type="radio"]:checked + label::before {
+    background-color: #007bff;
+}
+
+.custom-radio input[type="radio"]:checked + label::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 10px;
+    width: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
