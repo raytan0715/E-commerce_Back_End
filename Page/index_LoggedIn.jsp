@@ -104,6 +104,7 @@
             
           </div>
 
+
           <!-- 右側兩個按鈕欄位 -->
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
 
@@ -123,6 +124,7 @@
 
                   <div class="sidebarinner">
 
+                      <!-- 購物車表單 -->
                       <form action="">
 
                           <!-- 購物車商品之單頁 商品01 -->
@@ -135,11 +137,12 @@
                                       <p>一盒裝 24入</p>
                                   </div>
 
-                                  <div class="cp2">   <!-- 數量增減 -->
-                                    <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input id="quantity" type="text" value="1"/>
-                                    <input id="add" type="button" value="+"/> 
+                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input class="quantity" type="text" value="1"/>
+                                    <input class="add" type="button" value="+"/> 
                                   </div>
+                            
                               </div>
 
                               <div class="cp3">   <!-- 商品價格 -->
@@ -159,11 +162,11 @@
                                       <h1>【韓味不二】香蕉牛奶</h1>
                                       <p>一瓶(200ml)</p>
                                   </div>
-                                  <div class="cp2">   <!-- 數量增減 -->
-                                      <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                      <input id="quantity" type="text" value="1"/>
-                                      <input id="add" type="button" value="+"/> 
-                                  </div>
+                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input class="quantity" type="text" value="1"/>
+                                    <input class="add" type="button" value="+"/> 
+                                </div>                            
                               </div>
 
                               <div class="cp3">   <!-- 商品價格 -->
@@ -183,11 +186,11 @@
                                     <h1>【韓味不二】香蕉牛奶</h1>
                                     <p>一瓶(200ml)</p>
                                 </div>
-                                <div class="cp2">   <!-- 數量增減 -->
-                                    <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input id="quantity" type="text" value="1"/>
-                                    <input id="add" type="button" value="+"/> 
-                                </div>
+                                <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                  <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                  <input class="quantity" type="text" value="1"/>
+                                  <input class="add" type="button" value="+"/> 
+                              </div>
                             </div>
 
                             <div class="cp3">   <!-- 商品價格 -->
@@ -197,7 +200,7 @@
                             <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
 
                         </div>
-                        
+
                         <!-- 購買數量增減控制 -->
                         <script>
                           document.addEventListener("DOMContentLoaded", function() {
@@ -238,6 +241,7 @@
                               });
                           });
                       </script>
+
                         
                           
                         <!-- 計算總價 -->
@@ -250,10 +254,11 @@
                         <div class="cart-but row" >
 
                             <div class="col">
-                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="location.href='shop.html'">
+                              <!-- 繼續購物時，就關閉當前購物車視窗 -->
+                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
                             </div>
                             <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='checkout.html'">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
                             </div>
 
                         </div>
@@ -267,11 +272,53 @@
             </div>
 
             <!-- 【會員註冊登入】 -->
-
+            <%
+                // 獲取當前用戶的電子郵件
+                String email = (String) session.getAttribute("userEmail");
+            
+                // 設置資料庫連接相關變數
+                Connection conn = null;
+                PreparedStatement pstmt = null;
+                ResultSet rs = null;
+            
+                String userName = "";
+                String userPhone = "";
+                String userBirthday = "";
+                String userAddress = "";
+            
+                try {
+                    // 連接到 MySQL 資料庫
+                    String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    conn = DriverManager.getConnection(url, "root", "Ray_930715");
+            
+                    // 獲取用戶資料
+                    String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
+                    
+                    // 使用 PreparedStatement 防止 SQL 注入
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, email);
+            
+                    // 執行查詢操作
+                    rs = pstmt.executeQuery();
+            
+                    if (rs.next()) {
+                        userName = rs.getString("MemberName");
+                        userPhone = rs.getString("MemberPhone");
+                        userBirthday = rs.getString("BirthdayDate");
+                        userAddress = rs.getString("Address");
+                    }
+            
+                    // 關閉資料庫連接
+                    conn.close();
+                } catch (SQLException sExec) {
+                    out.println("SQL 錯誤: " + sExec.toString());
+                }
+            %>
             <!-- 會員註冊與登入按鈕 -->
             <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
-               OOO 您好！
+              <%= userName %> 您好！
             </button>
 
             <!-- 登出按鈕 -->
@@ -420,9 +467,9 @@
         <div class="TrendingProduct_CardContainer">
             <%
             // JDBC 變數宣告
-            Connection conn = null;
+            Connection con = null;
             Statement stmt = null;
-            ResultSet rs = null;
+            ResultSet rst = null;
     
             // 順序圖標的陣列
             String[] rankingImages = {"firstPlace.png", "secondPlace.png", "thirdPlace.png"};
@@ -435,23 +482,23 @@
                 String dbPassword = "Ray_930715";
     
                 // 建立連接
-                conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+                con = DriverManager.getConnection(url, dbUsername, dbPassword);
     
-                if (conn.isClosed()) {
+                if (con.isClosed()) {
                     out.println("連線建立失敗");
                 } else {
-                    stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                    stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                     
                     // 查詢庫存數量最少的商品
                     String sql = "SELECT * FROM finalproject.inventoryquantity ORDER BY Quantity ASC LIMIT 3";
-                    rs = stmt.executeQuery(sql);
+                    rst = stmt.executeQuery(sql);
     
                     int i = 0;
-                    while (rs.next() && i < rankingImages.length) {
-                        String productId = rs.getString("ProductID");
-                        String imageUrl = rs.getString("Producturl");
-                        String productName = rs.getString("ProductName");
-                        int productPrice = rs.getInt("Price");
+                    while (rst.next() && i < rankingImages.length) {
+                        String productId = rst.getString("ProductID");
+                        String imageUrl = rst.getString("Producturl");
+                        String productName = rst.getString("ProductName");
+                        int productPrice = rst.getInt("Price");
             %>
 
             <!-- 人氣排行商品圖卡-->

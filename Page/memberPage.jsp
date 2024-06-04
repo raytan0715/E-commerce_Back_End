@@ -4,6 +4,14 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*" %>
 
+<%
+    // 初始化購物車
+    if (session.getAttribute("cart") == null) {
+        session.setAttribute("cart", new HashMap<String, Integer>());
+    }
+    Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
+%>
+
 <!doctype html>
 
 <html lang="en" data-bs-theme="auto">
@@ -132,6 +140,7 @@
 
                   <div class="sidebarinner">
 
+                      <!-- 購物車表單 -->
                       <form action="">
 
                           <!-- 購物車商品之單頁 商品01 -->
@@ -144,11 +153,12 @@
                                       <p>一盒裝 24入</p>
                                   </div>
 
-                                  <div class="cp2">   <!-- 數量增減 -->
-                                    <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input id="quantity" type="text" value="1"/>
-                                    <input id="add" type="button" value="+"/> 
+                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input class="quantity" type="text" value="1"/>
+                                    <input class="add" type="button" value="+"/> 
                                   </div>
+                            
                               </div>
 
                               <div class="cp3">   <!-- 商品價格 -->
@@ -168,11 +178,11 @@
                                       <h1>【韓味不二】香蕉牛奶</h1>
                                       <p>一瓶(200ml)</p>
                                   </div>
-                                  <div class="cp2">   <!-- 數量增減 -->
-                                      <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                      <input id="quantity" type="text" value="1"/>
-                                      <input id="add" type="button" value="+"/> 
-                                  </div>
+                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input class="quantity" type="text" value="1"/>
+                                    <input class="add" type="button" value="+"/> 
+                                </div>                            
                               </div>
 
                               <div class="cp3">   <!-- 商品價格 -->
@@ -192,11 +202,11 @@
                                     <h1>【韓味不二】香蕉牛奶</h1>
                                     <p>一瓶(200ml)</p>
                                 </div>
-                                <div class="cp2">   <!-- 數量增減 -->
-                                    <input id="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input id="quantity" type="text" value="1"/>
-                                    <input id="add" type="button" value="+"/> 
-                                </div>
+                                <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                  <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                  <input class="quantity" type="text" value="1"/>
+                                  <input class="add" type="button" value="+"/> 
+                              </div>
                             </div>
 
                             <div class="cp3">   <!-- 商品價格 -->
@@ -206,6 +216,49 @@
                             <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
 
                         </div>
+
+                        <!-- 購買數量增減控制 -->
+                        <script>
+                          document.addEventListener("DOMContentLoaded", function() {
+                              document.body.addEventListener('click', function(event) {
+                                  if (event.target.classList.contains('min') || event.target.classList.contains('add')) {
+                                      const cp2 = event.target.closest('.cp2');
+                                      const quantityInput = cp2.querySelector('.quantity');
+                                      let currentValue = parseInt(quantityInput.value);
+                      
+                                      const min = parseInt(cp2.getAttribute('data-min'));
+                                      const max = parseInt(cp2.getAttribute('data-max'));
+                      
+                                      if (event.target.classList.contains('min') && currentValue > min) {
+                                          quantityInput.value = currentValue - 1;
+                                      }
+                      
+                                      if (event.target.classList.contains('add') && currentValue < max) {
+                                          quantityInput.value = currentValue + 1;
+                                      }
+                                  }
+                              });
+                      
+                              // 避免非數值資料輸入進數量欄位
+                              document.querySelectorAll('.quantity').forEach(input => {
+                                  input.addEventListener('input', function() {
+                                      let value = this.value.replace(/[^0-9]/g, '');
+                                      const cp2 = this.closest('.cp2');
+                                      const max = parseInt(cp2.getAttribute('data-max'));
+
+                                      // 數量欄位限制購買數量，當輸入超過最大數量，則予以提醒。
+                                      if (value > max) {
+                                          alert(`最多只能購買 ${max} 個`);
+                                          this.value = '';
+                                      } else {
+                                          this.value = value;
+                                      }
+                                  });
+                              });
+                          });
+                      </script>
+
+                        
                           
                         <!-- 計算總價 -->
                         <div class="cart-total">
@@ -217,10 +270,11 @@
                         <div class="cart-but row" >
 
                             <div class="col">
-                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="location.href='./shop.html'">
+                              <!-- 繼續購物時，就關閉當前購物車視窗 -->
+                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
                             </div>
                             <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./checkout.html'">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
                             </div>
 
                         </div>
@@ -389,8 +443,7 @@
                                         <input type="date" name="birthday" id="AccountBirthday" placeholder="生日" value="<%= userBirthday %>" style="color: black;">
                                         <input type="text" name="address" id="AccountAddress" placeholder="地址" value="<%= userAddress %>">
                                       </div>
-                                      <!-- Google reCAPTCHA v2 -->
-                                      <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
+                                      
                                       <input type="submit" value="更新資料" class="p-sub" id="submitBtn1" disabled>
                                   </form>
                                 </div>
@@ -402,11 +455,12 @@
                                             <input type="text" name="email" id="" placeholder="Email" value="<%= email %>">
                                             <input type="password" name="password" id="" placeholder="New Password">
                                         </div>
-                                        <!-- Google reCAPTCHA v2 -->
-                                        <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
+                                        
                                         <input type="submit" value="更新資料" class="p-sub" id="submitBtn2" disabled>
                                     </form>
                                     <h2 style="color: #6e573a;font-weight: 800;font-size: 16px;">*修改資料直接填入輸入格即可。*</h2>
+                                    <!-- Google reCAPTCHA v2 -->
+                                    <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
                                 </div>
                               </div>
                              

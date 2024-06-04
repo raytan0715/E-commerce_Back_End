@@ -1,5 +1,6 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*" %>
+<%@ page pageEncoding="UTF-8" %>
 
 <%
     // 設置發送到資料庫的字符編碼為UTF-8
@@ -15,7 +16,10 @@
     // 檢查參數是否為null或為空
     if (username == null || phone == null || email == null || password == null || confirm_password == null ||
         username.isEmpty() || phone.isEmpty() || email.isEmpty() || password.isEmpty() || confirm_password.isEmpty()) {
-        response.sendRedirect("register.jsp?error=Missing required fields");
+        out.println("<script type=\"text/javascript\">");
+        out.println("alert('缺少必填欄位');");
+        out.println("window.location.href = 'register.jsp';");
+        out.println("</script>");
         return;
     }
 
@@ -32,7 +36,11 @@
 
         // 檢查連接是否成功
         if (conn.isClosed()) {
-            out.println("連接失敗");
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('連接失敗');");
+            out.println("window.location.href = 'index.jsp';");
+            out.println("</script>");
+            return;
         } else {
             // 確認密碼是否匹配
             if (password.equals(confirm_password)) {
@@ -63,17 +71,26 @@
                 response.sendRedirect("./memberPage.jsp");
                 return;
             } else {
-                // 密碼不匹配，重定向到註冊頁面並顯示錯誤消息
-                response.sendRedirect("register.jsp?error=Password does not match");
+                // 密碼不匹配，使用 JavaScript alert 顯示錯誤訊息並重定向到 register.jsp
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('密碼不匹配');");
+                out.println("window.location.href = './index.jsp';");
+                out.println("</script>");
+                return;
             }
         }
-
-        // 關閉資料庫連接
-        conn.close();
     } catch (ClassNotFoundException e) {
-        out.println("找不到JDBC驅動程序類：" + e.toString()); // 捕獲JDBC驅動程序類未找到異常並輸出
+        out.println("<script type=\"text/javascript\">");
+        out.println("alert('找不到JDBC驅動程序類：" + e.toString() + "');");
+        out.println("window.location.href = './index.jsp';");
+        out.println("</script>");
+        return;
     } catch (SQLException sExec) {
-        out.println("SQL錯誤：" + sExec.toString()); // 捕獲SQL異常並輸出
+        out.println("<script type=\"text/javascript\">");
+        out.println("alert('SQL錯誤：" + sExec.toString() + "');");
+        out.println("window.location.href = './index.jsp';");
+        out.println("</script>");
+        return;
     } finally {
         if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
         if (conn != null) try { conn.close(); } catch (SQLException ignore) {}

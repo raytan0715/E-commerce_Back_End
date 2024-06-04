@@ -2,6 +2,17 @@
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
+<%@ page language="java" import="java.util.*" %>
+
+<%
+// 初始化購物車
+if (session.getAttribute("cart") == null) {
+    session.setAttribute("cart", new HashMap<String, Integer>());
+}
+Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
+%>
 <!doctype html>
 
 <html lang="en" data-bs-theme="auto">
@@ -253,7 +264,7 @@
                               <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
                             </div>
                             <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./checkout.html'">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
                             </div>
 
                         </div>
@@ -267,17 +278,65 @@
             </div>
 
             <!-- 【會員註冊登入】 -->
+            <%
+    
 
-            <!-- 會員註冊與登入按鈕 -->
-            <button onclick="location.href='./memberPage.html'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+              // 獲取當前用戶的電子郵件
+              String email = (String) session.getAttribute("userEmail");
+
+              // 設置資料庫連接相關變數
+              Connection con = null;
+              PreparedStatement pstm = null;
+              ResultSet rst = null;
+
+              String userName = "";
+              String userPhone = "";
+              String userBirthday = "";
+              String userAddress = "";
+
+              try {
+                  // 連接到 MySQL 資料庫
+                  String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+                  Class.forName("com.mysql.cj.jdbc.Driver");
+                  con = DriverManager.getConnection(url, "root", "Ray_930715");
+
+                  // 獲取用戶資料
+                  String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
+
+                  // 使用 PreparedStatement 防止 SQL 注入
+                  pstm = con.prepareStatement(sql);
+                  pstm.setString(1, email);
+
+                  // 執行查詢操作
+                  rst = pstm.executeQuery();
+
+                  if (rst.next()) {
+                      userName = rst.getString("MemberName");
+                      userPhone = rst.getString("MemberPhone");
+                      userBirthday = rst.getString("BirthdayDate");
+                      userAddress = rst.getString("Address");
+                  }
+
+                  // 關閉資料庫連接
+                  con.close();
+              } catch (SQLException sExec) {
+                  out.println("SQL 錯誤: " + sExec.toString());
+              } finally {
+                  if (rst != null) try { rst.close(); } catch (SQLException ignore) {}
+                  if (pstm != null) try { pstm.close(); } catch (SQLException ignore) {}
+                  if (con != null) try { con.close(); } catch (SQLException ignore) {}
+              }
+          %>
+           <!-- 【會員註冊登入】 -->
+            <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
-               OOO 您好！
+              <%= userName %> 您好！
             </button>
 
-            <!-- 登出按鈕 -->
-            <button onclick="location.href='./index.html'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
-              <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
-              登出
+          <!-- 登出按鈕 -->
+            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+                <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
+                登出
             </button>
 
             <!-- 購物車所需js檔 -->
@@ -376,7 +435,7 @@
 
             <div class="pro">
 
-              <img src="<%= imageUrl %>" alt="<%= productName %>">
+              <img src="<%= imageUrl %>" alt="<%= productName %>" >
 
                 <div class="pro-name">
                     <h5><%= productName %></h5>

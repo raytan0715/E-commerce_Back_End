@@ -1,3 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+
 <!doctype html>
 
 <html lang="en" data-bs-theme="auto">
@@ -6,7 +12,7 @@
 
   <head>
     
-    <script src="../assets/js/color-modes.js"></script>
+    <script src="./assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +31,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 使用font-awesome線上免下載圖標(icon) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -43,13 +49,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- 本html樣式檔 -->
-    <link href="stylesheets/payment.css" rel="stylesheet">
+    <link href="./stylesheets/payment.css" rel="stylesheet">
 
     <!-- 登入註冊樣式檔  -->
-    <link rel="stylesheet" href="stylesheets/LoginArea.css"> 
+    <link rel="stylesheet" href="./stylesheets/LoginArea.css"> 
 
     <!-- 購物車樣式檔 -->
-    <link rel="stylesheet" href="stylesheets/BuyCart.css">
+    <link rel="stylesheet" href="./stylesheets/BuyCart.css">
 
   </head>
 
@@ -68,8 +74,8 @@
           <div class="col-sm navLogoCol">
             <div class="navLogo" >
               <!-- Logo 點擊回到登入後主頁 -->
-              <a href="/index_LoggedIn.html">
-              <img src="/picture/material/navPic/navLogo.png" alt="navLogoPic">
+              <a href="./index_LoggedIn.html">
+              <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
               </a>
             </div>
           </div>
@@ -120,7 +126,7 @@
 
                           <!-- 購物車商品之單頁 商品01 -->
                           <div class="cart-p">
-                              <img src="picture/material/productPic/snacks/snacks_2.PNG">
+                              <img src="./picture/material/productPic/snacks/snacks_2.PNG">
                               <div>
 
                                   <div class="cp1">   <!--商品名稱-->
@@ -147,7 +153,7 @@
                           <!-- 購物車商品之單頁 商品02 -->
                           <div class="cart-p">
 
-                              <img src="picture/material/productPic/drinks/banana.jpg">
+                              <img src="./picture/material/productPic/drinks/banana.jpg">
                               <div>
                                   <div class="cp1">   <!--商品名稱-->
                                       <h1>【韓味不二】香蕉牛奶</h1>
@@ -171,7 +177,7 @@
                           <!-- 購物車商品之單頁 商品03 -->
                           <div class="cart-p">
 
-                            <img src="picture/material/productPic/drinks/banana.jpg">
+                            <img src="./picture/material/productPic/drinks/banana.jpg">
                             <div>
                                 <div class="cp1">   <!--商品名稱-->
                                     <h1>【韓味不二】香蕉牛奶</h1>
@@ -249,7 +255,7 @@
                               <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
                             </div>
                             <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='payment.html'">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.html'">
                             </div>
 
                         </div>
@@ -263,21 +269,63 @@
             </div>
 
             <!-- 【會員註冊登入】 -->
-
+            <%
+                // 獲取當前用戶的電子郵件
+                String email = (String) session.getAttribute("userEmail");
+            
+                // 設置資料庫連接相關變數
+                Connection conn = null;
+                PreparedStatement pstmt = null;
+                ResultSet rs = null;
+            
+                String userName = "";
+                String userPhone = "";
+                String userBirthday = "";
+                String userAddress = "";
+            
+                try {
+                    // 連接到 MySQL 資料庫
+                    String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    conn = DriverManager.getConnection(url, "root", "Ray_930715");
+            
+                    // 獲取用戶資料
+                    String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
+                    
+                    // 使用 PreparedStatement 防止 SQL 注入
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, email);
+            
+                    // 執行查詢操作
+                    rs = pstmt.executeQuery();
+            
+                    if (rs.next()) {
+                        userName = rs.getString("MemberName");
+                        userPhone = rs.getString("MemberPhone");
+                        userBirthday = rs.getString("BirthdayDate");
+                        userAddress = rs.getString("Address");
+                    }
+            
+                    // 關閉資料庫連接
+                    conn.close();
+                } catch (SQLException sExec) {
+                    out.println("SQL 錯誤: " + sExec.toString());
+                }
+            %>
             <!-- 會員註冊與登入按鈕 -->
-            <button onclick="location.href='memberPage.html'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
-               OOO 您好！
+              <%= userName %> 您好！
             </button>
 
             <!-- 登出按鈕 -->
-            <button onclick="location.href='index.html'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
               登出
             </button>
 
             <!-- 購物車所需js檔 -->
-            <script src="javascript/h.js" charset="utf-8"></script>
+            <script src="./javascript/h.js" charset="utf-8"></script>
 
           </div>
 
@@ -300,10 +348,10 @@
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html">所有商品</a></li>
-                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html#noodle">泡麵</a></li>
-                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html#drinks">飲料</a></li>
-                <li><a class="dropdown-item" href="Allproduct_LoggedIn.html#snacks">零食糖果</a></li>
+                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.html">所有商品</a></li>
+                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.html#noodle">泡麵</a></li>
+                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.html#drinks">飲料</a></li>
+                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.html#snacks">零食糖果</a></li>
               </ul>
             </li>
 
@@ -629,7 +677,7 @@
       <jsp:include page="./footer.jsp" />
 
     <!-- Javascript 區域 -->
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
 

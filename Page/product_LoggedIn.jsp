@@ -1,15 +1,82 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
+
 <%
-    // 初始化購物車
-    if (session.getAttribute("cart") == null) {
+      // 初始化購物車
+      if (session.getAttribute("cart") == null) {
         session.setAttribute("cart", new HashMap<String, Integer>());
-    }
-    Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
+      }
+      Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
+
+        // 設置資料庫連接相關變數
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        // 獲取當前用戶資訊
+        String email = (String) session.getAttribute("userEmail");
+        String userName = "";
+        String userPhone = "";
+        String userBirthday = "";
+        String userAddress = "";
+
+        try {
+            // 連接到 MySQL 資料庫
+            String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(url, "root", "12345678");
+
+            // 獲取用戶資料
+            String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
+            
+            // 使用 PreparedStatement 防止 SQL 注入
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+
+            // 執行查詢操作
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                userName = rs.getString("MemberName");
+                userPhone = rs.getString("MemberPhone");
+                userBirthday = rs.getString("BirthdayDate");
+                userAddress = rs.getString("Address");
+            }
+        } catch (SQLException sExec) {
+            out.println("SQL 錯誤: " + sExec.toString());
+        } finally {
+            // 確保資源被釋放
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        //處理購物車操作
+        String action = request.getParameter("action");
+        String product = request.getParameter("product");
+        if ("add".equals(action)) {
+            cart.put(product, cart.getOrDefault(product, 0) + 1);
+        } else if ("remove".equals(action)) {
+            if (cart.containsKey(product)) {
+                int quantity = cart.get(product) - 1;
+                if (quantity > 0) {
+                    cart.put(product, quantity);
+                } else {
+                    cart.remove(product);
+                }
+            }
+        } else if ("delete".equals(action)) {
+            cart.remove(product);
+        }
 %>
+
+
 
 <!doctype html>
 
@@ -140,7 +207,14 @@
 
                       <!-- 購物車表單 -->
                       <form action="">
-
+                        <%
+                          if (cart.isEmpty()) {
+                              out.println("<p>您的购物车是空的。</p>");
+                          } else {
+                              for (Map.Entry<String, Integer> entry : cart.entrySet()) {
+                                  String productName = entry.getKey();
+                                  int quantity = entry.getValue();
+                        %>
                           <!-- 購物車商品之單頁 商品01 -->
                           <div class="cart-p">
                               <img src="./picture/material/productPic/snacks/snacks_2.PNG">
@@ -284,7 +358,7 @@
                       if (cart.isEmpty()) {
                           out.println("<p>您的購物車是空的。</p>");
                       } else {
-                          for (Map.Entry<String, Integer> entry : cart.entrySet()) {
+                          for (int i=0;i<10;i++;) {
                               String productName = entry.getKey();
                               int quantity = entry.getValue();
                       %>
@@ -326,11 +400,14 @@
                               <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
                             </div>
                             <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./checkout.html'">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
                             </div>
 
                         </div>
-
+                        <%
+                            }
+                        }
+                        %>
                       </form>
 
                   </div>
@@ -340,11 +417,41 @@
             </div>
 
             <!-- 【會員註冊登入】 -->
-
+            <%
+                
+                try {
+                    // 連接到 MySQL 資料庫
+                    String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    conn = DriverManager.getConnection(url, "root", "Ray_930715");
+            
+                    // 獲取用戶資料
+                    String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
+                    
+                    // 使用 PreparedStatement 防止 SQL 注入
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1, email);
+            
+                    // 執行查詢操作
+                    rs = pstmt.executeQuery();
+            
+                    if (rs.next()) {
+                        userName = rs.getString("MemberName");
+                        userPhone = rs.getString("MemberPhone");
+                        userBirthday = rs.getString("BirthdayDate");
+                        userAddress = rs.getString("Address");
+                    }
+            
+                    // 關閉資料庫連接
+                    conn.close();
+                } catch (SQLException sExec) {
+                    out.println("SQL 錯誤: " + sExec.toString());
+                }
+            %>
             <!-- 會員註冊與登入按鈕 -->
             <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
-               OOO 您好！
+              <%= userName %> 您好！
             </button>
 
             <!-- 登出按鈕 -->
@@ -415,11 +522,7 @@
             out.println("產品ID無效");
             return;
         }
-    
-        // 連接資料庫並檢索產品詳細資訊
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+
         try {
             // 加載JDBC驅動
             Class.forName("com.mysql.cj.jdbc.Driver");

@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*" %>
 
@@ -42,9 +43,12 @@
                 response.sendRedirect("./memberPage.jsp");
                 return;
             } else {
-                // 登入失敗，重定向到登入頁面並顯示錯誤消息
-                out.println("登入失敗: 無效的電子郵件或密碼");
-                response.sendRedirect("login.jsp?error=Invalid email or password");
+                // 登入失敗，使用 JavaScript alert 顯示錯誤訊息並重定向到 index.jsp
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('登入失敗: 無效的電子郵件或密碼');");
+                out.println("window.location.href = 'index.jsp';");
+                out.println("</script>");
+                return;
             }
         }
 
