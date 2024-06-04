@@ -74,7 +74,7 @@
           <div class="col-sm navLogoCol">
             <div class="navLogo" >
               <!-- Logo 點擊回到登入後主頁 -->
-              <a href="./index_LoggedIn.html">
+              <a href="./index_LoggedIn.jsp">
               <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
               </a>
             </div>
@@ -255,7 +255,7 @@
                               <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
                             </div>
                             <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.html'">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
                             </div>
 
                         </div>
@@ -348,10 +348,10 @@
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.html">所有商品</a></li>
-                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.html#noodle">泡麵</a></li>
-                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.html#drinks">飲料</a></li>
-                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.html#snacks">零食糖果</a></li>
+                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.jsp">所有商品</a></li>
+                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.jsp#noodle">泡麵</a></li>
+                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.jsp#drinks">飲料</a></li>
+                <li><a class="dropdown-item" href="./Allproduct_LoggedIn.jsp#snacks">零食糖果</a></li>
               </ul>
             </li>
 
@@ -645,7 +645,7 @@
 
             /*結帳成功後顯示成功訊息並導至主頁*/
             alert("✅ 結帳成功");
-            window.location.href = 'index_LoggedIn.html';
+            window.location.href = './index_LoggedIn.jsp';
         }
 
         // Prevent default form submission
