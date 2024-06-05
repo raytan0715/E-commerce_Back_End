@@ -482,7 +482,7 @@
                 <p>庫存數量：<%= productQuantity %></p>
                 <p>到期日：<%= productExp %></p>
               </div>
-
+              <form method='post' action='./tocart.jsp' class='product'>
               <!-- 商品數量增減按鈕 -->
               <div class="quantityButton" data-min="1" data-max="30">   <!-- 數量增減 data-min最低數量;data-max 最多數量 -->
                 <input type="button" value="&minus;" class="min"/> <!-- ' &minus; '是減號 -->
@@ -493,15 +493,16 @@
               <!-- 商品購買按鈕容器 -->
               <div class="addToCart">
 
-                <button type="button" class="btn" onclick="showAlert()">
+                <button type="submit" class="btn" onclick="showAlert()">
                   加入購物車
                 </button>
 
-                <button type="button" class="btn" onclick=""> <!-- 導引至結帳區 -->
+                <button type="submit" class="btn" onclick=""> <!-- 導引至結帳區 -->
                   立即購買
                 </button>
 
               </div>
+              </form> 
 
               <!-- 購買數量增減控制 -->
               <script>
