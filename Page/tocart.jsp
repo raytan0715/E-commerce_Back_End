@@ -18,9 +18,13 @@
         			String productId = request.getParameter("productId");
 					String number=request.getParameter("quantity");
 					
-					if(number==null)
-						number="1";
-					String userid="1";//注意，這邊應該是讀session存的ID
+					// 檢查 quantity 是否為 null，如果是，則設置為預設值 "1"
+					if(number == null || number.isEmpty()) {
+						number = "1";
+					}
+					
+					String userid = String.valueOf(session.getAttribute("MemberID")); // 從 session 中獲取用戶 ID
+
 					String sql1="INSERT into `cart`(`customerID`,`productId`,`quantity`)";//寫入購物車
 					sql1+="VALUES('"+userid+"','"+productId+"','"+number+"')";      
 					

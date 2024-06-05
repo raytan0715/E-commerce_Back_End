@@ -318,9 +318,6 @@
                 ResultSet rs = null;
             
                 String userName = "";
-                String userPhone = "";
-                String userBirthday = "";
-                String userAddress = "";
             
                 try {
                     // 連接到 MySQL 資料庫
@@ -329,7 +326,7 @@
                     conn = DriverManager.getConnection(url, "root", "Ray_930715");
             
                     // 獲取用戶資料
-                    String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
+                    String sql = "SELECT MemberName FROM membership WHERE MemberAccount = ?";
                     
                     // 使用 PreparedStatement 防止 SQL 注入
                     pstmt = conn.prepareStatement(sql);
@@ -340,9 +337,6 @@
             
                     if (rs.next()) {
                         userName = rs.getString("MemberName");
-                        userPhone = rs.getString("MemberPhone");
-                        userBirthday = rs.getString("BirthdayDate");
-                        userAddress = rs.getString("Address");
                     }
             
                     // 關閉資料庫連接
@@ -418,43 +412,46 @@
 
       <!-- 商品內容之大容器-->
       <section class="desc-page">
-        <%
-        // 從URL獲取productId
-        String productId = request.getParameter("productId");
-        if (productId == null || productId.isEmpty()) {
-            out.println("產品ID無效");
-            return;
-        }
+        
+      <%
+      
+      // 從URL獲取productId
+      String productId = request.getParameter("productId");
+      
+      if (productId == null || productId.isEmpty()) {
+          out.println("產品ID無效");
+          return;
+      }
 
-        try {
-            // 加載JDBC驅動
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
-            String dbUsername = "root";
-            String dbPassword = "Ray_930715";
-    
-            // 建立連接
-            conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-    
-            if (conn.isClosed()) {
-                out.println("連線建立失敗");
-            } else {
-                // 創建聲明
-                String sql = "SELECT * FROM inventoryquantity WHERE ProductID=?";
-                pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, productId);
-                rs = pstmt.executeQuery();
-    
-                if (rs.next()) {
-                    String productName = rs.getString("ProductName");
-                    int productPrice = rs.getInt("Price");
-                    int productQuantity = rs.getInt("Quantity");
-                    String productExp = rs.getString("exp");
-                    String productIngredientList = rs.getString("LngredientList");
-                    String productAllergyList = rs.getString("AllergyList");
-                    String productDetails = rs.getString("ProductDetails");
-                    String productUrl = rs.getString("Producturl");
-           %>
+      try {
+          // 加載JDBC驅動
+          Class.forName("com.mysql.cj.jdbc.Driver");
+          String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+          String dbUsername = "root";
+          String dbPassword = "Ray_930715";
+  
+          // 建立連接
+          conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+  
+          if (conn.isClosed()) {
+              out.println("連線建立失敗");
+          } else {
+              // 創建聲明
+              String sql = "SELECT * FROM inventoryquantity WHERE ProductID=?";
+              pstmt = conn.prepareStatement(sql);
+              pstmt.setString(1, productId);
+              rs = pstmt.executeQuery();
+  
+              if (rs.next()) {
+                  String productName = rs.getString("ProductName");
+                  int productPrice = rs.getInt("Price");
+                  int productQuantity = rs.getInt("Quantity");
+                  String productExp = rs.getString("exp");
+                  String productIngredientList = rs.getString("LngredientList");
+                  String productAllergyList = rs.getString("AllergyList");
+                  String productDetails = rs.getString("ProductDetails");
+                  String productUrl = rs.getString("Producturl");
+         %>
 
         <!-- 網頁當前路徑顯示 -->
         <div class="product-path">
@@ -482,13 +479,18 @@
                 <p>庫存數量：<%= productQuantity %></p>
                 <p>到期日：<%= productExp %></p>
               </div>
+
               <form method='post' action='./tocart.jsp' class='product'>
               <!-- 商品數量增減按鈕 -->
               <div class="quantityButton" data-min="1" data-max="30">   <!-- 數量增減 data-min最低數量;data-max 最多數量 -->
                 <input type="button" value="&minus;" class="min"/> <!-- ' &minus; '是減號 -->
-                <input  type="text" value="1" class="quantity"/>
+                <input  type="text" name="quantity" value="1" class="quantity"/>
                 <input  type="button" value="+" class="add"/>
               </div>
+              <!-- 隱藏的 productId 輸入欄位 -->
+              <input type="hidden" name="productId" value="<%= productId %>"/>
+              <!-- 隱藏的 MemberID 輸入欄位 -->
+              <input type="hidden" name="MemberID" value="<%= userid %>"/>
 
               <!-- 商品購買按鈕容器 -->
               <div class="addToCart">
@@ -578,18 +580,18 @@
 
         </div>
         <%
-            } else {
-                out.println("找不到該產品的詳細資訊");
-            }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-                if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-                if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-            }
-        %>
+          } else {
+              out.println("找不到該產品的詳細資訊");
+          }
+              }
+          } catch (Exception e) {
+              e.printStackTrace();
+          } finally {
+              if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+              if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+              if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+          }
+      %>
       </section>
 
 
@@ -607,9 +609,8 @@
 
           <form action="#" method="post">
 
-            <label for="fname">姓名</label><br>
+            <label for="fname" style="font-size: 20px;">姓名:</label><br>
 
-            <input type="text" id="fname" name="fname" class="CommentNameInput"><br>
 
             <p>留言</p>
             <textarea name="message" rows="10" cols="30" style="height: 200px;resize: none; "></textarea>
@@ -699,7 +700,7 @@
         </div>
           
       </section>
-
+      
       <!-- 回到頂部按鈕 -->
       <div class="slider">
         <a href="#">

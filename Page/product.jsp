@@ -505,9 +505,7 @@
 
           <form action="#" method="post">
 
-            <label for="fname">姓名</label><br>
-
-            <input type="text" id="fname" name="fname"><br>
+            <label for="fname" style="font-size: 20px;">姓名:</label><br>
 
             <p>留言</p>
             <textarea name="message" rows="10" cols="30" style="height: 200px;resize: none; "></textarea>
