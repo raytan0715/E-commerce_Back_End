@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
 
 
-
+    <!-- 引用google reCaptcha驗證機制 -->
     <script>
     function onSubmit(token) {
         document.getElementById("recaptchaResponse").value = token;

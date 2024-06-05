@@ -24,6 +24,7 @@ CREATE TABLE `cart` (
   `cartID` int NOT NULL AUTO_INCREMENT,
   `customerID` varchar(45) NOT NULL,
   `productID` varchar(45) NOT NULL,
+  `quantity` int DEFAULT NULL,
   PRIMARY KEY (`cartID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 #/*!40101 SET character_set_client = @saved_cs_client */;
@@ -34,7 +35,7 @@ CREATE TABLE `cart` (
 
 /*LOCK TABLES `cart` WRITE;*/
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-/*INSERT INTO `cart` VALUES (1,'1','2',2),(2,'1','1',1),(3,'1','3',1),(4,'1','10',1);*/
+INSERT INTO `cart` VALUES (1,'1','2',2),(2,'1','1',1),(3,'1','3',1),(4,'1','10',1);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 /*UNLOCK TABLES;*/
 
@@ -419,19 +420,64 @@ UNLOCK TABLES;
 -- Table structure for table `reviews`
 --
 
-DROP TABLE IF EXISTS `reviews`;
+DROP TABLE IF EXISTS `comment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `reviews` (
-  `Rating` int DEFAULT NULL,
-  `Opinion` varchar(45) DEFAULT NULL,
-  `MemberName` varchar(45) NOT NULL,
-  PRIMARY KEY (`MemberName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `comment` (
+  `MemberID` int NOT NULL AUTO_INCREMENT,
+  `MemberAccount` varchar(45) DEFAULT NULL,
+  `ProductID` int DEFAULT NULL,
+  `star` int DEFAULT NULL,
+  `comment` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`MemberID`),
+ KEY `proo_idx` (`ProductID`),
+  CONSTRAINT `proo` FOREIGN KEY (`ProductID`) REFERENCES `pro` (`MemberID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+
+-- Dumping data for table `comment`
+--
+
+LOCK TABLES `comment` WRITE;
+/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT INTO `comment` VALUES (1,'dipjuolty883@gmail.com',1,4,'好吃');
+/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+UNLOCK TABLES;
 --
 -- Dumping data for table `reviews`
 --
 
+--
+-- Table structure for table `orderitems`
+--
+
+DROP TABLE IF EXISTS `orderitems`;#訂單
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orderitems` (
+  `MemberID` int NOT NULL AUTO_INCREMENT,
+  `orderid` int DEFAULT NULL,
+  `ProductID` int DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `price` int DEFAULT NULL,
+  `totalprice` int DEFAULT NULL,
+  PRIMARY KEY (`MemberID`),
+  KEY `id_idx` (`orderid`),
+  KEY `ProductID_idx` (`ProductID`),
+  CONSTRAINT `id` FOREIGN KEY (`orderid`) REFERENCES `order` (`MemberID`),
+  CONSTRAINT `ProductID` FOREIGN KEY (`ProductID`) REFERENCES `pro` (`MemberID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orderitems`
+--
+
+LOCK TABLES `orderitems` WRITE;
+/*!40000 ALTER TABLE `orderitems` DISABLE KEYS */;
+INSERT INTO `orderitems` VALUES (1,1,2,3,850,2550),(2,1,5,3,120,360);
+/*!40000 ALTER TABLE `orderitems` ENABLE KEYS */;
+UNLOCK TABLES;
 

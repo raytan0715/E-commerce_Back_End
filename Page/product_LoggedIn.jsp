@@ -1,8 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
+
 
 <%
       // 初始化購物車
@@ -10,53 +12,7 @@
         session.setAttribute("cart", new HashMap<String, Integer>());
       }
       Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
-
-        // 設置資料庫連接相關變數
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        // 獲取當前用戶資訊
-        String email = (String) session.getAttribute("userEmail");
-        String userName = "";
-        String userPhone = "";
-        String userBirthday = "";
-        String userAddress = "";
-
-        try {
-            // 連接到 MySQL 資料庫
-            String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url, "root", "12345678");
-
-            // 獲取用戶資料
-            String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
-            
-            // 使用 PreparedStatement 防止 SQL 注入
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, email);
-
-            // 執行查詢操作
-            rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                userName = rs.getString("MemberName");
-                userPhone = rs.getString("MemberPhone");
-                userBirthday = rs.getString("BirthdayDate");
-                userAddress = rs.getString("Address");
-            }
-        } catch (SQLException sExec) {
-            out.println("SQL 錯誤: " + sExec.toString());
-        } finally {
-            // 確保資源被釋放
-            try {
-                if (rs != null) rs.close();
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
+        
         //處理購物車操作
         String action = request.getParameter("action");
         String product = request.getParameter("product");
@@ -189,7 +145,6 @@
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
 
             <!-- 【購物車】 -->
-            
             <div id="cart">
 
               <!-- 購物車按鈕 --> 
@@ -207,14 +162,7 @@
 
                       <!-- 購物車表單 -->
                       <form action="">
-                        <%
-                          if (cart.isEmpty()) {
-                              out.println("<p>您的购物车是空的。</p>");
-                          } else {
-                              for (Map.Entry<String, Integer> entry : cart.entrySet()) {
-                                  String productName = entry.getKey();
-                                  int quantity = entry.getValue();
-                        %>
+
                           <!-- 購物車商品之單頁 商品01 -->
                           <div class="cart-p">
                               <img src="./picture/material/productPic/snacks/snacks_2.PNG">
@@ -227,7 +175,7 @@
 
                                   <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
                                     <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input class="BuyCart_quantity" type="text" value="1"/>
+                                    <input class="quantity" type="text" value="1"/>
                                     <input class="add" type="button" value="+"/> 
                                   </div>
                             
@@ -252,7 +200,7 @@
                                   </div>
                                   <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
                                     <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input class="BuyCart_quantity" type="text" value="1"/>
+                                    <input class="quantity" type="text" value="1"/>
                                     <input class="add" type="button" value="+"/> 
                                 </div>                            
                               </div>
@@ -276,7 +224,7 @@
                                 </div>
                                 <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
                                   <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                  <input class="BuyCart_quantity" type="text" value="1"/>
+                                  <input class="quantity" type="text" value="1"/>
                                   <input class="add" type="button" value="+"/> 
                               </div>
                             </div>
@@ -295,7 +243,7 @@
                               document.body.addEventListener('click', function(event) {
                                   if (event.target.classList.contains('min') || event.target.classList.contains('add')) {
                                       const cp2 = event.target.closest('.cp2');
-                                      const quantityInput = cp2.querySelector('.BuyCart_quantity');
+                                      const quantityInput = cp2.querySelector('.quantity');
                                       let currentValue = parseInt(quantityInput.value);
                       
                                       const min = parseInt(cp2.getAttribute('data-min'));
@@ -312,12 +260,12 @@
                               });
                       
                               // 避免非數值資料輸入進數量欄位
-                              document.querySelectorAll('.BuyCart_quantity').forEach(input => {
+                              document.querySelectorAll('.quantity').forEach(input => {
                                   input.addEventListener('input', function() {
                                       let value = this.value.replace(/[^0-9]/g, '');
                                       const cp2 = this.closest('.cp2');
                                       const max = parseInt(cp2.getAttribute('data-max'));
-                      
+
                                       // 數量欄位限制購買數量，當輸入超過最大數量，則予以提醒。
                                       if (value > max) {
                                           alert(`最多只能購買 ${max} 個`);
@@ -328,63 +276,9 @@
                                   });
                               });
                           });
-
-                          
-                          String action = request.getParameter("action");
-                          String product = request.getParameter("product");
-
-                          if ("add".equals(action)) {
-                              if (cart.containsKey(product)) {
-                                  cart.put(product, cart.get(product) + 1);
-                              } else {
-                                  cart.put(product, 1);
-                              }
-                          } else if ("remove".equals(action)) {
-                              if (cart.containsKey(product)) {
-                                  int quantity = cart.get(product) - 1;
-                                  if (quantity > 0) {
-                                      cart.put(product, quantity);
-                                  } else {
-                                      cart.remove(product);
-                                  }
-                              }
-                          } else if ("delete".equals(action)) {
-                              cart.remove(product);
-                          };
-                          
                       </script>
 
-                      <%
-                      if (cart.isEmpty()) {
-                          out.println("<p>您的購物車是空的。</p>");
-                      } else {
-                          for (int i=0;i<10;i++;) {
-                              String productName = entry.getKey();
-                              int quantity = entry.getValue();
-                      %>
-                              <div class="cart-item">
-                                  <span><%= productName %></span>
-                                  <span>數量: <%= quantity %></span>
-                                  <form action="product_LoggedIn.jsp" method="post" style="display:inline;">
-                                      <input type="hidden" name="product" value="<%= productName %>">
-                                      <input type="hidden" name="action" value="add">
-                                      <button type="submit">增加</button>
-                                  </form>
-                                  <form action="product_LoggedIn.jsp" method="post" style="display:inline;">
-                                      <input type="hidden" name="product" value="<%= productName %>">
-                                      <input type="hidden" name="action" value="remove">
-                                      <button type="submit">減少</button>
-                                  </form>
-                                  <form action="product_LoggedIn.jsp" method="post" style="display:inline;">
-                                      <input type="hidden" name="product" value="<%= productName %>">
-                                      <input type="hidden" name="action" value="delete">
-                                      <button type="submit">刪除</button>
-                                  </form>
-                              </div>
-                      <%
-                          }
-                      }
-                      %>
+                        
                           
                         <!-- 計算總價 -->
                         <div class="cart-total">
@@ -404,10 +298,7 @@
                             </div>
 
                         </div>
-                        <%
-                            }
-                        }
-                        %>
+
                       </form>
 
                   </div>
@@ -418,7 +309,19 @@
 
             <!-- 【會員註冊登入】 -->
             <%
-                
+                // 獲取當前用戶的電子郵件
+                String email = (String) session.getAttribute("userEmail");
+            
+                // 設置資料庫連接相關變數
+                Connection conn = null;
+                PreparedStatement pstmt = null;
+                ResultSet rs = null;
+            
+                String userName = "";
+                String userPhone = "";
+                String userBirthday = "";
+                String userAddress = "";
+            
                 try {
                     // 連接到 MySQL 資料庫
                     String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
@@ -466,8 +369,6 @@
           </div>
 
         </div>
-
-        
       </nav>
 
       <!-- 工具欄第二欄 -->
@@ -481,6 +382,7 @@
           <!-- 下拉式選單 -->
           <div class="collapse navbar-collapse justify-content-md-center navCol-2" id="navbarsExample08"> 
 
+            <!-- 【商品瀏覽】 -->
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
               <ul class="dropdown-menu">
@@ -491,6 +393,7 @@
               </ul>
             </li>
 
+            <!-- 【關於我們】 -->
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
               <ul class="dropdown-menu">
@@ -499,6 +402,7 @@
               </ul>
             </li>
 
+            <!-- 【聯絡我們】 -->
             <li class="nav-item dropdown">
               <a class="nav-link" href="#FooterArea"  aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>
             </li>
@@ -507,7 +411,6 @@
 
         </div>
       </nav>
-
    
 
       <!-- 商品購買與介紹區域
