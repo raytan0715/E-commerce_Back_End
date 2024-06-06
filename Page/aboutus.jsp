@@ -1,10 +1,25 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
+<%@ page language="java" import="java.util.*" %>
 <!doctype html>
 
 <html lang="en" data-bs-theme="auto">
 
   <head>
-    
-    <script src="../assets/js/color-modes.js"></script>
+    <!-- 引用google reCaptcha驗證機制 -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+      function onSubmit(token) {
+          document.getElementById("recaptchaResponse").value = token;
+          document.getElementById("loginForm").submit();
+      }
+    </script>
+
+    <script src="./assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +38,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 使用font-awesome線上免下載圖標(icon) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -42,13 +57,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- css 樣式檔案 -->
-    <link href="stylesheets/aboutus.css" rel="stylesheet">
+    <link href="./stylesheets/aboutus.css" rel="stylesheet">
 
-    <!-- 登入註冊樣式檔  -->
-    <link rel="stylesheet" href="stylesheets/LoginArea.css"> 
+    <!-- 購物車樣式檔 -->
+    <link rel="stylesheet" href="./stylesheets/BuyCart.css">
 
     <!-- cookie提示 網路引用樣式檔 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
+
+    <!-- 登入註冊樣式檔  -->
+    <link rel="stylesheet" href="./stylesheets/LoginArea.css"> 
 
   </head>
 
@@ -59,21 +77,21 @@
 
     <!-- 先為code寫上註解 不要急著修改-->
 
-      <!-- 共具欄第一欄 -->
+      <!-- 工具欄第一欄 -->
       <nav class="navbar navbar-expand-lg"> 
 
         <!-- 工具欄第一欄內容物容器 -->
         <div class="row navOneRow">
 
-            <!-- 圖標logo-->
-            <div class="col-sm navLogoCol" >
-              <div class="navLogo" >
-                <!-- Logo 點擊回到主頁 -->
-                <a href="/index.html">
-                  <img src="/picture/material/navPic/navLogo.png" alt="navLogoPic">
-                </a>
-              </div>
+          <!-- 【圖標logo】-->
+          <div class="col-sm navLogoCol">
+            <div class="navLogo" >
+              <!-- Logo 點擊回到登入後主頁 -->
+              <a href="./index.jsp">
+              <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
+              </a>
             </div>
+          </div>
           
 
           <!-- 搜尋欄 -->
@@ -116,35 +134,57 @@
               會員註冊/登入
             </button>
 
-              <!-- 會員註冊登入頁面 --> 
-              <div id="id01" class="modal">
+             <!-- 會員註冊登入頁面 --> 
+            <div id="id01" class="modal">
 
-                  <div class="container_Login" id="container">
+              <div class="container_Login" id="container">
 
                     <div class="form-container sign-up-container">
-
-                        <!-- 註冊頁面 -->
-                        <form action="#">
-                            <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;font-weight: 800;">註冊新會員</h1>
-                            <input type="text" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="姓名" />
-                            <input type="number" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電話" />
-                            <input type="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" />
-                            <input type="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" />
-                            <button style="background-color: #a59e94;color: #ffffff;border: 0px;">註冊</button>
-                        </form>
+                      <!-- 註冊頁面 -->
+                      <form method="post" action="./register.jsp">
+                          <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;font-weight: 800;">註冊新會員</h1>
+                          <input type="text" name="username" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="姓名" required />
+                          <input type="number" name="phone" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電話" required />
+                          <input type="email" name="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" required />
+                          <input type="password" name="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" required />
+                          <input type="password" name="confirm_password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="確認密碼" required />
+                          <!-- Google reCAPTCHA v2 -->
+                          <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
+                          <button id="submitBtn1" style="background-color: #a59e94;color: #ffffff;border: 0px;" disabled>註冊</button>
+                      </form>
                     </div>
-                    
+                  
                     <div class="form-container sign-in-container">
+                      <!-- 登入頁面 -->
+                      <form method="post" action="./login.jsp">
+                          <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;">登入</h1>
+                          <input type="email" name="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" required />
+                          <input type="password" name="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" required />
+                          <!-- Google reCAPTCHA v2 -->
+                          <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
+                          <button id="submitBtn2" style="background-color: #a59e94;color: #ffffff;border: 0px;" disabled>登入</button>
+                      </form>
+                  </div>
+                  
+                  <script>
+                    var recaptchaChecked = false;
+                    
+                    function enableBtn() {
+                        recaptchaChecked = true;
+                        document.getElementById('submitBtn1').disabled = false;
+                        document.getElementById('submitBtn2').disabled = false;
+                    }
+                    
+                    function checkRecaptcha() {
+                        if (!recaptchaChecked) {
+                            alert('請完成 reCAPTCHA 驗證');
+                            return false;
+                        }
+                        return true;
+                    }
+                    </script>
 
-                        <!-- 登入頁面 -->
-                        <form action="#">
-                            <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;">登入</h1>
-                            <input type="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" />
-                            <input type="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" />
-                            <button style="background-color: #a59e94;color: #ffffff;border: 0px;">登入</button>
-                        </form>
 
-                    </div>
 
                     <!-- 轉換登入與註冊"文字提示" -->
                     <div class="overlay-container">
@@ -225,18 +265,18 @@
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html">所有商品</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#noodle">泡麵</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#drinks">飲料</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#snacks">零食糖果</a></li>
+                <li><a class="dropdown-item" href="./AllProduct.jsp">所有商品</a></li>
+                <li><a class="dropdown-item" href="./AllProduct.jsp">泡麵</a></li>
+                <li><a class="dropdown-item" href="./AllProduct.jsp#drinks">飲料</a></li>
+                <li><a class="dropdown-item" href="./AllProduct.jsp#snacks">零食糖果</a></li>
               </ul>
             </li>
 
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="aboutus.html#brandConcept">品牌理念</a></li>
-                <li><a class="dropdown-item" href="aboutus.html#MemberIntro">成員介紹</a></li>
+                <li><a class="dropdown-item" href="./aboutus.jsp#brandConcept">品牌理念</a></li>
+                <li><a class="dropdown-item" href="./aboutus.jsp#MemberIntro">成員介紹</a></li>
               </ul>
             </li>
 
@@ -249,7 +289,7 @@
         </div>
       </nav>
 
-      <!-- about us part ------------------- -->
+            <!-- about us part ------------------- -->
       <!-- 品牌理念 --------------------  -->
       
       <section id="brandConcept" class="aboutSect">
@@ -260,7 +300,7 @@
         </div>
         <div class="brandCont">
             <div class="brandImgContlogo">
-                <img src="/picture/material/navPic/navLogo.png" alt="">
+                <img src="./picture/material/navPic/navLogo.png" alt="">
             </div>
             <div class="brandDesceven">
                 <h6>「吃貨道」 是我們的品牌名稱 <br>
@@ -277,7 +317,7 @@
                 <div class="text-overlay">
                     <h3>探索不同口味 <br> 尋找心中的味道</h3>
                 </div>
-                <img src="/picture/material/about/about2.jpg" alt="">
+                <img src="./picture/material/about/about2.jpg" alt="">
             </div>
             
         </div>
@@ -287,7 +327,7 @@
                 <div class="text-overlayodd">
                     <h3>品質保證 <br> 美味無限</h3>
                 </div>
-                <img src="/picture/material/about/about3.jpg" alt="">
+                <img src="./picture/material/about/about3.jpg" alt="">
             </div>
             <div class="brandDescEven2">
                 <h6>我們嚴格把關每一款產品的品質 <br> 只有通過了嚴格的篩選和品質測試的產品 <br> 才能登上我們的平台 <br> 我們希望每位顧客都能放心選購 <br> 享受到最美味的韓國泡麵、零食和飲料</h6>
@@ -313,7 +353,7 @@
               <div class="card_inner">
                 <div class="front_side">
                   <p>11144209</p>
-                  <img src="/picture/memberPhoto/jay.jpg" alt=" "> <br>
+                  <img src="./picture/memberPhoto/jay.jpg" alt=" "> <br>
                   <div class="cardName">
                     <h1>潘驄杰</h1>
                     <h3>Front-End Developer</h3>
@@ -338,7 +378,7 @@
             <div class="card_inner">
               <div class="front_side">
                 <p>11144275 </p>
-                <img src="/picture/memberPhoto/nathania.jpg" alt=" "> <br>
+                <img src="./picture/memberPhoto/nathania.jpg" alt=" "> <br>
                 <div class="cardName">
                   <h1>潘秀玉</h1>
                   <h3>Front-End Developer</h3>
@@ -363,7 +403,7 @@
             <div class="card_inner">
               <div class="front_side">
                 <p>11144223</p>
-                <img src="/picture/memberPhoto/yinzhen.jpg" alt=" "> <br>
+                <img src="./picture/memberPhoto/yinzhen.jpg" alt=" "> <br>
                 <div class="cardName">
                   <h1>張尹榛</h1>
                   <h3>Front-End Developer</h3>
@@ -393,7 +433,7 @@
               <div class="card_inner">
                 <div class="front_side">
                   <p>11144138</p>
-                  <img src="/picture/memberPhoto/ray.jpg" alt=" 譚睿承"> <br>
+                  <img src="./picture/memberPhoto/ray.jpg" alt=" 譚睿承"> <br>
                   <div class="cardName">
                     <h1>譚睿承</h1>
                     <h3>Back-End Developer</h3>
@@ -417,7 +457,7 @@
             <div class="card_inner">
               <div class="front_side">
                 <p>11144139 </p>
-                <img src="/picture/memberPhoto/anita.jpg" alt=" "> <br>
+                <img src="./picture/memberPhoto/anita.jpg" alt=" "> <br>
                 <div class="cardName">
                   <h1>高嘉嬨</h1>
                   <h3>Back-End Developer</h3>
@@ -442,7 +482,7 @@
             <div class="card_inner">
               <div class="front_side">
                 <p>11144155</p>
-                <img src="/picture/memberPhoto/zijie.png" alt=" "> <br>
+                <img src="./picture/memberPhoto/zijie.png" alt=" "> <br>
                 <div class="cardName">
                   <h1>鍾子傑</h1>
                   <h3>Back-End Developer</h3>
@@ -509,10 +549,23 @@
           <p>&copy; 2024 Company, Inc. All rights reserved.</p>
 
           <!-- 可自行更動網頁瀏覽人數設定 -->
-          <p> 網頁瀏覽人數：999人</p>
+          <p> 網頁瀏覽人數：<span id="visitor-count">999</span>人</p>
         </div>
-
-        </div>
+          <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: 'footer.jsp',
+                    method: 'GET',
+                    success: function(data) {
+                        var visitorCount = $(data).find('#visitor-count-value').text();
+                        $('#visitor-count').text(visitorCount);
+                    },
+                    error: function() {
+                        console.error('Failed to fetch visitor count');
+                    }
+                });
+            });
+        </script>
 
       </section>
 
@@ -536,7 +589,7 @@
       </div>
 
     <!-- Javascript 區域 -->
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
     

@@ -375,14 +375,14 @@
               </ul>
             </li>
 
-            <!-- 【關於我們】 -->
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">品牌理念</a></li>
-                <li><a class="dropdown-item" href="#">成員介紹</a></li>
+                <li><a class="dropdown-item" href="./aboutus_LoggedIn.jsp#brandConcept">品牌理念</a></li>
+                <li><a class="dropdown-item" href="./aboutus_LoggedIn.jsp#MemberIntro">成員介紹</a></li>
               </ul>
             </li>
+
 
             <!-- 【聯絡我們】 -->
             <li class="nav-item dropdown">

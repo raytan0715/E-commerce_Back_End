@@ -227,17 +227,17 @@
                   <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="./AllProduct.jsp">所有商品</a></li>
-                    <li><a class="dropdown-item" href="./AllProduct.jsp#noodle">泡麵</a></li>
+                    <li><a class="dropdown-item" href="./AllProduct.jsp">泡麵</a></li>
                     <li><a class="dropdown-item" href="./AllProduct.jsp#drinks">飲料</a></li>
                     <li><a class="dropdown-item" href="./AllProduct.jsp#snacks">零食糖果</a></li>
                   </ul>
                 </li>
-              
+    
                 <li class="nav-item dropdown">
-                  <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
+                  <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">品牌理念</a></li>
-                    <li><a class="dropdown-item" href="#">成員介紹</a></li>
+                    <li><a class="dropdown-item" href="./aboutus.jsp#brandConcept">品牌理念</a></li>
+                    <li><a class="dropdown-item" href="./aboutus.jsp#MemberIntro">成員介紹</a></li>
                   </ul>
                 </li>
               

@@ -1,10 +1,17 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
+<%@ page language="java" import="java.util.*" %>
 <!doctype html>
 
 <html lang="en" data-bs-theme="auto">
 
   <head>
     
-    <script src="../assets/js/color-modes.js"></script>
+    <script src="./assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +30,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 使用font-awesome線上免下載圖標(icon) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -42,10 +49,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- css 樣式檔案 -->
-    <link href="stylesheets/aboutus.css" rel="stylesheet">
+    <link href="./stylesheets/aboutus.css" rel="stylesheet">
 
-    <!-- 登入註冊樣式檔  -->
-    <link rel="stylesheet" href="stylesheets/LoginArea.css"> 
+    <!-- 購物車樣式檔 -->
+    <link rel="stylesheet" href="./stylesheets/BuyCart.css">
 
     <!-- cookie提示 網路引用樣式檔 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
@@ -57,28 +64,27 @@
     <!-- 上方欄位 (工具欄)
     ================================================== -->
 
-    <!-- 先為code寫上註解 不要急著修改-->
-
-      <!-- 共具欄第一欄 -->
+      <!-- 工具欄第一欄 -->
       <nav class="navbar navbar-expand-lg"> 
 
         <!-- 工具欄第一欄內容物容器 -->
         <div class="row navOneRow">
 
-            <!-- 圖標logo-->
-            <div class="col-sm navLogoCol" >
-              <div class="navLogo" >
-                <!-- Logo 點擊回到主頁 -->
-                <a href="/index.html">
-                  <img src="/picture/material/navPic/navLogo.png" alt="navLogoPic">
-                </a>
-              </div>
+          <!-- 【圖標logo】-->
+          <div class="col-sm navLogoCol">
+            <div class="navLogo" >
+              <!-- Logo 點擊回到登入後主頁 -->
+              <a href="./index_LoggedIn.jsp">
+              <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
+              </a>
             </div>
+          </div>
           
 
-          <!-- 搜尋欄 -->
+          <!-- 【搜尋欄】 -->
           <div class="col-sm searchBarCol">
               
+              <!-- style 設定搜尋欄的長度 -->
               <form class="d-flex" style="width:750px;"> 
                 <input id="searchBar" class="form-control me-2 searchBar" type="search" placeholder="🔍 搜尋" aria-label="Search">
                 
@@ -99,113 +105,188 @@
           <!-- 右側兩個按鈕欄位 -->
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
 
-            <!-- 購物車按鈕 --> 
-            <!-- 未登入前統一先要求登入後再購物 -->
-            <button type="button" class="btn btn-light" style="width: auto;height:auto;" onclick="showAlert()">
-              <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
-              <script>
-                function showAlert() {
-                  alert("🔔 購買前請先登入！🔔");
-                }
-              </script>
-            </button>
-            
-            <!-- 會員註冊登入按鈕 -->
-            <button onclick="document.getElementById('id01').style.display='block'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
-              <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size: 22px;"></i>
-              會員註冊/登入
-            </button>
+            <!-- 【購物車】 -->
+            <div id="cart">
 
-              <!-- 會員註冊登入頁面 --> 
-              <div id="id01" class="modal">
+              <!-- 購物車按鈕 --> 
+                <button onclick="openNav()".style.display='block' type="button" class="btn btn-light" style="width: auto;height:auto;">
+                    <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
+                </button>
+              
+              <!-- 旁邊顯示之購物車界面 -->
+              <div id="mySidebar" class="sidebar">
 
-                  <div class="container_Login" id="container">
+                  <!-- 購物車頁面右邊之大叉叉-->
+                  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-                    <div class="form-container sign-up-container">
+                  <div class="sidebarinner">
 
-                        <!-- 註冊頁面 -->
-                        <form action="#">
-                            <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;font-weight: 800;">註冊新會員</h1>
-                            <input type="text" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="姓名" />
-                            <input type="number" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電話" />
-                            <input type="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" />
-                            <input type="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" />
-                            <button style="background-color: #a59e94;color: #ffffff;border: 0px;">註冊</button>
-                        </form>
-                    </div>
-                    
-                    <div class="form-container sign-in-container">
+                      <!-- 購物車表單 -->
+                      <form action="">
 
-                        <!-- 登入頁面 -->
-                        <form action="#">
-                            <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;">登入</h1>
-                            <input type="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" />
-                            <input type="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" />
-                            <button style="background-color: #a59e94;color: #ffffff;border: 0px;">登入</button>
-                        </form>
+                          <!-- 購物車商品之單頁 商品01 -->
+                          <div class="cart-p">
+                              <img src="./picture/material/productPic/snacks/snacks_2.PNG">
+                              <div>
 
-                    </div>
+                                  <div class="cp1">   <!--商品名稱-->
+                                      <h1>GEMEZ Enaak 韓式小雞麵 雞汁味</h1>
+                                      <p>一盒裝 24入</p>
+                                  </div>
 
-                    <!-- 轉換登入與註冊"文字提示" -->
-                    <div class="overlay-container">
+                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input class="quantity" type="text" value="1"/>
+                                    <input class="add" type="button" value="+"/> 
+                                  </div>
+                            
+                              </div>
 
-                        <div class="overlay">
-                            <div class="overlay-panel overlay-left">
-                                <h1 style="font-weight: 900;">已註冊會員</h1>
-                                <p style="font-size: 20px;">馬上登入！</p>
-                                <button class="registerLoginBtn" id="signIn">前往登入</button>
+                              <div class="cp3">   <!-- 商品價格 -->
+                                  <p>$239</p>
+                              </div>
+
+                              <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+
+                          </div>
+
+                          <!-- 購物車商品之單頁 商品02 -->
+                          <div class="cart-p">
+
+                              <img src="./picture/material/productPic/drinks/banana.jpg">
+                              <div>
+                                  <div class="cp1">   <!--商品名稱-->
+                                      <h1>【韓味不二】香蕉牛奶</h1>
+                                      <p>一瓶(200ml)</p>
+                                  </div>
+                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                    <input class="quantity" type="text" value="1"/>
+                                    <input class="add" type="button" value="+"/> 
+                                </div>                            
+                              </div>
+
+                              <div class="cp3">   <!-- 商品價格 -->
+                                  <p>$25</p>
+                              </div>
+
+                              <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+
+                          </div>
+
+                          <!-- 購物車商品之單頁 商品03 -->
+                          <div class="cart-p">
+
+                            <img src="./picture/material/productPic/drinks/banana.jpg">
+                            <div>
+                                <div class="cp1">   <!--商品名稱-->
+                                    <h1>【韓味不二】香蕉牛奶</h1>
+                                    <p>一瓶(200ml)</p>
+                                </div>
+                                <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                  <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
+                                  <input class="quantity" type="text" value="1"/>
+                                  <input class="add" type="button" value="+"/> 
+                              </div>
                             </div>
-                            <div class="overlay-panel overlay-right">
-                                <h1 style="font-weight: 900;">還沒成為會員嗎？</h1>
-                                <p style="font-size: 20px;">立即註冊加入會員吧！</p>
-                                <button class="registerLoginBtn" id="signUp">前往註冊</button>
+
+                            <div class="cp3">   <!-- 商品價格 -->
+                                <p>$25</p>
                             </div>
+
+                            <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+
                         </div>
 
-                    </div>
+                        <!-- 購買數量增減控制 -->
+                        <script>
+                          document.addEventListener("DOMContentLoaded", function() {
+                              document.body.addEventListener('click', function(event) {
+                                  if (event.target.classList.contains('min') || event.target.classList.contains('add')) {
+                                      const cp2 = event.target.closest('.cp2');
+                                      const quantityInput = cp2.querySelector('.quantity');
+                                      let currentValue = parseInt(quantityInput.value);
+                      
+                                      const min = parseInt(cp2.getAttribute('data-min'));
+                                      const max = parseInt(cp2.getAttribute('data-max'));
+                      
+                                      if (event.target.classList.contains('min') && currentValue > min) {
+                                          quantityInput.value = currentValue - 1;
+                                      }
+                      
+                                      if (event.target.classList.contains('add') && currentValue < max) {
+                                          quantityInput.value = currentValue + 1;
+                                      }
+                                  }
+                              });
+                      
+                              // 避免非數值資料輸入進數量欄位
+                              document.querySelectorAll('.quantity').forEach(input => {
+                                  input.addEventListener('input', function() {
+                                      let value = this.value.replace(/[^0-9]/g, '');
+                                      const cp2 = this.closest('.cp2');
+                                      const max = parseInt(cp2.getAttribute('data-max'));
+
+                                      // 數量欄位限制購買數量，當輸入超過最大數量，則予以提醒。
+                                      if (value > max) {
+                                          alert(`最多只能購買 ${max} 個`);
+                                          this.value = '';
+                                      } else {
+                                          this.value = value;
+                                      }
+                                  });
+                              });
+                          });
+                      </script>
+
+                        
+                          
+                        <!-- 計算總價 -->
+                        <div class="cart-total">
+                            <p>總金額<p>
+                            <p class="r">$289</p>
+                        </div>
+
+                        <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
+                        <div class="cart-but row" >
+
+                            <div class="col">
+                              <!-- 繼續購物時，就關閉當前購物車視窗 -->
+                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
+                            </div>
+                            <div class="col">
+                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
+                            </div>
+
+                        </div>
+
+                      </form>
+
+                  </div>
+
               </div>
+
             </div>
 
-            <!-- ========== 會員登入註冊介面之 JS語法 ========== -->
-            <!-- 導覽列 -->
-            <script src="javascript/h.js" charset="utf-8"></script>
+            <!-- 【會員註冊登入】 -->
 
-            <!--滑動頁面-->
-            <script>
-                let b1 = document.getElementById('b1');
-                let btt1 = document.getElementById('btt1');
+            <!-- 會員註冊與登入按鈕 -->
+            <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+              <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
+               OOO 您好！
+            </button>
 
-                window.addEventListener('scroll',function(){
-                    let value = window.scrollY;
-                    b1.style.top = value *1 + 'px';
-                    btt1.style.top = value *0.5 + 'px';
-                })
-            </script>
-            <!--幻燈片-->
-            <script>
-                var myIndex = 0;
-                carousel();
+            <!-- 登出按鈕 -->
+            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+              <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
+              登出
+            </button>
 
-                function carousel() {
-                var i;
-                var x = document.getElementsByClassName("mySlides");
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";  
-                }
-                myIndex++;
-                if (myIndex > x.length) {myIndex = 1}    
-                x[myIndex-1].style.display = "block";  
-                setTimeout(carousel, 4000); // Change image every 2 seconds
-                }
-            </script>
-            <!-- 滑動特效 -->
-            <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-            <script>
-                AOS.init({duration:1000,once:true});
-            </script>
-            <!-- ==================== -->
+            <!-- 購物車所需js檔 -->
+            <script src="./javascript/h.js" charset="utf-8"></script>
 
           </div>
+
         </div>
 
         
@@ -225,18 +306,18 @@
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html">所有商品</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#noodle">泡麵</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#drinks">飲料</a></li>
-                <li><a class="dropdown-item" href="AllProduct_LoggedIn.html#snacks">零食糖果</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp">所有商品</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#noodle">泡麵</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#drinks">飲料</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#snacks">零食糖果</a></li>
               </ul>
             </li>
 
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="aboutus.html#brandConcept">品牌理念</a></li>
-                <li><a class="dropdown-item" href="aboutus.html#MemberIntro">成員介紹</a></li>
+                <li><a class="dropdown-item" href="./aboutus_LoggedIn.jsp#brandConcept">品牌理念</a></li>
+                <li><a class="dropdown-item" href="./aboutus_LoggedIn.jsp#MemberIntro">成員介紹</a></li>
               </ul>
             </li>
 
@@ -260,7 +341,7 @@
         </div>
         <div class="brandCont">
             <div class="brandImgContlogo">
-                <img src="/picture/material/navPic/navLogo.png" alt="">
+                <img src="./picture/material/navPic/navLogo.png" alt="">
             </div>
             <div class="brandDesceven">
                 <h6>「吃貨道」 是我們的品牌名稱 <br>
@@ -277,7 +358,7 @@
                 <div class="text-overlay">
                     <h3>探索不同口味 <br> 尋找心中的味道</h3>
                 </div>
-                <img src="/picture/material/about/about2.jpg" alt="">
+                <img src="./picture/material/about/about2.jpg" alt="">
             </div>
             
         </div>
@@ -287,7 +368,7 @@
                 <div class="text-overlayodd">
                     <h3>品質保證 <br> 美味無限</h3>
                 </div>
-                <img src="/picture/material/about/about3.jpg" alt="">
+                <img src="./picture/material/about/about3.jpg" alt="">
             </div>
             <div class="brandDescEven2">
                 <h6>我們嚴格把關每一款產品的品質 <br> 只有通過了嚴格的篩選和品質測試的產品 <br> 才能登上我們的平台 <br> 我們希望每位顧客都能放心選購 <br> 享受到最美味的韓國泡麵、零食和飲料</h6>
@@ -313,7 +394,7 @@
               <div class="card_inner">
                 <div class="front_side">
                   <p>11144209</p>
-                  <img src="/picture/memberPhoto/jay.jpg" alt=" "> <br>
+                  <img src="./picture/memberPhoto/jay.jpg" alt=" "> <br>
                   <div class="cardName">
                     <h1>潘驄杰</h1>
                     <h3>Front-End Developer</h3>
@@ -338,7 +419,7 @@
             <div class="card_inner">
               <div class="front_side">
                 <p>11144275 </p>
-                <img src="/picture/memberPhoto/nathania.jpg" alt=" "> <br>
+                <img src="./picture/memberPhoto/nathania.jpg" alt=" "> <br>
                 <div class="cardName">
                   <h1>潘秀玉</h1>
                   <h3>Front-End Developer</h3>
@@ -363,7 +444,7 @@
             <div class="card_inner">
               <div class="front_side">
                 <p>11144223</p>
-                <img src="/picture/memberPhoto/yinzhen.jpg" alt=" "> <br>
+                <img src="./picture/memberPhoto/yinzhen.jpg" alt=" "> <br>
                 <div class="cardName">
                   <h1>張尹榛</h1>
                   <h3>Front-End Developer</h3>
@@ -393,7 +474,7 @@
               <div class="card_inner">
                 <div class="front_side">
                   <p>11144138</p>
-                  <img src="/picture/memberPhoto/ray.jpg" alt=" 譚睿承"> <br>
+                  <img src="./picture/memberPhoto/ray.jpg" alt=" 譚睿承"> <br>
                   <div class="cardName">
                     <h1>譚睿承</h1>
                     <h3>Back-End Developer</h3>
@@ -417,7 +498,7 @@
             <div class="card_inner">
               <div class="front_side">
                 <p>11144139 </p>
-                <img src="/picture/memberPhoto/anita.jpg" alt=" "> <br>
+                <img src="./picture/memberPhoto/anita.jpg" alt=" "> <br>
                 <div class="cardName">
                   <h1>高嘉嬨</h1>
                   <h3>Back-End Developer</h3>
@@ -442,7 +523,7 @@
             <div class="card_inner">
               <div class="front_side">
                 <p>11144155</p>
-                <img src="/picture/memberPhoto/zijie.png" alt=" "> <br>
+                <img src="./picture/memberPhoto/zijie.png" alt=" "> <br>
                 <div class="cardName">
                   <h1>鍾子傑</h1>
                   <h3>Back-End Developer</h3>
@@ -470,8 +551,6 @@
       
 
      
-
-      <div class="separator_Footer"></div> <!-- 分隔線 -->
 
       <!-- 頁尾(含聯絡資訊) 
       ================================================== -->
@@ -509,10 +588,23 @@
           <p>&copy; 2024 Company, Inc. All rights reserved.</p>
 
           <!-- 可自行更動網頁瀏覽人數設定 -->
-          <p> 網頁瀏覽人數：999人</p>
+          <p> 網頁瀏覽人數：<span id="visitor-count">999</span>人</p>
         </div>
-
-        </div>
+          <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: 'footer.jsp',
+                    method: 'GET',
+                    success: function(data) {
+                        var visitorCount = $(data).find('#visitor-count-value').text();
+                        $('#visitor-count').text(visitorCount);
+                    },
+                    error: function() {
+                        console.error('Failed to fetch visitor count');
+                    }
+                });
+            });
+        </script>
 
       </section>
 
@@ -536,7 +628,7 @@
       </div>
 
     <!-- Javascript 區域 -->
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
     

@@ -16,12 +16,12 @@
     /*background-color: #d28718;*/
     background-color: #fff;
     /*padding-bottom: 3rem;*/
-    /*color: rgb(var(--bs-tertiary-color-rgb));
+    /*color: rgb(var(--bs-tertiary-color-rgb));*/
   }
   
   .separator{ /* 基本分隔線設定 */
     border-top: 1px solid #7b7b7b; /* 黑色分隔線，1px 寬度 */
-    width: 1180px; /* 線長度 */
+    width: 1000px; /* 線長度 */
     margin: 30px auto;  /* 與其他元素間距增大，中間對齊 */
     /*box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* 添加陰影效果 */
   
@@ -176,7 +176,8 @@
   
 /* ----- about us part ----------------------------- */
 .aboutSect{
-    margin: 60px 100px 120px 100px;
+    margin: 50px 100px 120px 100px;
+
 }
 /* 品牌理念 */
 .brandCont{
@@ -185,8 +186,33 @@
     flex-direction: row;
     align-items: center; 
     justify-content: center;
+}
+
+.titleButtonSect{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
 
 }
+
+.titleButton1{
+  background-color: #cda574;
+  width: 220px;
+  border-radius: 10px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  margin: 50px 60px 30px 60px;
+  display: flex;
+}
+
+.titleButton1 h4{
+  text-align: center;
+  font-weight: 1000;
+}
+  
 
 
 /* explanation 1 */
@@ -198,7 +224,7 @@
     border-radius: 8px 0 0 8px;
     align-items: center;
     justify-content: center;
-    background-color: #5a493df1;
+    background-color: #61432ef1;
 }
 
 .brandImgContlogo img{
@@ -259,7 +285,7 @@
     border-radius: 0 10px 10px 0;
 }
 
-.brandDescodd h5{
+.brandDescodd h3{
     margin: 0;
     padding: 10px;
 }
@@ -280,54 +306,57 @@
 
 }
 
-.text-overlay h5{
+.text-overlay h3{
     text-align: center;
     justify-content: center;
     display: flex;
     margin: 90px 30px 50px 30px;
-    line-height: 30px;
+    line-height: 40px;
+    font-weight: bold;
     letter-spacing: 3px;
 }
 
 /* explanation 3 */
-.brandDescodd{
+.brandDescEven2{
     width: 360px;
-    text-align: right;
+    text-align: left;
+    font-weight: bold;
     height: auto;
-    border-radius: 8px 0 0 8px;
+    font-size: 60px;
+    border-radius:0  8px  8px 0;
     background-color: #b49e8b84;
     color: #462804;
 }
 
 
-.brandDescodd h6{
+.brandDescEven2 h6{
     margin: 20px 20px 10px 15px ;
     line-height: 35px;
     letter-spacing: 2px;
 }
 
-.brandImgCont{
+.brandImgCont3{
     position: relative;
     width: 340px;
     height: auto;
     align-items: center; 
-    border-radius: 8px 0 0 8px;
+    border-radius:  0 8px 8px 0;
     justify-content: center;
 }
 
-.brandImgCont img{
+.brandImgCont3 img{
     width: 340px;
     height: 280px;
     display: block;
-    border-radius: 0 10px 10px 0;
+    border-radius: 10px 0  0 10px;
 }
 
-.brandDescodd h5{
+.brandDescEven2 h3{
     margin: 0;
     padding: 10px;
 }
 
-.text-overlay {
+.text-overlayodd {
     position: absolute; /* Position the text overlay absolutely within the container */
  /* Align the overlay to the left */
     width: 340px; /* Make the overlay take the full width of the container */
@@ -339,16 +368,17 @@
     text-align: center; /* Center the text */
     justify-content: center;
     display: flex;
-    border-radius: 0 10px 10px 0;
+    border-radius: 10px 0  0 10px;
 
 }
 
-.text-overlay h5{
+.text-overlayodd h3{
     text-align: center;
     justify-content: center;
     display: flex;
+    font-weight: bold;
     margin: 90px 30px 50px 30px;
-    line-height: 30px;
+    line-height: 40px;
     letter-spacing: 3px;
 }
 
@@ -365,3 +395,185 @@
   
   }
   
+
+  /* Member Introduction -------- */
+  #MemberIntro.aboutSect{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+
+  
+  .titleButton h4{
+    text-align: center;
+  }
+
+
+  /* ------------ Member card ------------ */
+  .titleButton{
+    background-color: #cda574;
+    width: 220px;
+    border-radius: 10px;
+    height: 50px;
+    margin: 50px 60px 30px 60px;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .titleButton h4{
+    font-weight:1000;
+  }
+
+.cardBoxCont{
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  height: 100%;
+  margin-top: 30px;
+  padding-top: 10px;
+  margin: 0 90px;
+  margin-bottom: 150px ;
+
+}
+
+  .memberCardCont{
+    width: 400px;
+    height: 500px;
+    margin: 0 40px;
+    perspective: 1000px;
+  }
+
+  .card_inner{
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
+  }
+
+  .front_side, .back_side{
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    position: absolute;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .front_side img{
+    margin-top: -50px;
+    width: 320px;
+    height: 380px;
+    padding: 20px;
+    object-fit: cover;
+    border-radius:25px; 
+    margin-bottom: 30px;
+
+  }
+
+  .front_side{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #b49e8b36;
+    color: #462804;
+    width: 100%;
+    padding-top: 5px;
+    height: 600px;
+    border-radius: 10px;
+    z-index: 2;    
+  }
+.cardName{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.front_side p{
+  letter-spacing: 5px;
+  font-size: 25px;
+  color: #462804;
+  height: 10px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+  .cardName h1{
+    margin-top: -70px;
+    font-weight: bold;
+    color: #462804;
+    text-align: center;
+  }
+
+  .cardName h3{
+    color: #727271;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .memberCardCont:hover .card_inner{
+    transform: rotateY(-180deg);
+  }
+
+  .back_side{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    height: 600px;
+    /* background-color: #7b7b7b; */
+    transform: rotateY(180deg);
+    background-color: #b1adaa4f;
+
+  }
+
+  .back_side h2{
+    font-size: 40px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #462804;
+  }
+
+  .back_side p{
+    font-size: 18px;
+    margin-top: -10px;
+    text-align: center;
+    margin-bottom: 5px;
+    color: #462804;
+    padding-left: 20px;
+    padding-right: 20px;
+
+  }
+
+  .social-icon a{
+    display: inline-flex;
+    color: #111;
+    justify-content: center;
+    align-items: center;
+    width: 64;
+    height: 64px;
+    background: transparent;
+    border: 0.2rem;
+    font-size: 32px;
+    border-radius:50% ;
+    border-radius: 50%;
+    margin:0 24px 20px 0;
+    transition: 0.3s ease;
+}
+
+.social-icon a:hover{
+    font-size: 50px;
+}
+

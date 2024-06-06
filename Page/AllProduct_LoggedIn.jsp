@@ -362,20 +362,21 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">所有商品</a></li>
-                <li><a class="dropdown-item" href="#noodle">泡麵</a></li>
-                <li><a class="dropdown-item" href="#drinks">飲料</a></li>
-                <li><a class="dropdown-item" href="#snacks">零食糖果</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp">所有商品</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#noodle">泡麵</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#drinks">飲料</a></li>
+                <li><a class="dropdown-item" href="./AllProduct_LoggedIn.jsp#snacks">零食糖果</a></li>
               </ul>
             </li>
 
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">品牌理念</a></li>
-                <li><a class="dropdown-item" href="#">成員介紹</a></li>
+                <li><a class="dropdown-item" href="./aboutus_LoggedIn.jsp#brandConcept">品牌理念</a></li>
+                <li><a class="dropdown-item" href="./aboutus_LoggedIn.jsp#MemberIntro">成員介紹</a></li>
               </ul>
             </li>
+
 
             <li class="nav-item dropdown">
               <a class="nav-link" href="#FooterArea"  aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>

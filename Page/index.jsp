@@ -23,36 +23,36 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 
-    <!-- 引用 Bootstrap 套件--->
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/masonry/">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/footers/">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
+   <!-- 引用 Bootstrap 套件---> 
+   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
+   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/">
+   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/masonry/">
+   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/footers/">
+   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+   <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- 使用font-awesome線上免下載圖標(icon) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <!-- 使用font-awesome線上免下載圖標(icon) -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- 登入欄位引用線上資源 -->
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- header -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!-- header -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+   <!-- 登入欄位引用線上資源 -->
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- header -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!-- header -->
+   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
-    <!-- 引用 思源黑體字形 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+   <!-- 引用 思源黑體字形 -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- css 樣式檔案 -->
     <link href="./stylesheets/index.css" rel="stylesheet">
 
     <!-- 登入註冊樣式檔  -->
-    <link rel="stylesheet" href="./stylesheets/LoginArea.css">
+    <link rel="stylesheet" href="./stylesheets/LoginArea.css"> 
 
     <!-- cookie提示 網路引用樣式檔 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.css">
@@ -271,14 +271,14 @@
                   <li><a class="dropdown-item" href="./AllProduct.jsp#snacks">零食糖果</a></li>
                 </ul>
               </li>
-
-            <li class="nav-item dropdown">
+  
+              <li class="nav-item dropdown">
                 <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">品牌理念</a></li>
-                    <li><a class="dropdown-item" href="#">成員介紹</a></li>
+                  <li><a class="dropdown-item" href="./aboutus.jsp#brandConcept">品牌理念</a></li>
+                  <li><a class="dropdown-item" href="./aboutus.jsp#MemberIntro">成員介紹</a></li>
                 </ul>
-            </li>
+              </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#FooterArea"  aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>
@@ -431,9 +431,7 @@
                     <img src="./picture/material/indexPageMaterial/<%= rankingImages[i] %>" alt="RankingImage" style="width:75px; height:auto; position: absolute; top: -20px; left: -20px;">
 
                     <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="<%= imageUrl %>" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <rect width="100%" height="100%" fill="#868e96"/></img>
-
+                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="<%= imageUrl %>" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
                     <!-- 商品詳細資訊 -->
                     <div class="card-body" style="background-color: rgb(255, 255, 255);">
                         <h5 class="card-title" style="color: black;"><%= productName %></h5>
@@ -517,7 +515,7 @@
                 <div class="card" style="width: 330px; height: 420px; position: relative;background-color: rgb(255, 255, 255);">
 
                     <!-- 商品圖片 -->
-                    <img class="bd-placeholder-img card-img-top" src="<%= imageUrl %>" alt="<%= productName %>" width="100%" height="250" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <img class="bd-placeholder-img card-img-top" width="100%" height="250" src="<%= imageUrl %>" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></img>
 
                     <!-- 商品詳細資訊 -->
                     <div class="card-body" style="background-color: rgb(255, 255, 255);">
@@ -550,63 +548,63 @@
 
 <div class="separator"></div> <!-- 分隔線 -->
 
-<!-- 精選推薦
-================================================== -->
+<!-- 精選推薦 
+      ================================================== -->
 
-<section class="Recommendation" style="margin-bottom: 120px;">
+      <section class="Recommendation" style="margin-bottom: 120px;">
 
-    <!-- 精選推薦(圖片標題) -->
-    <div class="Recommendation_PictureTitle" >
-        <img src="./picture/material/indexPageMaterial/RecommendationTitle.png" alt="PitureForm_Of_Title">
-    </div>
+        <!-- 精選推薦(圖片標題) -->
+        <div class="Recommendation_PictureTitle" >
+          <img src="./picture/material/indexPageMaterial/RecommendationTitle.png" alt="PitureForm_Of_Title">
+        </div>
 
-    <div class="Recommendation_CardContainer" >
+        <div class="Recommendation_CardContainer" >
 
-        <!-- 精選推薦圖卡 01-->
-        <div class="col-sm-6 col-lg-4 mb-4 card card-btn position-relative" style="width: 330px;height:600px;background-color: #b3d6e4">
-
+          <!-- 精選推薦圖卡 01-->
+          <div class="col-sm-6 col-lg-4 mb-4 card card-btn position-relative" style="width: 330px;height:600px;background-color: #b3d6e4">
+            
             <!-- 圖卡圖片-->
             <img class="bd-placeholder-img card-img-top" width="100%" height="400" src="./picture/material/indexPageMaterial/Recommendation_Beverage.jpg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></svg>
-
+            
             <div class="card-body">
-                <h5 class="card-title" style="font-weight:900;color: black;font-size: 25px;">沁涼一夏</h5>
-                <p class="card-text" style="color: #535758;font-size: large;">炎炎夏日，來一杯冰飲，一起歡聚「飲冰」食光。</p>
-
-                <!-- 了解更多按鈕 -->
-                <a href="./AllProduct.jsp#drinks" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+              <h5 class="card-title" style="font-weight:900;color: black;font-size: 25px;">沁涼一夏</h5>
+              <p class="card-text" style="color: #535758;font-size: large;">炎炎夏日，來一杯冰飲，一起歡聚「飲冰」食光。</p>
+              
+              <!-- 了解更多按鈕 -->
+              <a href="./AllProduct.html#drinks" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
-        </div>
+          </div>
 
-        <!-- 精選推薦圖卡 02-->
-        <div class="col-sm-6 col-lg-4 mb-4 card card-btn position-relative" style="width: 330px;height:600px;background-color: #d1c9c0">
-
+          <!-- 精選推薦圖卡 02-->
+          <div class="col-sm-6 col-lg-4 mb-4 card card-btn position-relative" style="width: 330px;height:600px;background-color: #d1c9c0">
+            
             <!-- 圖卡圖片-->
             <img class="bd-placeholder-img card-img-top" width="100%" height="400" src="./picture/material/indexPageMaterial/Recommendation_nightFood.jpg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></svg>
-
+            
             <div class="card-body">
-                <h5 class="card-title" style="font-weight:900;color: black;font-size: 25px;">深夜食光</h5>
-                <p class="card-text" style="color: #535758;font-size: large;">夜色昏暗，明月當天，還在挑燈夜戰嗎？給宵夜時間的你。</p>
-
-                <!-- 了解更多按鈕 -->
-                <a href="./AllProduct.jsp#noodle" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+              <h5 class="card-title" style="font-weight:900;color: black;font-size: 25px;">深夜食光</h5>
+              <p class="card-text" style="color: #535758;font-size: large;">夜色昏暗，明月當天，還在挑燈夜戰嗎？給宵夜時間的你。</p>
+              
+              <!-- 了解更多按鈕 -->
+              <a href="./AllProduct.html#noodle" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
-        </div>
+          </div>
 
-        <!-- 精選推薦圖卡 03-->
-        <div class="col-sm-6 col-lg-4 mb-4 card card-btn position-relative" style="width: 330px;height:600px;background-color: #f3ed9d">
-
+          <!-- 精選推薦圖卡 03-->
+          <div class="col-sm-6 col-lg-4 mb-4 card card-btn position-relative" style="width: 330px;height:600px;background-color: #f3ed9d">
+            
             <!-- 圖卡圖片-->
             <img class="bd-placeholder-img card-img-top" width="100%" height="400" src="./picture/material/indexPageMaterial/Recommendation_snacks.jpg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#868e96"/></svg>
-
+            
             <div class="card-body">
-                <h5 class="card-title" style="font-weight:900;color: black;font-size: 25px;">點心輕食</h5>
-                <p class="card-text" style="color: #535758;font-size: large;">不飢不餓，但還是想滿足口腹之慾？這裡有各類點心輕食提供給你。</p>
-
-                <!-- 了解更多按鈕 -->
-                <a href="./AllProduct.jsp#snacks" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
+              <h5 class="card-title" style="font-weight:900;color: black;font-size: 25px;">點心輕食</h5>
+              <p class="card-text" style="color: #535758;font-size: large;">不飢不餓，但還是想滿足口腹之慾？這裡有各類點心輕食提供給你。</p>
+              
+              <!-- 了解更多按鈕 -->
+              <a href="./AllProduct.html#snacks" class="btn btn-primary" style="background-color: #000000;color: rgb(244, 244, 244);font-size: 16px;border: 0px;">了解更多</a>
             </div>
-        </div>
-</section>
+          </div>
+      </section>
 
 
 <!-- Footer 頁尾部分 -->
@@ -621,10 +619,10 @@
     </button>
 </div>
 <!--------->
-
 <!-- Javascript 區域 -->
 <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
-<script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+<script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
 
 <!-- 添加 cookie提示 script -->
 <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>

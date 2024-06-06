@@ -121,12 +121,16 @@
 
                         <!-- 註冊頁面 -->
                         <form action="#">
-                            <h1 style="color: #281805;font-weight: 900; bolder;padding-bottom: 15px;font-weight: 800;">註冊新會員</h1>
-                            <input type="text" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="姓名" />
-                            <input type="number" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電話" />
-                            <input type="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" />
-                            <input type="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" />
-                            <button style="background-color: #a59e94;color: #ffffff;border: 0px;">註冊</button>
+                          <h1 style="color: #281805;font-weight: 900;padding-bottom: 15px;font-weight: 800;">註冊新會員</h1>
+                          <input type="text" name="username" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="姓名" required />
+                          <input type="number" name="phone" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電話" required />
+                          <input type="email" name="email" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="電子郵件" required />
+                          <input type="password" name="password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="密碼" required />
+                          <input type="password" name="confirm_password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="確認密碼" required />
+                          
+                          <input type="password" name="confirm_password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="測試長度欄位" required />
+                          <input type="password" name="confirm_password" style="color: #66625e;font-weight: 800;background-color: #eaeaea;" placeholder="測試長度欄位" required />
+                          <button id="submitBtn1" style="background-color: #a59e94;color: #ffffff;border: 0px;" disabled>註冊</button>
                         </form>
                     </div>
                     
@@ -231,8 +235,8 @@
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">品牌理念</a></li>
-                <li><a class="dropdown-item" href="#">成員介紹</a></li>
+                <li><a class="dropdown-item" href="aboutus.html#brandConcept">品牌理念</a></li>
+                <li><a class="dropdown-item" href="aboutus.html#MemberIntro">成員介紹</a></li>
               </ul>
             </li>
 
@@ -541,11 +545,11 @@
             <div class="pro-container">
               
                 <!-- 飲料排行商品圖卡 01 -->
-                <a href="./product.html">
+                <a href="product.html">
 
                   <div class="pro">
 
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+                      <img src="/picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
 
                       <div class="pro-name">
                           <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
@@ -572,14 +576,15 @@
                       </div>
 
                   </div>
+                </a>
                 
 
                 <!-- 飲料排行商品圖卡 02 -->
-                <a href="./product.html">
+                <a href="product.html">
 
                   <div class="pro">
 
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+                      <img src="/picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
 
                       <div class="pro-name">
                           <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
@@ -609,11 +614,11 @@
                 </a>
 
                 <!-- 飲料排行商品圖卡 03 -->
-                <a href="./product.html">
+                <a href="product.html">
 
                   <div class="pro">
 
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+                      <img src="/picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
 
                       <div class="pro-name">
                           <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
@@ -643,11 +648,11 @@
                 </a>
 
                 <!-- 飲料排行商品圖卡 04 -->
-                <a href="./product.html">
+                <a href="product.html">
 
                   <div class="pro">
 
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+                      <img src="/picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
 
                       <div class="pro-name">
                           <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
@@ -677,11 +682,11 @@
                 </a>
 
                 <!--飲料排行商品圖卡 05 -->
-                <a href="./product.html">
+                <a href="product.html">
 
                   <div class="pro">
 
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+                      <img src="/picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
 
                       <div class="pro-name">
                           <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
@@ -711,11 +716,11 @@
                 </a>
 
                 <!-- 飲料排行商品圖卡 06 -->
-                <a href="./product.html">
+                <a href="product.html">
 
                   <div class="pro">
 
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+                      <img src="/picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
 
                       <div class="pro-name">
                           <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
@@ -745,11 +750,11 @@
                 </a>
 
                 <!-- 飲料排行商品圖卡 07 -->
-                <a href="./product.html">
+                <a href="product.html">
 
                   <div class="pro">
 
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+                      <img src="/picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
 
                       <div class="pro-name">
                           <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>
@@ -825,11 +830,11 @@
             <div class="pro-container">
 
                 <!-- 零食餅乾排行商品圖卡 01 -->
-                <a href="./product.html">
+                <a href="product.html">
 
                   <div class="pro">
 
-                      <img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
+                      <img src="/picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="">
 
                       <div class="pro-name">
                           <h5>Nongshim 農心 <br>韓國境內版 辛拉麵 5包</h5>

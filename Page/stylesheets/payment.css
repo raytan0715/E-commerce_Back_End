@@ -457,7 +457,7 @@ body{
     font-size: 20px;
     color: #462804;
     font-weight: bold;
-    margin-right: 15px; /* Add some space between the label and the input */
+    margin-right: 5px; /* Add some space between the label and the input */
     width: 30%; /* Adjust the width as needed */
     text-align: right; /* Right justify the labels */
 }
@@ -487,10 +487,6 @@ body{
 .input-container {
     width: 100%; /* Make the container take the full width */
 }
-
-
-
-
 
 select {
     padding: 4px auto 4px 10px;
@@ -542,28 +538,6 @@ select {
     color: #42392F;
   }
 
-  .form-group-pay{
-    display: flex;
-    align-items: center; /* Align items vertically in the center */
-    margin-bottom: 30px;
-    margin-left: -20px;
-    margin-right: 50px;
-    justify-self: space-between;
-}
-
-.form-group-pay label{
-    font-size: 20px;
-    color: #462804;
-    font-weight: bold;
-    margin-right: 5px; /* Add some space between the label and the input */
-    width: 30%; /* Adjust the width as needed */
-    text-align: right; /* Right justify the labels */
-}
-
-/* .form-group-pay input{
-    background-color: white;
-    border: 1px solid #bdbdbd ;
-} */
 
 /* 基本分隔線設定 */
 .separator {
@@ -578,7 +552,7 @@ select {
 
 .separatorText{
     position: absolute;
-    color: #ababab;
+    color: #ec5656;
     top: -12px; /* Adjust this value to center the text vertically on the line */
     left: 50%;
     transform: translateX(-50%);
@@ -661,55 +635,41 @@ input[type="date"]::placeholder {
     height: 60px;
     border-radius: 10px;
     border: none;
+    transition: 0.5s;
+}
 
+.paymentbtn:hover{
+  background-color:#e3df8a;
+  transition: 0.5s;
 }
 
 
 
 /* radio part */
-.custom-radio {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+.form-group input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #bdbdbd;
+  border-radius: 50%;
+  background-color: white;
+  position: relative;
+  outline: none;
+  cursor: pointer;
 }
 
-.custom-radio input[type="radio"] {
-    display: none;
-}
-
-.custom-radio label {
-    position: relative;
-    padding-left: 30px;
-    cursor: pointer;
-    user-select: none;
-}
-
-.custom-radio label::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 20px;
-    width: 20px;
-    background-color: #fff;
-    border: 2px solid #007bff;
-    border-radius: 50%;
-}
-
-.custom-radio input[type="radio"]:checked + label::before {
-    background-color: #007bff;
-}
-
-.custom-radio input[type="radio"]:checked + label::after {
-    content: "";
-    position: absolute;
-    left: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 10px;
-    width: 10px;
-    background-color: #fff;
-    border-radius: 50%;
+/* Style the checked state */
+.form-group input[type="radio"]:checked::before {
+  content: '';
+  width: 10px; /* Adjusted width */
+  height: 10px; /* Adjusted height */
+  border-radius: 50%;
+  background-color: rgb(45, 87, 239);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the circle */
 }
 

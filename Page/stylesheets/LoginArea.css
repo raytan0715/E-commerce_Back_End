@@ -5,7 +5,10 @@
   font-family: "Noto Sans TC", sans-serif;
 }
 
-/* ========== 登入 ========== */
+
+/* ========== 登入與註冊面板設定 ========== */
+
+/* 登入大面板 */
 .modal {
   display: none;
   position: fixed;
@@ -26,8 +29,6 @@
   -webkit-animation: animatezoom 0.6s;
   animation: animatezoom 0.6s
 }
-
-/* ========== 登入與註冊面板設定 ========== */
 
 /* 登入與註冊面板 */
 
@@ -52,12 +53,9 @@
   left: 50%;
   transform: translateX(-50%);
   top: 20%;
-  overflow: hidden;
   width: 700px;
   /* max-width: 100%; */
-  /*min-height: 500px;*/
   min-height: 500px;
-  
 }
 
 .container_Login h1 {
@@ -113,7 +111,6 @@
   padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
-  min-height: auto;
   font-size: 14px;
 }
 

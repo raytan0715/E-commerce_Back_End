@@ -33,7 +33,7 @@
         counter++;
         context.setAttribute("counter", counter);
       %>
-      <p id="visitor-count-value" style="display: none;"><%= counter %></p>
+      <span id="visitor-count-value" style="display: none;"><%= counter %></span>
       <p> 網頁瀏覽人數：<%= counter %>人</p>
     </div>
   </section>
