@@ -410,7 +410,8 @@ CREATE TABLE `membership` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `membership` (`MemberID`, `MemberAccount`, `MemberPassword`, `MemberName`, `MemberPhone`, `BirthdayDate`, `Address`) VALUES
 (1, '11144139jay@gmail.com', '12345', 'jay', '0906692674', NULL, '台北市信義區永吉路30巷101弄10號'),
-(2, '11144154jay@gmail.com', '54321', 'alice', '0901297374', NULL, '桃園市中壢區中北路200號');
+(2, '11144154jay@gmail.com', '54321', 'alice', '0901297374', NULL, '桃園市中壢區中北路200號'),
+(3, '11144138jay@gmail.com', '114514', '譚睿承','0905114520', NULL, '桃園市中壢區普忠路210號');
 /*!40000 ALTER TABLE `membership` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -421,28 +422,25 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comment` (
-  `MemberID` int NOT NULL AUTO_INCREMENT,
-  `MemberAccount` varchar(45) DEFAULT NULL,
-  `ProductID` int DEFAULT NULL,
+  `CommentID` int NOT NULL AUTO_INCREMENT,
+  `MemberID` int NOT NULL,
+  `ProductID` int NOT NULL,
   `star` int DEFAULT NULL,
-  `comment` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`MemberID`),
- KEY `proo_idx` (`ProductID`),
-  CONSTRAINT `proo` FOREIGN KEY (`ProductID`) REFERENCES `pro` (`MemberID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
-
+  `comment` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`CommentID`),
+  KEY `fk_member_idx` (`MemberID`),
+  KEY `fk_product_idx` (`ProductID`),
+  CONSTRAINT `fk_member` FOREIGN KEY (`MemberID`) REFERENCES `membership` (`MemberID`),
+  CONSTRAINT `fk_product` FOREIGN KEY (`ProductID`) REFERENCES `inventoryquantity` (`ProductID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 -- Dumping data for table `comment`
 --
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` VALUES (1,'dipjuolty883@gmail.com',1,4,'好吃');
+#INSERT INTO `comment` VALUES (1,'11144139jay@gmail.com',1,4,'好吃');
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 --

@@ -1,47 +1,38 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.text.DecimalFormat" %>
-<%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="java.util.HashMap" %>
-<%@ page import="java.util.Map" %>
-
 
 <%
-      // 初始化購物車
-      if (session.getAttribute("cart") == null) {
+    // 初始化購物車
+    if (session.getAttribute("cart") == null) {
         session.setAttribute("cart", new HashMap<String, Integer>());
-      }
-      Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
-        
-        //處理購物車操作
-        String action = request.getParameter("action");
-        String product = request.getParameter("product");
-        if ("add".equals(action)) {
-            cart.put(product, cart.getOrDefault(product, 0) + 1);
-        } else if ("remove".equals(action)) {
-            if (cart.containsKey(product)) {
-                int quantity = cart.get(product) - 1;
-                if (quantity > 0) {
-                    cart.put(product, quantity);
-                } else {
-                    cart.remove(product);
-                }
+    }
+    Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
+    
+    //處理購物車操作
+    String action = request.getParameter("action");
+    String product = request.getParameter("product");
+    if ("add".equals(action)) {
+        cart.put(product, cart.getOrDefault(product, 0) + 1);
+    } else if ("remove".equals(action)) {
+        if (cart.containsKey(product)) {
+            int quantity = cart.get(product) - 1;
+            if (quantity > 0) {
+                cart.put(product, quantity);
+            } else {
+                cart.remove(product);
             }
-        } else if ("delete".equals(action)) {
-            cart.remove(product);
         }
+    } else if ("delete".equals(action)) {
+        cart.remove(product);
+    }
 %>
 
-
-
 <!doctype html>
-
 <html lang="en" data-bs-theme="auto">
-
   <head>
-    
     <script src="./assets/js/color-modes.js"></script>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -51,15 +42,15 @@
     <!-- 網頁標題 -->
     <title> 吃貨道| 吃貨的專屬門道 </title> 
 
-   <!-- 引用 Bootstrap 套件--->
-   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
-   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/">
-   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/masonry/">
-   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/footers/">
-   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
+    <!-- 引用 Bootstrap 套件--->
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/masonry/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/footers/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbars/">
 
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-   <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 使用font-awesome線上免下載圖標(icon) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -84,7 +75,6 @@
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-
     <!-- css 樣式檔案 -->
     <link href="./stylesheets/product.css" rel="stylesheet">
     
@@ -97,18 +87,13 @@
   </head>
 
   <body>
-
     <!-- 上方欄位 (工具欄)
     ================================================== -->
-
     <!-- 先為code寫上註解 不要急著修改-->
-
-      <!-- 共具欄第一欄 -->
-      <nav class="navbar navbar-expand-lg"> 
-
+    <!-- 共具欄第一欄 -->
+    <nav class="navbar navbar-expand-lg"> 
         <!-- 工具欄第一欄內容物容器 -->
         <div class="row navOneRow">
-
           <!-- 【圖標logo】-->
           <div class="col-sm navLogoCol">
             <div class="navLogo" >
@@ -119,34 +104,27 @@
             </div>
           </div>
           
-
           <!-- 搜尋欄 -->
           <div class="col-sm searchBarCol">
-
             <form class="d-flex" action="./SearchProduct_LoggedIn.jsp" method="get" style="width:750px;">
               <input id="searchBar" class="form-control me-2 searchBar" name="keyword" type="search" placeholder="🔍 搜尋" aria-label="Search">
-          
               <script>
                   // 在輸入框獲得焦點時，添加特定的樣式
                   document.getElementById("searchBar").addEventListener("focus", function() {
                       this.classList.add("focused");
                   });
-          
                   // 在輸入框失去焦點時，移除特定的樣式
                   document.getElementById("searchBar").addEventListener("blur", function() {
                       this.classList.remove("focused");
                   });
               </script>
           </form>
-            
           </div>
 
           <!-- 右側兩個按鈕欄位 -->
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
-
             <!-- 【購物車】 -->
             <div id="cart">
-
               <!-- 購物車按鈕 --> 
                 <button onclick="openNav()".style.display='block' type="button" class="btn btn-light" style="width: auto;height:auto;">
                     <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
@@ -154,44 +132,34 @@
               
               <!-- 旁邊顯示之購物車界面 -->
               <div id="mySidebar" class="sidebar">
-
                   <!-- 購物車頁面右邊之大叉叉-->
                   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
                   <div class="sidebarinner">
-
                       <!-- 購物車表單 -->
                       <form action="">
-
                           <!-- 購物車商品之單頁 商品01 -->
                           <div class="cart-p">
                               <img src="./picture/material/productPic/snacks/snacks_2.PNG">
                               <div>
-
                                   <div class="cp1">   <!--商品名稱-->
                                       <h1>GEMEZ Enaak 韓式小雞麵 雞汁味</h1>
                                       <p>一盒裝 24入</p>
                                   </div>
-
                                   <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
                                     <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
                                     <input class="quantity" type="text" value="1"/>
                                     <input class="add" type="button" value="+"/> 
                                   </div>
-                            
                               </div>
-
                               <div class="cp3">   <!-- 商品價格 -->
                                   <p>$239</p>
                               </div>
-
                               <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
-
                           </div>
 
                           <!-- 購物車商品之單頁 商品02 -->
                           <div class="cart-p">
-
                               <img src="./picture/material/productPic/drinks/banana.jpg">
                               <div>
                                   <div class="cp1">   <!--商品名稱-->
@@ -204,18 +172,14 @@
                                     <input class="add" type="button" value="+"/> 
                                 </div>                            
                               </div>
-
                               <div class="cp3">   <!-- 商品價格 -->
                                   <p>$25</p>
                               </div>
-
                               <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
-
                           </div>
 
                           <!-- 購物車商品之單頁 商品03 -->
                           <div class="cart-p">
-
                             <img src="./picture/material/productPic/drinks/banana.jpg">
                             <div>
                                 <div class="cp1">   <!--商品名稱-->
@@ -228,13 +192,10 @@
                                   <input class="add" type="button" value="+"/> 
                               </div>
                             </div>
-
                             <div class="cp3">   <!-- 商品價格 -->
                                 <p>$25</p>
                             </div>
-
                             <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
-
                         </div>
 
                         <!-- 購買數量增減控制 -->
@@ -245,20 +206,18 @@
                                       const cp2 = event.target.closest('.cp2');
                                       const quantityInput = cp2.querySelector('.quantity');
                                       let currentValue = parseInt(quantityInput.value);
-                      
+                                      
                                       const min = parseInt(cp2.getAttribute('data-min'));
                                       const max = parseInt(cp2.getAttribute('data-max'));
-                      
+                                      
                                       if (event.target.classList.contains('min') && currentValue > min) {
                                           quantityInput.value = currentValue - 1;
                                       }
-                      
                                       if (event.target.classList.contains('add') && currentValue < max) {
                                           quantityInput.value = currentValue + 1;
                                       }
                                   }
                               });
-                      
                               // 避免非數值資料輸入進數量欄位
                               document.querySelectorAll('.quantity').forEach(input => {
                                   input.addEventListener('input', function() {
@@ -269,7 +228,7 @@
                                       // 數量欄位限制購買數量，當輸入超過最大數量，則予以提醒。
                                       if (value > max) {
                                           alert(`最多只能購買 ${max} 個`);
-                                          this.value = '';
+                                          this.value = max;
                                       } else {
                                           this.value = value;
                                       }
@@ -278,8 +237,6 @@
                           });
                       </script>
 
-                        
-                          
                         <!-- 計算總價 -->
                         <div class="cart-total">
                             <p>總金額<p>
@@ -288,7 +245,6 @@
 
                         <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
                         <div class="cart-but row" >
-
                             <div class="col">
                               <!-- 繼續購物時，就關閉當前購物車視窗 -->
                               <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
@@ -296,15 +252,10 @@
                             <div class="col">
                               <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
                             </div>
-
                         </div>
-
                       </form>
-
                   </div>
-
               </div>
-
             </div>
 
             <!-- 【會員註冊登入】 -->
@@ -339,6 +290,9 @@
                         userName = rs.getString("MemberName");
                     }
             
+                    // 將userName存儲在session中
+                    session.setAttribute("userName", userName);
+
                     // 關閉資料庫連接
                     conn.close();
                 } catch (SQLException sExec) {
@@ -359,23 +313,18 @@
 
             <!-- 購物車所需js檔 -->
             <script src="./javascript/h.js" charset="utf-8"></script>
-
           </div>
-
         </div>
       </nav>
 
       <!-- 工具欄第二欄 -->
       <nav class="navbar navbar-expand-lg navbar-black bg-black" aria-label="Tenth navbar example"> 
-
         <div class="container-fluid" style="background-color: #f7f7f7">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-          
           <!-- 下拉式選單 -->
           <div class="collapse navbar-collapse justify-content-md-center navCol-2" id="navbarsExample08"> 
-
             <!-- 【商品瀏覽】 -->
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">商品瀏覽</a>
@@ -395,18 +344,14 @@
               </ul>
             </li>
 
-
             <!-- 【聯絡我們】 -->
             <li class="nav-item dropdown">
               <a class="nav-link" href="#FooterArea"  aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>
             </li>
-
           </div>
-
         </div>
       </nav>
    
-
       <!-- 商品購買與介紹區域
       ================================================== -->
 
@@ -414,11 +359,9 @@
       <section class="desc-page">
         
       <%
-      
       // 從URL獲取productId
       String productId = request.getParameter("productId");
       String userid = (String) session.getAttribute("userid");
-      String productId = "someProductId"; // This should be dynamically set based on your application logic
       
       if (productId == null || productId.isEmpty()) {
           out.println("產品ID無效");
@@ -467,7 +410,6 @@
 
         <!-- 商品基本內容顯示容器(標題、圖片、價格、數量、計數器、購買按鈕)-->
         <div id="product1" class="display">
-
           <!-- 商品圖片 -->
           <div class="cont-img">
             <img src="<%= productUrl %>" alt="<%= productName %>">
@@ -475,7 +417,6 @@
 
           <!-- 商品之標題、價格、數量、計數器、購買按鈕顯示容器 -->
           <div class="cont">
-
               <!-- 商品標題 -->
               <div class="cont-name">
                 <h5><%= productName %></h5>
@@ -499,15 +440,12 @@
 
               <!-- 商品購買按鈕容器 -->
               <div class="addToCart">
-
                 <button type="submit" class="btn" onclick="showAlert()">
                   加入購物車
                 </button>
-
                 <button type="submit" class="btn" onclick=""> <!-- 導引至結帳區 -->
                   立即購買
                 </button>
-
               </div>
               </form> 
 
@@ -551,38 +489,27 @@
                     });
                 });
               </script>
-
           </div>
-        
         </div>
 
         <div class="separator"></div> <!-- 分隔線 -->
         
         <!-- 商品介紹
          ------------------------->
-
         <div class="introduction">
-
           <!-- 商品介紹 -->
           <h4> &#92;商品介紹&sol;</h4>
-
           <p><%= productDetails %></p>
-
           <br>
-
           <!-- 成分内容 -->
           <h4> &#92;成分内容&sol;</h4>
           <p><%= productIngredientList %></p>
-
           <br>
-
           <!-- 過敏原資訊 -->
           <h4> &#92;過敏原資訊&sol;</h4>
           <p><%= productAllergyList %></p>
           <br>
-
           </div>
-
         </div>
         <%
           } else {
@@ -599,155 +526,139 @@
       %>
       </section>
 
-
       <div class="separator"></div> <!-- 分隔線 -->
 
       <!-- 商品留言評價區域
       ================================================== -->
 
       <section class="comment">
-
         <!-- 左方填寫評論區域 -->
         <div class="leftside">
-
           <h5>留言評價</h5>
-
-          <form action="#" method="post">
-
-            <label for="fname" style="font-size: 20px;">姓名:</label><br>
-
-
+          <form action="./submitComment.jsp" method="post">
+            <label for="fname" style="font-size: 22px;">姓名: <%= session.getAttribute("userName") %></label><br>
+            <input type="hidden" name="userEmail" value="<%= session.getAttribute("userEmail") %>">
+            <input type="hidden" id="fname" name="fname" class="CommentNameInput" value="<%= session.getAttribute("userName") %>" readonly><br>
+        
             <p>留言</p>
-            <textarea name="message" rows="10" cols="30" style="height: 200px;resize: none; "></textarea>
+            <textarea name="message" rows="10" cols="30" style="height: 200px; resize: none;"></textarea>
             <br><br>
-
+        
             <!-- 星星評分部分 -->
             <div class="star" id="star-rating">
-
               <iconify-icon icon="ic:baseline-star" width="40" data-index="1" class="star-icon"></iconify-icon>
               <iconify-icon icon="ic:baseline-star" width="40" data-index="2" class="star-icon"></iconify-icon>
               <iconify-icon icon="ic:baseline-star" width="40" data-index="3" class="star-icon"></iconify-icon>
               <iconify-icon icon="ic:baseline-star" width="40" data-index="4" class="star-icon"></iconify-icon>
               <iconify-icon icon="ic:baseline-star" width="40" data-index="5" class="star-icon"></iconify-icon>
-              
             </div>
-
+        
+            <input type="hidden" name="starRating" id="starRatingInput">
+            <input type="hidden" name="MemberID" value="<%= session.getAttribute("MemberID") %>">
+            <input type="hidden" name="ProductID" value="<%= request.getParameter("productId") %>">
             <input type="submit" value="送出">
-
           </form>
-
         </div>
         
         <!-- 星星js程式部分 -->
         <script>
           document.addEventListener("DOMContentLoaded", function() {
-            const starRatings = document.querySelectorAll(".star");
+            const starIcons = document.querySelectorAll(".star-icon");
         
-              starRatings.forEach((starRating) => {
-                const starIcons = starRating.querySelectorAll(".star-icon");
+            starIcons.forEach((starIcon) => {
+              starIcon.addEventListener("click", function() {
+                const clickedIndex = parseInt(this.getAttribute("data-index"));
         
-                  starIcons.forEach((starIcon) => {
-                      starIcon.addEventListener("click", function() {
-                        const clickedIndex = parseInt(this.getAttribute("data-index"));
+                document.getElementById("starRatingInput").value = clickedIndex;
         
-                          starIcons.forEach((icon, index) => {
-                              if (index < clickedIndex) {
-                                  icon.setAttribute("icon", "ic:baseline-star");
-                                  icon.classList.add("selected");
-                              } else {
-                                  icon.setAttribute("icon", "ic:baseline-star");
-                                  icon.classList.remove("selected");
-                              }
-                          });
+                starIcons.forEach((icon, index) => {
+                  if (index < clickedIndex) {
+                    icon.classList.add("selected");
+                  } else {
+                    icon.classList.remove("selected");
+                  }
+                });
         
-                        console.log("Selected Rating: " + clickedIndex);
-                      });
-                  });
+                console.log("Selected Rating: " + clickedIndex);
               });
+            });
           });
         </script>
-        
+
+
         <!-- 右方顯示評論區域 -->
+        
         <div class="rightside">
-          <%
-          String url = "jdbc:mysql://localhost:3306/transactionthing"; 
+          
+          <h5>評論</h5>
+          <div class="comment-box">
+            
+            <div class="box-top">
+            <%
+            List<Map<String, Object>> comments = new ArrayList<>(); // Declare outside the try block to ensure availability in the loop
 
-          try {
-              Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-              conn = DriverManager.getConnection(url, root, Ray_930715);
-
-              String userName = request.getParameter("userName");
-              String userOpinion = request.getParameter("userOpinion");
-              String ratingStr = request.getParameter("rating");
-              int rating = 0;
-
-              if (userName != null && !userName.trim().isEmpty() && userOpinion != null && !userOpinion.trim().isEmpty()) {
-                  try {
-                      rating = Integer.parseInt(ratingStr);
-                      String insertSql = "INSERT INTO comment (star, comment, MemberAccount) VALUES (?, ?, ?)";
-                      try (PreparedStatement pstmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
-                          pstmt.setInt(1, rating);
-                          pstmt.setString(2, userOpinion.trim());
-                          pstmt.setString(3, userName.trim());
-                          pstmt.executeUpdate();
-                      }
-                  } catch (NumberFormatException e) {
-                      out.println("請輸入星號並重新送出");
-                  }
+            try {
+              // Fetch product ID from request
+              String productIdParam = request.getParameter("productId");
+              if (productIdParam == null || productIdParam.isEmpty()) {
+                out.println("Invalid product ID");
+                return; // Exit if no product ID is provided
               }
 
-              // Display all reviews
-              String query = "SELECT * FROM comment";
-              stmt = conn.createStatement();
-              rs = stmt.executeQuery(query);
+              int productIds = Integer.parseInt(productIdParam);
+
+              String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+              Class.forName("com.mysql.cj.jdbc.Driver");
+              conn = DriverManager.getConnection(url, "root", "Ray_930715");
+
+              String sql = "SELECT m.MemberName, c.star, c.comment FROM comment c JOIN membership m ON c.MemberID = m.MemberID WHERE c.ProductID = ?";
+              pstmt = conn.prepareStatement(sql);
+              pstmt.setInt(1, productIds);
+              rs = pstmt.executeQuery();
+
               while (rs.next()) {
-                  int dbRating = rs.getInt("star");
-                  String dbUserOpinion = rs.getString("comment");
-                  String dbUserName = rs.getString("MemberAccount");
-        %>
-
-          <h5>評論</h5>
-
-          <!-- 評論顯示盒 - 大容器 -->
-          <div class="comment-box">
-
-            <!-- 評論顯示盒 小容器 -->
-            <div class="box-top">
+                  Map<String, Object> comment = new HashMap<>();
+                  comment.put("userName", rs.getString("MemberName"));
+                  comment.put("starRating", rs.getInt("star"));
+                  comment.put("comment", rs.getString("comment"));
+                  comments.add(comment);
+              }
+              } catch (Exception e) {
+                  e.printStackTrace();
+              } finally {
+                  if (rs != null) try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+                  if (pstmt != null) try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+                  if (conn != null) try { conn.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+              }
+              for (Map<String, Object> comment : comments) {
+            %>
 
               <!-- 用戶圖標 -->
               <iconify-icon icon="mingcute:user-4-fill" width="55" style="font-size: 36px;"></iconify-icon>
 
-              <h6><%= dbUserName %></h6>
+              <h6><%= comment.get("userName") %></h6>
 
-              <!-- 顯示評論之星星顯示區 -->
               <div class="starcomment" id="star-comment">
 
-                <% for (int i = 0; i < dbRating; i++) { %>
-                  <iconify-icon icon="ic:baseline-star" width="25" data-index="<%= i + 1 %>" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
+                  <% for (int i = 1; i <= (int) comment.get("starRating"); i++) { %>
+                      <iconify-icon icon="material-symbols:star" width="25" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
+                  <% }
+
+                    for (int i = (int) comment.get("starRating") + 1; i <= 5; i++) { %>
+                      <iconify-icon icon="material-symbols:star-outline" width="25" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
+                  <% } %>
+
+                </div>
+
+                <p><%= comment.get("comment") %></p>
+                
                 <% } %>
-              
-              </div>
-
-              <p>
-                <%= dbUserOpinion %>
-              </p>
-
             </div>
 
           </div>
-          <%
-                }
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
-                out.println("An error occurred: " + ex.getMessage());
-                ex.printStackTrace();
-            } finally {
-                if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-                if (stmt != null) try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-                if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-            }
-        %>
+
         </div>
-          
+
       </section>
       
       <!-- 回到頂部按鈕 -->
@@ -770,13 +681,10 @@
       }
     </script>
 
-
     <!-- Javascript 區域 -->
     <!-- <script src="./assets/dist/js/bootstrap.bundle.min.js"></script> -->
     <!-- 我先註解，我發現加上這個好像會使得下拉式選單無法正常開啟 -->
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
-
 </body>
-
 </html>
