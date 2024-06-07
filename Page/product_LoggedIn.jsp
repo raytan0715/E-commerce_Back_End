@@ -417,12 +417,17 @@
       
       // 從URL獲取productId
       String productId = request.getParameter("productId");
+      String userid = (String) session.getAttribute("userid");
+      String productId = "someProductId"; // This should be dynamically set based on your application logic
       
       if (productId == null || productId.isEmpty()) {
           out.println("產品ID無效");
           return;
       }
-
+      if (userid == null) {
+        // Handle the case when userid is not set
+        userid = "defaultUserId"; // Or redirect to login page or show an error
+      }
       try {
           // 加載JDBC驅動
           Class.forName("com.mysql.cj.jdbc.Driver");
@@ -487,9 +492,9 @@
                 <input  type="text" name="quantity" value="1" class="quantity"/>
                 <input  type="button" value="+" class="add"/>
               </div>
-              <!-- 隱藏的 productId 輸入欄位 -->
+              <!-- Hidden input for productId -->
               <input type="hidden" name="productId" value="<%= productId %>"/>
-              <!-- 隱藏的 MemberID 輸入欄位 -->
+              <!-- Hidden input for MemberID -->
               <input type="hidden" name="MemberID" value="<%= userid %>"/>
 
               <!-- 商品購買按鈕容器 -->
@@ -664,6 +669,42 @@
         
         <!-- 右方顯示評論區域 -->
         <div class="rightside">
+          <%
+          String url = "jdbc:mysql://localhost:3306/transactionthing"; 
+
+          try {
+              Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+              conn = DriverManager.getConnection(url, root, Ray_930715);
+
+              String userName = request.getParameter("userName");
+              String userOpinion = request.getParameter("userOpinion");
+              String ratingStr = request.getParameter("rating");
+              int rating = 0;
+
+              if (userName != null && !userName.trim().isEmpty() && userOpinion != null && !userOpinion.trim().isEmpty()) {
+                  try {
+                      rating = Integer.parseInt(ratingStr);
+                      String insertSql = "INSERT INTO comment (star, comment, MemberAccount) VALUES (?, ?, ?)";
+                      try (PreparedStatement pstmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+                          pstmt.setInt(1, rating);
+                          pstmt.setString(2, userOpinion.trim());
+                          pstmt.setString(3, userName.trim());
+                          pstmt.executeUpdate();
+                      }
+                  } catch (NumberFormatException e) {
+                      out.println("請輸入星號並重新送出");
+                  }
+              }
+
+              // Display all reviews
+              String query = "SELECT * FROM comment";
+              stmt = conn.createStatement();
+              rs = stmt.executeQuery(query);
+              while (rs.next()) {
+                  int dbRating = rs.getInt("star");
+                  String dbUserOpinion = rs.getString("comment");
+                  String dbUserName = rs.getString("MemberAccount");
+        %>
 
           <h5>評論</h5>
 
@@ -676,27 +717,35 @@
               <!-- 用戶圖標 -->
               <iconify-icon icon="mingcute:user-4-fill" width="55" style="font-size: 36px;"></iconify-icon>
 
-              <h6>酷寄</h6>
+              <h6><%= dbUserName %></h6>
 
               <!-- 顯示評論之星星顯示區 -->
               <div class="starcomment" id="star-comment">
 
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="1" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="2" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="3" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="4" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="5" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
+                <% for (int i = 0; i < dbRating; i++) { %>
+                  <iconify-icon icon="ic:baseline-star" width="25" data-index="<%= i + 1 %>" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
+                <% } %>
               
               </div>
 
               <p>
-                辛拉麵麵條Q彈超好吃 !! ~~
+                <%= dbUserOpinion %>
               </p>
 
             </div>
 
           </div>
-
+          <%
+                }
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+                out.println("An error occurred: " + ex.getMessage());
+                ex.printStackTrace();
+            } finally {
+                if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                if (stmt != null) try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
+        %>
         </div>
           
       </section>

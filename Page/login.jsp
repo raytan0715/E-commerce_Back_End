@@ -3,63 +3,56 @@
 <%@ page import="java.io.*" %>
 
 <%
-    // 從前端獲取用戶輸入的登入信息
     String email = request.getParameter("email");
     String password = request.getParameter("password");
 
-    // 設置資料庫連接相關變數
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
 
     try {
-        // 連接到 MySQL 資料庫
-        String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC"; // 使用具體的資料庫名稱
-        Class.forName("com.mysql.cj.jdbc.Driver"); // 確保使用正確的 MySQL 驅動
+        String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+        Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection(url, "root", "Ray_930715");
 
-        // 檢查連接是否成功
-        if (conn.isClosed()) {
-            out.println("連接失敗");
+        // First, check if user is a seller
+        String sqlSeller = "SELECT * FROM seller WHERE email = ? AND password = ?";
+        pstmt = conn.prepareStatement(sqlSeller);
+        pstmt.setString(1, email);
+        pstmt.setString(2, password);
+        rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            session.setAttribute("userEmail", email);
+            response.sendRedirect("./manager.jsp");
+            return;
         } else {
-            // 檢查用戶是否存在以及密碼是否正確
-            String sql = "SELECT * FROM membership WHERE MemberAccount = ? AND MemberPassword = ?";
-            
-            // 使用 PreparedStatement 防止 SQL 注入
-            pstmt = conn.prepareStatement(sql);
+            // Check if user is a member
+            String sqlMember = "SELECT * FROM membership WHERE MemberAccount = ? AND MemberPassword = ?";
+            pstmt = conn.prepareStatement(sqlMember);
             pstmt.setString(1, email);
             pstmt.setString(2, password);
-
-            // 執行查詢操作
             rs = pstmt.executeQuery();
-            
+
             if (rs.next()) {
-                // 登入成功，設置會話屬性
                 session.setAttribute("userEmail", email);
                 session.setAttribute("MemberID", rs.getInt("MemberID"));
-                
-                out.println("登入成功");
-                // 重定向到 memberPage.jsp
                 response.sendRedirect("./memberPage.jsp");
                 return;
             } else {
-                // 登入失敗，使用 JavaScript alert 顯示錯誤訊息並重定向到 index.jsp
+                // Login failed
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('登入失敗: 無效的電子郵件或密碼');");
-                out.println("window.location.href = 'index.jsp';");
+                out.println("window.location.href = './index.jsp';");
                 out.println("</script>");
                 return;
             }
         }
 
-        // 關閉資料庫連接
-        conn.close();
     } catch (ClassNotFoundException e) {
-        // 處理 JDBC 驅動類錯誤
-        out.println("JDBC 駕駛程序類未找到: " + e.toString());
+        out.println("JDBC Driver not found: " + e.toString());
     } catch (SQLException sExec) {
-        // 處理 SQL 錯誤
-        out.println("SQL 錯誤: " + sExec.toString());
+        out.println("SQL Error: " + sExec.toString());
     } finally {
         if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
         if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
