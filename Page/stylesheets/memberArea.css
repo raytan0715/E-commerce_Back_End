@@ -147,9 +147,8 @@ body{
 
 .container2 {
   position: relative;
-  height: 500px;
+  height: 550px; 
   width: 950px;
-  /*margin-top: 25px;*/
   margin-bottom: 50px;
   background-color: rgba(245, 245, 245, 0.932);
   border-radius: 30px;
@@ -235,6 +234,9 @@ body{
   color: #000;
   background: none;
 }
+.acc{
+  margin-bottom: 100px;
+}
 
 .acc h2{
   font-size: 15px;
@@ -268,4 +270,13 @@ body{
 }
 
 
-
+.recaptcha-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 0; /* Align at the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 20px; /* Adjust the margin as needed */
+}

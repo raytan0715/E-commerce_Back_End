@@ -458,9 +458,13 @@
                                         
                                         <input type="submit" value="更新資料" class="p-sub" id="submitBtn2" disabled>
                                     </form>
+
+
                                     <h2 style="color: #6e573a;font-weight: 800;font-size: 16px;">*修改資料直接填入輸入格即可。*</h2>
-                                    <!-- Google reCAPTCHA v2 -->
-                                    <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
+                                </div>
+                               <!-- Google reCAPTCHA v2 -->
+                                <div class="recaptcha-container">
+                                  <div class="g-recaptcha" data-sitekey="6LdDk-8pAAAAANkrrIZD2ZGk2O1cFmcHgSVc-2uI" data-callback="enableBtn"></div>
                                 </div>
                               </div>
                              
