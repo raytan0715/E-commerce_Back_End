@@ -592,8 +592,6 @@
           
           <h5>評論</h5>
           <div class="comment-box">
-            
-            <div class="box-top">
             <%
             List<Map<String, Object>> comments = new ArrayList<>(); // Declare outside the try block to ensure availability in the loop
 
@@ -632,6 +630,7 @@
               }
               for (Map<String, Object> comment : comments) {
             %>
+            <div class="box-top">
 
               <!-- 用戶圖標 -->
               <iconify-icon icon="mingcute:user-4-fill" width="55" style="font-size: 36px;"></iconify-icon>
@@ -646,15 +645,15 @@
 
                     for (int i = (int) comment.get("starRating") + 1; i <= 5; i++) { %>
                       <iconify-icon icon="material-symbols:star-outline" width="25" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
+                      
                   <% } %>
-
                 </div>
 
                 <p><%= comment.get("comment") %></p>
+                <div class="separator" style="margin-bottom: 0%; margin-top: 0; width: 100%;"></div> <!-- 分隔線 -->
                 
-                <% } %>
             </div>
-
+            <% } %>
           </div>
 
         </div>

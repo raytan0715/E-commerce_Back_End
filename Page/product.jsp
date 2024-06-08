@@ -2,6 +2,10 @@
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.HashMap" %>
 
 <!doctype html>
 
@@ -498,98 +502,72 @@
 
       <section class="comment">
 
-        <!-- 左方填寫評論區域 -->
-        <div class="leftside">
-
-          <h5>留言評價</h5>
-
-          <form action="#" method="post">
-
-            <label for="fname" style="font-size: 20px;">姓名:</label><br>
-
-            <p>留言</p>
-            <textarea name="message" rows="10" cols="30" style="height: 200px;resize: none; "></textarea>
-            <br><br>
-
-            <!-- 星星評分部分 -->
-            <div class="star" id="star-rating">
-
-              <iconify-icon icon="ic:baseline-star" width="40" data-index="1" class="star-icon"></iconify-icon>
-              <iconify-icon icon="ic:baseline-star" width="40" data-index="2" class="star-icon"></iconify-icon>
-              <iconify-icon icon="ic:baseline-star" width="40" data-index="3" class="star-icon"></iconify-icon>
-              <iconify-icon icon="ic:baseline-star" width="40" data-index="4" class="star-icon"></iconify-icon>
-              <iconify-icon icon="ic:baseline-star" width="40" data-index="5" class="star-icon"></iconify-icon>
-              
-            </div>
-
-            <input type="submit" value="送出">
-
-          </form>
-
-        </div>
-        
-        <!-- 星星js程式部分 -->
-        <script>
-          document.addEventListener("DOMContentLoaded", function() {
-            const starRatings = document.querySelectorAll(".star");
-        
-              starRatings.forEach((starRating) => {
-                const starIcons = starRating.querySelectorAll(".star-icon");
-        
-                  starIcons.forEach((starIcon) => {
-                      starIcon.addEventListener("click", function() {
-                        const clickedIndex = parseInt(this.getAttribute("data-index"));
-        
-                          starIcons.forEach((icon, index) => {
-                              if (index < clickedIndex) {
-                                  icon.setAttribute("icon", "ic:baseline-star");
-                                  icon.classList.add("selected");
-                              } else {
-                                  icon.setAttribute("icon", "ic:baseline-star");
-                                  icon.classList.remove("selected");
-                              }
-                          });
-        
-                        console.log("Selected Rating: " + clickedIndex);
-                      });
-                  });
-              });
-          });
-        </script>
-        
-        <!-- 右方顯示評論區域 -->
         <div class="rightside">
-
+          
           <h5>評論</h5>
-
-          <!-- 評論顯示盒 - 大容器 -->
           <div class="comment-box">
+            <%
+            List<Map<String, Object>> comments = new ArrayList<>(); // Declare outside the try block to ensure availability in the loop
 
-            <!-- 評論顯示盒 小容器 -->
+            try {
+              // Fetch product ID from request
+              String productIdParam = request.getParameter("productId");
+              if (productIdParam == null || productIdParam.isEmpty()) {
+                out.println("Invalid product ID");
+                return; // Exit if no product ID is provided
+              }
+
+              int productIds = Integer.parseInt(productIdParam);
+
+              String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+              Class.forName("com.mysql.cj.jdbc.Driver");
+              conn = DriverManager.getConnection(url, "root", "Ray_930715");
+
+              String sql = "SELECT m.MemberName, c.star, c.comment FROM comment c JOIN membership m ON c.MemberID = m.MemberID WHERE c.ProductID = ?";
+              pstmt = conn.prepareStatement(sql);
+              pstmt.setInt(1, productIds);
+              rs = pstmt.executeQuery();
+
+              while (rs.next()) {
+                  Map<String, Object> comment = new HashMap<>();
+                  comment.put("userName", rs.getString("MemberName"));
+                  comment.put("starRating", rs.getInt("star"));
+                  comment.put("comment", rs.getString("comment"));
+                  comments.add(comment);
+              }
+              } catch (Exception e) {
+                  e.printStackTrace();
+              } finally {
+                  if (rs != null) try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+                  if (pstmt != null) try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+                  if (conn != null) try { conn.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+              }
+              for (Map<String, Object> comment : comments) {
+            %>
             <div class="box-top">
 
               <!-- 用戶圖標 -->
               <iconify-icon icon="mingcute:user-4-fill" width="55" style="font-size: 36px;"></iconify-icon>
 
-              <h6>酷寄</h6>
+              <h6><%= comment.get("userName") %></h6>
 
-              <!-- 顯示評論之星星顯示區 -->
               <div class="starcomment" id="star-comment">
 
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="1" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="2" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="3" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="4" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                <iconify-icon icon="ic:baseline-star" width="25" data-index="5" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-              
-              </div>
+                  <% for (int i = 1; i <= (int) comment.get("starRating"); i++) { %>
+                      <iconify-icon icon="material-symbols:star" width="25" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
+                  <% }
 
-              <p>
-                辛拉麵麵條Q彈超好吃 !! ~~
-              </p>
+                    for (int i = (int) comment.get("starRating") + 1; i <= 5; i++) { %>
+                      <iconify-icon icon="material-symbols:star-outline" width="25" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
+                      
+                  <% } %>
+                </div>
 
+                <p><%= comment.get("comment") %></p>
+                <div class="separator" style="margin-bottom: 0%; margin-top: 0; width: 100%;"></div> <!-- 分隔線 -->
+                
             </div>
-
+            <% } %>
           </div>
 
         </div>
