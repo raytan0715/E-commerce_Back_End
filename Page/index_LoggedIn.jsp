@@ -363,8 +363,8 @@
             <li class="nav-item dropdown">
               <a class="nav-link " href="#" data-bs-toggle="dropdown" aria-expanded="flase" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">關於我們</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="./aboutus_LoggedIn.html#brandConcept">品牌理念</a></li>
-                <li><a class="dropdown-item" href="./aboutus_LoggedIn.html#MemberIntro">成員介紹</a></li>
+                <li><a class="dropdown-item" href="./aboutus_LoggedIn.jsp#brandConcept">品牌理念</a></li>
+                <li><a class="dropdown-item" href="./aboutus_LoggedIn.jsp#MemberIntro">成員介紹</a></li>
               </ul>
             </li>
 
@@ -380,76 +380,78 @@
 
    
 
-      <!-- 圖片輪播 
-      ================================================== -->
+      <!-- 圖片輪播 ================================================== -->
 
       <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel" data-bs-interval="3000">
 
-      <!-- 圖片輪播區下方導引按鈕 -->
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="background-color: #282929;height:5px"></button>
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" style="background-color: #535758;height:5px"></button>
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" style="background-color: #535758;height:5px"></button>
-      </div>
+        <!-- 圖片輪播區下方導引按鈕 -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="background-color: #282929;height:5px"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" style="background-color: #535758;height:5px"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" style="background-color: #535758;height:5px"></button>
+        </div>
+
         <!-- 輪播圖片區 - 大容器-->
         <div class="carousel-inner" style="background-color: aliceblue;">
 
-          <!-- 輪播圖片區 - 小容器(圖片01)-->
-          <div class="carousel-item active">
-            <a href="./product_LoggedIn.jsp?productId=18"  style="text-decoration: none; position: relative;">
-              <div class="d-flex justify-content-center align-items-center">
-                  <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel01.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                  <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
-              </div>
-              <div class="container">
-                  <div class="carousel-caption text-start">
-                  </div>
-              </div>
-            </a>
-          </div>
+            <!-- 輪播圖片區 - 小容器(圖片01)-->
+            <div class="carousel-item active">
+                <!-- 點擊導引至該商品連結 -->
+                <a href="./product_LoggedIn.jsp?productId=18" style="text-decoration: none; position: relative;">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel01.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
+                    </div>
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                        </div>
+                    </div>
+                </a>
+            </div>
 
-          <!-- 輪播圖片區 - 小容器(圖片02)-->
-          <div class="carousel-item">
-            <a href="./product_LoggedIn.jsp?productId=4" style="text-decoration: none; position: relative;">
-              <div class="d-flex justify-content-center align-items-center">
-                <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel02.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
-              </div>
-              <div class="container">
-                  <div class="carousel-caption">
-                  </div>
-              </div>
-            </a>
-          </div>
+            <!-- 輪播圖片區 - 小容器(圖片02)-->
+            <div class="carousel-item">
+                <!-- 點擊導引至該商品連結 -->
+                <a href="./product_LoggedIn.jsp?productId=4" style="text-decoration: none; position: relative;">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel02.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
+                    </div>
+                    <div class="container">
+                        <div class="carousel-caption">
+                        </div>
+                    </div>
+                </a>
+            </div>
 
-          <!-- 輪播圖片區 - 小容器(圖片03)-->
-          <div class="carousel-item">
-            <a href="./product_LoggedIn.jsp?productId=12" style="text-decoration: none; position: relative;">
-              <div class="d-flex justify-content-center align-items-center">
-                <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel03.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
-              </div>
-              <div class="container">
-                  <div class="carousel-caption text-end">
-                  </div>
-              </div>
-            </a>
-          </div>
+            <!-- 輪播圖片區 - 小容器(圖片03)-->
+            <div class="carousel-item">
+                <!-- 點擊導引至該商品連結 -->
+                <a href="./product_LoggedIn.jsp?productId=12" style="text-decoration: none; position: relative;">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img class="bd-placeholder-img" width="85%" height="auto" src="./picture/material/indexPageMaterial/CarouselPic/Carousel03.jpg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <rect width="100%" height="100%" fill="var(--bs-secondary-color)">
+                    </div>
+                    <div class="container">
+                        <div class="carousel-caption text-end">
+                        </div>
+                    </div>
+                </a>
+            </div>
 
-      </div>
-      
+        </div>
 
-      <!-- 上一張圖片的按鈕 -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev"  style="width: 115px;background-color: #969391;">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-      </button>
+        <!-- 上一張圖片的按鈕 -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
 
-      <!-- 下一張圖片的按鈕 -->
-      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next" style="width: 115px;background-color: #969391;">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-      </button>
+        <!-- 下一張圖片的按鈕 -->
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
 
       </div>
           
