@@ -116,157 +116,144 @@
               <!-- 旁邊顯示之購物車界面 -->
               <div id="mySidebar" class="sidebar">
 
-                  <!-- 購物車頁面右邊之大叉叉-->
-                  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <!-- 購物車頁面右邊之大叉叉-->
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-                  <div class="sidebarinner">
+                <div class="sidebarinner">
 
-                      <!-- 購物車表單 -->
-                      <form action="">
+                  
 
-                          <!-- 購物車商品之單頁 商品01 -->
+                      <div class="container">
+
+                          <%
+                          String memberId = String.valueOf(session.getAttribute("MemberID"));
+                          if (memberId == null) {
+                              out.println("<p>請先登入以查看購物車。</p>");
+                              return;
+                          }
+
+                          int totalQuantity = 0; // 總數量
+                          int totalPrice = 0; // 總價格
+
+                          Connection ProductConn = null;
+                          PreparedStatement ProductPstmt = null;
+                          ResultSet ProductRs = null;
+                          try {
+                              Class.forName("com.mysql.cj.jdbc.Driver");
+                              ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
+
+                              String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
+                              ProductPstmt = ProductConn.prepareStatement(sql);
+                              ProductPstmt.setInt(1, Integer.parseInt(memberId));
+                              ProductRs = ProductPstmt.executeQuery();
+
+                              if (!ProductRs.isBeforeFirst()) {
+                                  out.println("<p>您的購物車是空的</p>");
+                              } else {
+                                  while (ProductRs.next()) {
+                                      int cartID = ProductRs.getInt("cartID"); // Ensure cartID is retrieved
+                                      String pid = ProductRs.getString("productID");
+                                      int quantity = ProductRs.getInt("quantity");
+                                      String productName = ProductRs.getString("ProductName");
+                                      int price = ProductRs.getInt("Price");
+                                      String imageUrl = ProductRs.getString("Producturl");
+
+                                      totalQuantity += quantity;
+                                      totalPrice += price * quantity;
+                          %>
+                          
                           <div class="cart-p">
-                              <img src="./picture/material/productPic/snacks/snacks_2.PNG">
-                              <div>
-
-                                  <div class="cp1">   <!--商品名稱-->
-                                      <h1>GEMEZ Enaak 韓式小雞麵 雞汁味</h1>
-                                      <p>一盒裝 24入</p>
-                                  </div>
-
-                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
-                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input class="quantity" type="text" value="1"/>
-                                    <input class="add" type="button" value="+"/> 
-                                  </div>
-                            
-                              </div>
-
-                              <div class="cp3">   <!-- 商品價格 -->
-                                  <p>$239</p>
-                              </div>
-
-                              <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
-
-                          </div>
-
-                          <!-- 購物車商品之單頁 商品02 -->
-                          <div class="cart-p">
-
-                              <img src="./picture/material/productPic/drinks/banana.jpg">
-                              <div>
-                                  <div class="cp1">   <!--商品名稱-->
-                                      <h1>【韓味不二】香蕉牛奶</h1>
-                                      <p>一瓶(200ml)</p>
-                                  </div>
-                                  <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
-                                    <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                    <input class="quantity" type="text" value="1"/>
-                                    <input class="add" type="button" value="+"/> 
-                                </div>                            
-                              </div>
-
-                              <div class="cp3">   <!-- 商品價格 -->
-                                  <p>$25</p>
-                              </div>
-
-                              <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
-
-                          </div>
-
-                          <!-- 購物車商品之單頁 商品03 -->
-                          <div class="cart-p">
-
-                            <img src="./picture/material/productPic/drinks/banana.jpg">
+                            <img src="<%= imageUrl %>" alt="<%= productName %>">
                             <div>
                                 <div class="cp1">   <!--商品名稱-->
-                                    <h1>【韓味不二】香蕉牛奶</h1>
-                                    <p>一瓶(200ml)</p>
+                                    <h1><%= productName %></h1>
                                 </div>
-                                <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
-                                  <input class="min" type="button" value="&minus;"/> <!-- ' &minus; '是減號 -->
-                                  <input class="quantity" type="text" value="1"/>
-                                  <input class="add" type="button" value="+"/> 
-                              </div>
+                                <!-- 購物車表單 -->
+                                <form action="./changeCartItem.jsp" method="post" class="quantity-form">
+                                    <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                        <input class="min" type="button" value="&minus;" onclick="updateQuantity(this, -1)" /> <!-- ' &minus; '是減號 -->
+                                        <input class="quantity" type="text" name="quantity" value="<%= quantity %>" oninput="validateQuantity(this)" />
+                                        <input class="add" type="button" value="+" onclick="updateQuantity(this, 1)" /> 
+                                    </div>
+                                    <input type="hidden" name="cartID" value="<%= cartID %>">
+                                    <input type="hidden" name="action" value="update">
+                                </form>
                             </div>
-
                             <div class="cp3">   <!-- 商品價格 -->
-                                <p>$25</p>
+                                <p>NT$ <%= price %></p>
                             </div>
-
-                            <button>&times;</button>    <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
-
+                            <form action="./changeCartItem.jsp" method="post" style="display:inline;">
+                                <input type="hidden" name="cartID" value="<%= cartID %>">
+                                <input type="hidden" name="action" value="delete">
+                                <button type="submit">&times;</button> <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+                            </form>
                         </div>
-
+                          <%
+                                  }
+                              }
+                          } catch (Exception e) {
+                              e.printStackTrace();
+                          } finally {
+                              if (ProductRs != null) try { ProductRs.close(); } catch (SQLException ignore) {}
+                              if (ProductPstmt != null) try { ProductPstmt.close(); } catch (SQLException ignore) {}
+                              if (ProductConn != null) try { ProductConn.close(); } catch (SQLException ignore) {}
+                          }
+                          %>
                         <!-- 購買數量增減控制 -->
                         <script>
-                          document.addEventListener("DOMContentLoaded", function() {
-                              document.body.addEventListener('click', function(event) {
-                                  if (event.target.classList.contains('min') || event.target.classList.contains('add')) {
-                                      const cp2 = event.target.closest('.cp2');
-                                      const quantityInput = cp2.querySelector('.quantity');
-                                      let currentValue = parseInt(quantityInput.value);
+                          function updateQuantity(button, delta) {
+                              const form = button.closest('.quantity-form');
+                              const quantityInput = form.querySelector('.quantity');
+                              let currentValue = parseInt(quantityInput.value);
                       
-                                      const min = parseInt(cp2.getAttribute('data-min'));
-                                      const max = parseInt(cp2.getAttribute('data-max'));
+                              const min = parseInt(button.closest('.cp2').getAttribute('data-min'));
+                              const max = parseInt(button.closest('.cp2').getAttribute('data-max'));
                       
-                                      if (event.target.classList.contains('min') && currentValue > min) {
-                                          quantityInput.value = currentValue - 1;
-                                      }
-                      
-                                      if (event.target.classList.contains('add') && currentValue < max) {
-                                          quantityInput.value = currentValue + 1;
-                                      }
+                              if (!isNaN(currentValue)) {
+                                  const newValue = currentValue + delta;
+                                  if (newValue >= min && newValue <= max) {
+                                      quantityInput.value = newValue;
+                                      form.submit();
                                   }
-                              });
+                              }
+                          }
                       
-                              // 避免非數值資料輸入進數量欄位
-                              document.querySelectorAll('.quantity').forEach(input => {
-                                  input.addEventListener('input', function() {
-                                      let value = this.value.replace(/[^0-9]/g, '');
-                                      const cp2 = this.closest('.cp2');
-                                      const max = parseInt(cp2.getAttribute('data-max'));
-
-                                      // 數量欄位限制購買數量，當輸入超過最大數量，則予以提醒。
-                                      if (value > max) {
-                                          alert(`最多只能購買 ${max} 個`);
-                                          this.value = '';
-                                      } else {
-                                          this.value = value;
-                                      }
-                                  });
-                              });
-                          });
+                          function validateQuantity(input) {
+                              const form = input.closest('.quantity-form');
+                              let value = input.value.replace(/[^0-9]/g, '');
+                              const cp2 = input.closest('.cp2');
+                              const max = parseInt(cp2.getAttribute('data-max'));
+                      
+                              if (value > max) {
+                                  alert(`最多只能購買 ${max} 個`);
+                                  input.value = max;
+                              } else {
+                                  input.value = value;
+                              }
+                      
+                              form.submit();
+                          }
                       </script>
+                      
 
-                        
-                          
                         <!-- 計算總價 -->
                         <div class="cart-total">
-                            <p>總金額<p>
-                            <p class="r">$289</p>
+                          <p>總金額<p>
+                          <p class="r">NT$ <%= totalPrice %></p>
                         </div>
 
                         <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
                         <div class="cart-but row" >
-
-                            <div class="col">
-                              <!-- 繼續購物時，就關閉當前購物車視窗 -->
+                          <div class="col">
                               <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
-                            </div>
-                            <div class="col">
+                          </div>
+                          <div class="col">
                               <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
-                            </div>
-
-                        </div>
-
-                      </form>
-
-                  </div>
-
+                          </div>
+                      </div>
+                      </div>
+                </div>
               </div>
-
-            </div>
 
             <!-- 【會員註冊登入】 -->
             <%

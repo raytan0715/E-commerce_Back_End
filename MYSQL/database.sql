@@ -1,4 +1,3 @@
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -22,22 +21,18 @@ USE FinalProject;
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `cartID` int NOT NULL AUTO_INCREMENT,
-  `customerID` varchar(45) NOT NULL,
-  `productID` varchar(45) NOT NULL,
+  `MemberID` int NOT NULL,
+  `productID` int NOT NULL,
   `quantity` int DEFAULT NULL,
-  PRIMARY KEY (`cartID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-#/*!40101 SET character_set_client = @saved_cs_client */;
+  PRIMARY KEY (`cartID`),
+  FOREIGN KEY (`MemberID`) REFERENCES `membership` (`MemberID`),
+  FOREIGN KEY (`productID`) REFERENCES `inventoryquantity` (`ProductID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `cart`
---
+INSERT INTO `cart` VALUES (1, 1, 2, 2), (2, 1, 1, 1), (3, 2, 3, 1), (4, 3, 10, 1);
 
-/*LOCK TABLES `cart` WRITE;*/
-/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (1,'1','2',2),(2,'1','1',1),(3,'1','3',1),(4,'1','10',1);
-/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
-/*UNLOCK TABLES;*/
+-- 解鎖表
+UNLOCK TABLES;
 
 --
 -- Table structure for table `inventoryquantity`
@@ -411,7 +406,7 @@ CREATE TABLE `membership` (
 INSERT INTO `membership` (`MemberID`, `MemberAccount`, `MemberPassword`, `MemberName`, `MemberPhone`, `BirthdayDate`, `Address`) VALUES
 (1, '11144139jay@gmail.com', '12345', 'jay', '0906692674', NULL, '台北市信義區永吉路30巷101弄10號'),
 (2, '11144154jay@gmail.com', '54321', 'alice', '0901297374', NULL, '桃園市中壢區中北路200號'),
-(3, '11144138jay@gmail.com', '114514', '譚睿承','0905114520', NULL, '桃園市中壢區普忠路210號');
+(3, '11144138ray@gmail.com', '114514', '譚睿承','0905114520', NULL, '桃園市中壢區普忠路210號');
 /*!40000 ALTER TABLE `membership` ENABLE KEYS */;
 UNLOCK TABLES;
 
