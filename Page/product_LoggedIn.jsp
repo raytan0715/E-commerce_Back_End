@@ -371,26 +371,25 @@
                 <p>到期日：<%= productExp %></p>
               </div>
 
-              <form method='post' action='./tocart.jsp' class='product'>
-                <div class="quantityButton" data-min="1" data-max="30">
-                  <input type="button" value="&minus;" class="min"/>
-                  <input type="text" name="quantity" value="1" class="quantity"/>
-                  <input type="button" value="+" class="add"/>
-                </div>
-                <input type="hidden" name="productId" value="<%= productId %>"/>
-                <input type="hidden" name="MemberID" value="<%= MemberID %>"/>
-                <input type="hidden" name="productPrice" value="<%= productPrice %>"/>
+              <form method='post' action='./tocart.jsp' class='product' id="productForm">
+                  <div class="quantityButton" data-min="1" data-max="30">
+                      <input type="button" value="&minus;" class="min"/>
+                      <input type="text" name="quantity" value="1" class="quantity"/>
+                      <input type="button" value="+" class="add"/>
+                  </div>
+                  <input type="hidden" name="productId" value="<%= productId %>"/>
+                  <input type="hidden" name="MemberID" value="<%= MemberID %>"/>
+                  <input type="hidden" name="productPrice" value="<%= productPrice %>"/>
               
-                <div class="addToCart">
-                  <button type="submit" class="btn" onclick="showAlert()">
-                    加入購物車
-                  </button>
-                  <button type="submit" class="btn">
-                    立即購買
-                  </button>
-                </div>
+                  <div class="addToCart">
+                      <button type="submit" class="btn" onclick="showAlert()" id="addToCartButton">
+                          加入購物車
+                      </button>
+                      <button type="button" class="btn" id="buyNowButton">
+                          立即購買
+                      </button>
+                  </div>
               </form>
-
               <script>
                 document.addEventListener("DOMContentLoaded", function() {
                     document.body.addEventListener('click', function(event) {
@@ -515,14 +514,12 @@
         <div class="rightside">
           <h5>評論</h5>
           <div class="comment-box">
-            <div class="box-top">
               <%
               List<Map<String, Object>> comments = new ArrayList<>(); // Declare outside the try block to ensure availability in the loop
-  
-              Connection connComments = null;
-              PreparedStatement pstmtComments = null;
-              ResultSet rsComments = null;
-  
+              Connection conn = null;
+              PreparedStatement pstmt = null;
+              ResultSet rs = null;
+
               try {
                   // Fetch product ID from request
                   String productIdParam = request.getParameter("productId");
@@ -530,57 +527,51 @@
                       out.println("Invalid product ID");
                       return; // Exit if no product ID is provided
                   }
-  
+
                   int productIds = Integer.parseInt(productIdParam);
-  
+
                   String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
                   Class.forName("com.mysql.cj.jdbc.Driver");
-                  connComments = DriverManager.getConnection(url, "root", "Ray_930715");
-  
+                  conn = DriverManager.getConnection(url, "root", "Ray_930715");
+
                   String sql = "SELECT m.MemberName, c.star, c.comment FROM comment c JOIN membership m ON c.MemberID = m.MemberID WHERE c.ProductID = ?";
-                  pstmtComments = connComments.prepareStatement(sql);
-                  pstmtComments.setInt(1, productIds);
-                  rsComments = pstmtComments.executeQuery();
-  
-                  while (rsComments.next()) {
+                  pstmt = conn.prepareStatement(sql);
+                  pstmt.setInt(1, productIds);
+                  rs = pstmt.executeQuery();
+
+                  while (rs.next()) {
                       Map<String, Object> comment = new HashMap<>();
-                      comment.put("userName", rsComments.getString("MemberName"));
-                      comment.put("starRating", rsComments.getInt("star"));
-                      comment.put("comment", rsComments.getString("comment"));
+                      comment.put("userName", rs.getString("MemberName"));
+                      comment.put("starRating", rs.getInt("star"));
+                      comment.put("comment", rs.getString("comment"));
                       comments.add(comment);
                   }
               } catch (Exception e) {
                   e.printStackTrace();
               } finally {
-                  if (rsComments != null) try { rsComments.close(); } catch (SQLException ex) { ex.printStackTrace(); }
-                  if (pstmtComments != null) try { pstmtComments.close(); } catch (SQLException ex) { ex.printStackTrace(); }
-                  if (connComments != null) try { connComments.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+                  if (rs != null) try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+                  if (pstmt != null) try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+                  if (conn != null) try { conn.close(); } catch (SQLException ex) { ex.printStackTrace(); }
               }
-  
+
               for (Map<String, Object> comment : comments) {
               %>
-
-              <!-- 用戶圖標 -->
-              <iconify-icon icon="mingcute:user-4-fill" width="55" style="font-size: 36px;"></iconify-icon>
-
-              <h6><%= comment.get("userName") %></h6>
-
-              <div class="starcomment" id="star-comment">
-
-                  <% for (int i = 1; i <= (int) comment.get("starRating"); i++) { %>
-                      <iconify-icon icon="material-symbols:star" width="25" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                  <% }
-
-                    for (int i = (int) comment.get("starRating") + 1; i <= 5; i++) { %>
-                      <iconify-icon icon="material-symbols:star-outline" width="25" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
-                  <% } %>
-
-                </div>
-
-                <p><%= comment.get("comment") %></p>
-
-                <% } %>
-            </div>
+              <div class="box-top">
+                  <!-- 用戶圖標 -->
+                  <iconify-icon icon="mingcute:user-4-fill" width="55" style="font-size: 36px;"></iconify-icon>
+                  <h6><%= comment.get("userName") %></h6>
+                  <div class="starcomment" id="star-comment">
+                      <% for (int i = 1; i <= (int) comment.get("starRating"); i++) { %>
+                          <iconify-icon icon="material-symbols:star" width="25" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
+                      <% }
+                      for (int i = (int) comment.get("starRating") + 1; i <= 5; i++) { %>
+                          <iconify-icon icon="material-symbols:star-outline" width="25" class="stars" style="font-size: 15px; color: gold;"></iconify-icon>
+                      <% } %>
+                  </div>
+                  <p><%= comment.get("comment") %></p>
+                  <div class="separator" style="margin-bottom: 0%; margin-top: 0; width: 100%;"></div> <!-- 分隔線 -->
+              </div>
+              <% } %>
           </div>
         </div>
       </section>
@@ -595,10 +586,22 @@
 
       <jsp:include page="./footer.jsp" />
 
-    <script>
-      function showAlert() {
-        alert("✅ 已加入購物車！");
-      }
+      <script>
+        document.getElementById('buyNowButton').addEventListener('click', function(event) {
+            event.preventDefault(); // 防止表單的默認提交
+            const form = document.getElementById('productForm');
+            form.action = './tocart.jsp?redirect=payment'; // 設置不同的action
+            form.submit();
+        });
+    
+        function showAlert() {
+            alert("✅ 已加入購物車！");
+        }
+    
+        function showAlert2() {
+            alert("✅ 已加入購物車！");
+            window.location.href("./payment.jsp");
+        }
     </script>
 
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>

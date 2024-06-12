@@ -5,16 +5,49 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page language="java" import="java.util.*" %>
-<!doctype html>
+<%! 
+    public Connection getConnection() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
+    }
+%>
+<%
+    if ("Update".equals(request.getParameter("action"))) {
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int price = Integer.parseInt(request.getParameter("price"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
+        Connection con = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            con = getConnection();
+            String sql = "UPDATE inventoryquantity SET Price = ?, Quantity = ? WHERE ProductID = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, price);
+            pstmt.setInt(2, quantity);
+            pstmt.setInt(3, productId);
+            pstmt.executeUpdate();
+            out.println("<script>alert('Product updated successfully!');</script>");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) pstmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+%>
+<!doctype html>
 <html lang="en" data-bs-theme="auto">
 
   <!-- 此為登入後的介面 -->
-
   <head>
-    
     <script src="./assets/js/color-modes.js"></script>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -59,12 +92,16 @@
     <link rel="stylesheet" href="./stylesheets/BuyCart.css">
 
      <!-- 會員介面樣式檔 -->
-     <link rel="stylesheet" href="stylesheets/manager.css">
-
+     <link rel="stylesheet" href="./stylesheets/manager.css">
+     <style>
+        .r-table input[type='number'] {
+            width: 80px; /* 设置宽度 */
+            height: 25px; /* 设置高度 */
+        }
+    </style>
   </head>
 
   <body>
-
     <!-- 上方欄位 (工具欄)
     ================================================== -->
 
@@ -108,14 +145,60 @@
           <!-- 右側兩個按鈕欄位 -->
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
 
-            
-
             <!-- 【會員註冊登入】 -->
+            <!-- 【會員註冊登入】 -->
+            <%
+            // 獲取當前用戶的電子郵件
+            String email = (String) session.getAttribute("userEmail");
 
-            <!-- 會員註冊與登入按鈕 -->
-            <button onclick="" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
-              <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
-               OOO管理員您好！
+            // 設置資料庫連接相關變數
+            Connection conn = null;
+            PreparedStatement pstmt = null;
+            ResultSet rs = null;
+
+            String managerName = ""; // 初始化管理員名稱
+
+            try {
+                // 連接到 MySQL 資料庫
+                String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                conn = DriverManager.getConnection(url, "root", "Ray_930715");
+
+                // 獲取管理員資料
+                String sql = "SELECT managerName FROM seller WHERE email = ?";
+
+                // 使用 PreparedStatement 防止 SQL 注入
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, email);
+
+                // 執行查詢操作
+                rs = pstmt.executeQuery();
+
+                if (rs.next()) {
+                    managerName = rs.getString("managerName"); // 獲取管理員名稱
+                }
+
+            } catch (SQLException | ClassNotFoundException sExec) {
+                out.println("SQL 錯誤: " + sExec.toString());
+            } finally {
+                // 關閉資料庫連接
+                if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+                if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
+                if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+            }
+
+            if (email == null || email.isEmpty()) {
+              out.println("<script>");
+              out.println("alert('登入錯誤');"); // 顯示錯誤訊息
+              out.println("window.location.href = 'index.jsp';"); // 跳轉到 index.jsp
+              out.println("</script>");
+            }
+            %>
+
+            <!-- 登入按鈕 -->
+            <button type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+                <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
+                <%= managerName != null ? managerName : "您尚未登入" %> 管理員您好！
             </button>
 
             <!-- 登出按鈕 -->
@@ -161,6 +244,7 @@
               </ul>
             </li>
 
+
             <!-- 【聯絡我們】 -->
             <li class="nav-item dropdown">
               <a class="nav-link" href="#FooterArea"  aria-expanded="false" style="padding: 20px;color: #6e573a;font-weight: 1000;font-size: 18px;">聯絡我們</a>
@@ -172,7 +256,7 @@
       </nav>
 
    
-     <!-- 訂單管理頁面大容器 OrderInfo_Container -->
+      <!-- 訂單管理頁面大容器 OrderInfo_Container -->
     <div class="mt-5 OrderInfo_Container">
 
         <div class="row">
@@ -204,130 +288,88 @@
 
                         <!-- 訂單管理與商品管理之radio選單 -->
                         <input type="radio"  name="slider" id="modify" autocomplete="off" checked>
-                        <input type="radio"  name="slider"  id="record" autocomplete="off">
+                        <input type="radio"  name="slider"  id="record" autocomplete="off" >
 
                         <!-- 字區域 -->
                         <div class="text-content">
 
                             <div class="modify text" style="background: none;">
+                              <!-- 添加订单浏览代码 -->
+                              <%
+                                  Connection con = null;
+                                  PreparedStatement orderStmt = null;
+                                  ResultSet orderRs = null;
 
-                              <div class="order-container">
-                                <div class="order-header">
-                                    <label>訂單編號: 240406002</label>
-                                    <label>購買日期: 24/4/6</label>
-                                    <label class="order-status">未出貨</label>
-                                </div>
-                                <table class="order-table">
-                                    <thead>
-                                        <tr>
-                                            <th>商品</th>
-                                            <th>數量</th>
-                                            <th>金額</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="商品名稱" width="50">Nongshim 農心 韓國境內版 辛拉麵 5包</td>
-                                            <td>x 1</td>
-                                            <td>$239</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="./picture/material/productPic/snacks/snacks_3.PNG" alt="商品名稱" width="50">ORION 好麗友 預感非油炸香烤洋芋片 洋蔥口味 2盒</td>
-                                            <td>x 1</td>
-                                            <td>$ xxx</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="order-footer">
-                                    總金額: $ xxx
-                                </div>
-                              </div>
+                                  try {
+                                      con = getConnection();
+                                      String sql = "SELECT * FROM `order`";
+                                      orderStmt = con.prepareStatement(sql);
+                                      orderRs = orderStmt.executeQuery();
 
-                              <div class="order-container">
-                                <div class="order-header">
-                                    <label>訂單編號: 240406002</label>
-                                    <label>購買日期: 24/4/6</label>
-                                    <label class="order-status">未出貨</label>
-                                </div>
-                                <table class="order-table">
-                                    <thead>
-                                        <tr>
-                                            <th>商品</th>
-                                            <th>數量</th>
-                                            <th>金額</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><img src="./picture/material/productPic/instant noodles/Instant_noodles_1.jpg" alt="商品名稱" width="50">Nongshim 農心 韓國境內版 辛拉麵 5包</td>
-                                            <td>x 1</td>
-                                            <td>$239</td>
-                                        </tr>
-                                        <tr>
-                                            <td><img src="./picture/material/productPic/snacks/snacks_3.PNG" alt="商品名稱" width="50">ORION 好麗友 預感非油炸香烤洋芋片 洋蔥口味 2盒</td>
-                                            <td>x 1</td>
-                                            <td>$ xxx</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="order-footer">
-                                    總金額: $ xxx
-                                </div>
-                              </div>
-
+                                      out.println("<div class='order-container'>");
+                                      while (orderRs.next()) {
+                                          out.println("<div class='order-header'><label>訂單編號: " + orderRs.getInt("orderId") + "</label><label>購買日期: " + orderRs.getDate("orderDate") + "</label><label class='order-status'>未出貨</label></div>");
+                                          out.println("<table class='order-table'><thead><tr><th>商品</th><th>數量</th><th>金額</th></tr></thead><tbody>");
+                                          out.println("<tr><td><img src='./picture/material/productPic/instant noodles/Instant_noodles_1.jpg' alt='商品名稱' width='50'>" + orderRs.getString("productName") + "</td><td>x " + orderRs.getInt("quantity") + "</td><td>$" + orderRs.getInt("price") + "</td></tr>");
+                                          out.println("</tbody></table><div class='order-footer'>總金額: $" + orderRs.getInt("totalPrice") + "</div>");
+                                      }
+                                      out.println("</div>");
+                                  } catch (SQLException | ClassNotFoundException e) {
+                                      e.printStackTrace();
+                                  } finally {
+                                      try {
+                                          if (orderRs != null) orderRs.close();
+                                          if (orderStmt != null) orderStmt.close();
+                                          if (con != null) con.close();
+                                      } catch (SQLException e) {
+                                          e.printStackTrace();
+                                      }
+                                  }
+                              %>
                             </div>
 
                             
                             <div class="record text" style="color: #6e573a;">
-  
-                              <table class="r-table">
-                                <tr>
-                                  <th>商品編號</th>
-                                  <th>商品名稱</th>
-                                  <th>價格</th>
-                                  <th>庫存</th>
-                                  <th>上架</th> 
-                                
-                              </tr>
-                              <tr>
-                                  <td>N001</td>
-                                  <td><span>No Brand<br>經典炸醬拉麵 135g克 x 5 x 1PC包</span></td>
-                                  <td>$179</td>
-                                  <td ><input type="number" class="storenumber" style="width: 40px;" ></td>
-                                  <td class="dis"><input type="checkbox">上架</td>
-                              </tr>
-                              <tr>
-                                <td>N002</td>
-                                <td><span>OTTOGI<br>不倒翁 粗麵條版Q拉麵</span></td>
-                                <td>$225</td>
-                                <td ><input type="number" class="storenumber" style="width: 40px;" ></td>
-                                <td class="dis"><input type="checkbox">上架</td>
-                              </tr>
-                              <tr>
-                                <td>N003</td>
-                                <td><span>SAMYANG<br>三養 4種起司風味火辣雞肉風味鐵板炒麵</span></td>
-                                <td>$150</td>
-                                <td><input type="number" class="storenumber" style="width: 40px;" ></td>
-                                <td class="dis"><input type="checkbox">上架</td>
-                              </tr>
-                              <tr>
-                                <td>N004</td>
-                                <td><span>SAMYANG<br>三養 4種起司風味火辣雞肉風味鐵板炒麵</span></td>
-                                <td>$150</td>
-                                <td><input type="number" class="storenumber" style="width: 40px;" ></td>
-                                <td class="dis"><input type="checkbox">上架</td>
-                              </tr>
-                              <tr>
-                                <td>N005</td>
-                                <td><span>SAMYANG<br>三養 4種起司風味火辣雞肉風味鐵板炒麵</span></td>
-                                <td>$150</td>
-                                <td><input type="number" class="storenumber" style="width: 40px;" ></td>
-                                <td class="dis"><input type="checkbox">上架</td>
-                              </tr>
-                              
-  
-                              </table>
-  
+                              <!-- 添加商品编辑代码 -->
+                              <%
+                                  con = null;
+                                  PreparedStatement inventoryStmt = null;
+                                  ResultSet inventoryRs = null;
+
+                                  try {
+                                      con = getConnection();
+                                      String sql = "SELECT * FROM `inventoryquantity`";
+                                      inventoryStmt = con.prepareStatement(sql);
+                                      inventoryRs = inventoryStmt.executeQuery();
+
+                                      out.println("<table class='r-table' style='margin: 20px auto; color:#907859;'><tr><th>商品編號</th><th>商品名稱</th><th>價格</th><th>庫存</th><th>操作</th></tr>");
+                                      while (inventoryRs.next()) {
+                                          int productId = inventoryRs.getInt("ProductID");
+                                          String productName = inventoryRs.getString("ProductName");
+                                          int price = inventoryRs.getInt("Price");
+                                          int quantity = inventoryRs.getInt("Quantity");
+                                          out.println("<tr><form action='manager.jsp' method='post'>");
+                                          out.println("<td>" + productId + "</td>");
+                                          out.println("<td style='width: 330px;'><span>" + productName + "</span></td>");
+                                          out.println("<td><input type='number' name='price' value='" + price + "'></td>");
+                                          out.println("<td><input type='number' name='quantity' value='" + quantity + "'></td>");
+                                          out.println("<td class='dis'><input type='hidden' name='productId' value='" + productId + "'>");
+                                          out.println("<button type='submit' name='action' value='Update' style='background-color: #907859; color: white; border: none; padding: 3px; cursor: pointer;margin-bottom: 2px; border-radius: 15%; '>更新</button></td>");
+                                          out.println("</form></tr>");
+                                      }
+                                      out.println("</table>");
+                                  } catch (SQLException | ClassNotFoundException e) {
+                                      e.printStackTrace();
+                                  } finally {
+                                      try {
+                                          if (inventoryRs != null) inventoryRs.close();
+                                          if (inventoryStmt != null) inventoryStmt.close();
+                                          if (con != null) con.close();
+                                      } catch (SQLException e) {
+                                          e.printStackTrace();
+                                      }
+                                  }
+                              %>
                             </div>
 
                         </div>
@@ -349,16 +391,17 @@
       </a>
     </div>
       
-    <div class="separator_Footer"></div> <!-- 分隔線 -->
+
 
     <!-- 頁尾(含聯絡資訊) 
-      ================================================== -->
-      <jsp:include page="./footer.jsp" />
+    ================================================== -->
+    <jsp:include page="./footer.jsp" />
 
     
     <!-- Javascript 區域 -->
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <script src="../Page/javascript/slider.js"></script>
     <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
 
   </body>

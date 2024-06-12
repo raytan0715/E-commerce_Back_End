@@ -5,6 +5,7 @@
     int productPrice = Integer.parseInt(request.getParameter("productPrice"));
     int quantity = Integer.parseInt(request.getParameter("quantity"));
     int MemberID = Integer.parseInt(request.getParameter("MemberID"));
+    String redirect = request.getParameter("redirect"); // 獲取重定向參數
 
     Connection conn = null;
     PreparedStatement pstmt = null;
@@ -23,7 +24,11 @@
 %>
         <script>
             alert("商品已加入購物車");
-            window.location.href = "./product_LoggedIn.jsp?productId=<%= productId %>";
+            <% if ("payment".equals(redirect)) { %>
+                window.location.href = "./payment.jsp";
+            <% } else { %>
+                window.location.href = "./product_LoggedIn.jsp?productId=<%= productId %>";
+            <% } %>
         </script>
 <%
     } catch (SQLException | ClassNotFoundException e) {

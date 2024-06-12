@@ -110,6 +110,9 @@ body{
 #record:checked~.text-content .record {
   display: block;
 }
+
+
+
 .content input {
   display: none;
 }
@@ -147,16 +150,16 @@ body{
 
 .container2 {
   position: relative;
-  /*height: 500px;*/
   min-height: 500px;
   width: 950px;
-  /*margin-top: 25px;*/
   margin-bottom: 50px;
   background-color: rgba(245, 245, 245, 0.932);
   border-radius: 30px;
-  background-color: #f0ece8; /* 新增的样式 */
-  /*padding: 20px;          /* 新增的样式 */
+  background-color: #f0ece8;
+  max-height: 600px; /* 设置最大高度 */
+  overflow-y: auto; /* 当内容超过最大高度时，显示滚动条 */
 }
+
 .content {
   display: flex;
   align-items: center;
@@ -242,6 +245,13 @@ body{
   width: 72%;
   border-collapse: collapse;
 }
+
+.r-table input[type='number'] {
+  width: 80px; /* 設置寬度 */
+  height: 25px; /* 設置高度 */
+
+
+ }
 
 .r-table th {
   font-size: 18px;

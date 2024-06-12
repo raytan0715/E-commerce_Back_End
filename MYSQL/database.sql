@@ -442,37 +442,6 @@ UNLOCK TABLES;
 -- Dumping data for table `reviews`
 --
 
---
--- Table structure for table `orderitems`
---
-
-DROP TABLE IF EXISTS `orderitems`;#訂單
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orderitems` (
-  `MemberID` int NOT NULL AUTO_INCREMENT,
-  `orderid` int DEFAULT NULL,
-  `ProductID` int DEFAULT NULL,
-  `quantity` int DEFAULT NULL,
-  `price` int DEFAULT NULL,
-  `totalprice` int DEFAULT NULL,
-  PRIMARY KEY (`MemberID`),
-  KEY `id_idx` (`orderid`),
-  KEY `ProductID_idx` (`ProductID`),
-  CONSTRAINT `id` FOREIGN KEY (`orderid`) REFERENCES `order` (`MemberID`),
-  CONSTRAINT `ProductID` FOREIGN KEY (`ProductID`) REFERENCES `pro` (`MemberID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `orderitems`
---
-
-LOCK TABLES `orderitems` WRITE;
-/*!40000 ALTER TABLE `orderitems` DISABLE KEYS */;
-INSERT INTO `orderitems` VALUES (1,1,2,3,850,2550),(2,1,5,3,120,360);
-/*!40000 ALTER TABLE `orderitems` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `seller`
@@ -492,6 +461,33 @@ CREATE TABLE `seller` (
 --
 -- Dumping data for table `seller`
 --
+DROP TABLE IF EXISTS orderitems;#訂單
+/*!40101 SET @saved_cs_client     = @@character_set_client*/;
+/*!50503 SET character_set_client = utf8mb4*/;
+CREATE TABLE orderitems (
+  `orderid`  int NOT NULL AUTO_INCREMENT,
+  `cart_orderid` int  NOT NULL ,
+  `MemberID` int  NOT NULL,
+  `ProductID` int NOT NULL,
+  `quantity` int NOT NULL,
+  `price` int NOT NULL,
+  `date` varchar(30) DEFAULT NULL,
+  `totalprice` int NOT NULL,
+  `remark` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`orderid`),
+  FOREIGN KEY (`cart_orderid`) REFERENCES cart (`cartID`),
+  FOREIGN KEY (`ProductID`) REFERENCES inventoryquantity (`ProductID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client*/;
+
+--
+-- Dumping data for table orderitems
+--
+
+LOCK TABLES orderitems WRITE;
+/*!40000 ALTER TABLE orderitems DISABLE KEYS*/;
+/*!40000 ALTER TABLE orderitems ENABLE KEYS*/;
+UNLOCK TABLES;
 
 LOCK TABLES `seller` WRITE;
 /*!40000 ALTER TABLE `seller` DISABLE KEYS */;

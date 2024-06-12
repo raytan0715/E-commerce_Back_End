@@ -1,19 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="java.text.DecimalFormat" %>
-<%@ page import="java.util.Arrays" %>
+<%@ page import="java.text.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
 
-<!doctype html>
 
+<!doctype html>
 <html lang="en" data-bs-theme="auto">
 
   <!-- 此為登入後的介面 -->
 
   <head>
-    
     <script src="./assets/js/color-modes.js"></script>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -104,7 +101,7 @@
 
           <!-- 右側兩個按鈕欄位 -->
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
-
+            
             <!-- 【購物車】 -->
             <div id="cart">
 
@@ -113,6 +110,8 @@
                     <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
                 </button>
               
+            
+
               <!-- 旁邊顯示之購物車界面 -->
               <div id="mySidebar" class="sidebar">
 
@@ -199,43 +198,6 @@
                               if (ProductConn != null) try { ProductConn.close(); } catch (SQLException ignore) {}
                           }
                           %>
-                        <!-- 購買數量增減控制 -->
-                        <script>
-                          function updateQuantity(button, delta) {
-                              const form = button.closest('.quantity-form');
-                              const quantityInput = form.querySelector('.quantity');
-                              let currentValue = parseInt(quantityInput.value);
-                      
-                              const min = parseInt(button.closest('.cp2').getAttribute('data-min'));
-                              const max = parseInt(button.closest('.cp2').getAttribute('data-max'));
-                      
-                              if (!isNaN(currentValue)) {
-                                  const newValue = currentValue + delta;
-                                  if (newValue >= min && newValue <= max) {
-                                      quantityInput.value = newValue;
-                                      form.submit();
-                                  }
-                              }
-                          }
-                      
-                          function validateQuantity(input) {
-                              const form = input.closest('.quantity-form');
-                              let value = input.value.replace(/[^0-9]/g, '');
-                              const cp2 = input.closest('.cp2');
-                              const max = parseInt(cp2.getAttribute('data-max'));
-                      
-                              if (value > max) {
-                                  alert(`最多只能購買 ${max} 個`);
-                                  input.value = max;
-                              } else {
-                                  input.value = value;
-                              }
-                      
-                              form.submit();
-                          }
-                      </script>
-                      
-
                         <!-- 計算總價 -->
                         <div class="cart-total">
                           <p>總金額<p>
@@ -523,121 +485,184 @@
 
     </section>
 
+    <%
+
+
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
+
+        if (memberId != null) {
+            String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
+            ProductPstmt = ProductConn.prepareStatement(sql);
+            ProductPstmt.setInt(1, Integer.parseInt(memberId));
+            ProductRs = ProductPstmt.executeQuery();
+
+            while (ProductRs.next()) {
+                int cartID = ProductRs.getInt("cartID");
+                String pid = ProductRs.getString("productID");
+                int quantity = ProductRs.getInt("quantity");
+                String productName = ProductRs.getString("ProductName");
+                int price = ProductRs.getInt("Price");
+                String imageUrl = ProductRs.getString("Producturl");
+
+                totalQuantity += quantity;
+                totalPrice += price * quantity;
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (ProductRs != null) try { ProductRs.close(); } catch (SQLException e) { e.printStackTrace(); }
+        if (ProductPstmt != null) try { ProductPstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+        if (ProductConn != null) try { ProductConn.close(); } catch (SQLException e) { e.printStackTrace(); }
+    }
+%>
+
+<!-- 結帳表單 -->
+<form method="post" action="./order.jsp" class="order">
     <div class="submitarea">
         <button id="submitButton" class="paymentbtn">結帳</button>
     </div>
+    <%
+    // 確認並獲取變量
+    Integer cartID = (request.getParameter("cartID") != null) ? Integer.valueOf(request.getParameter("cartID")) : (Integer) session.getAttribute("cartID");
+    if (cartID == null) {
+        out.println("<p>購物車 ID 無法獲取</p>");
+    } else {
+        Integer productId = (Integer) session.getAttribute("productId");
+        Integer quantity = (Integer) session.getAttribute("quantity");
+        Integer productPrice = (Integer) session.getAttribute("productPrice");
+        Integer totalprice = (Integer) session.getAttribute("totalprice");
+        String remark = (String) session.getAttribute("remark");
+
+        if (productId == null || quantity == null || productPrice == null || totalprice == null || remark == null) {
+            out.println("<p>缺少必要的表單數據。</p>");
+        } else {
+            java.util.Date currentDate = new java.util.Date();
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = dateFormatter.format(currentDate);
+    %>
+            <input type="hidden" name="cartID" value="<%= cartID %>">
+            <input type="hidden" name="date" value="<%= formattedDate %>">
+            <input type="hidden" name="MemberID" value="<%= session.getAttribute("MemberID") %>">
+            <input type="hidden" name="productId" value="<%= productId %>">
+            <input type="hidden" name="quantity" value="<%= quantity %>">
+            <input type="hidden" name="productPrice" value="<%= productPrice %>">
+            <input type="hidden" name="totalprice" value="<%= totalprice %>">
+            <input type="hidden" name="remark" value="<%= remark %>">
+    <%
+        }
+    }
+    %>
+</form>
 
     <script>
 
     // 貨到付款與線上付款之信用卡欄位，必填與否設定
     document.addEventListener('DOMContentLoaded', function() {
-      const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
-      const creditCardInputs = document.querySelectorAll('#credit-card, #expiry-date, #securitynum, #cardholder-name');
+    const paymentMethodRadios = document.querySelectorAll('input[name="payment-method"]');
+    const creditCardInputs = document.querySelectorAll('#credit-card, #expiry-date, #securitynum, #cardholder-name');
 
-      function updateRequiredAttributes() {
+    function updateRequiredAttributes() {
         const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
         if (selectedPaymentMethod === '線上付款') {
-          creditCardInputs.forEach(input => {
+        creditCardInputs.forEach(input => {
             input.setAttribute('required', 'required');
-          });
+        });
         } else {
-          creditCardInputs.forEach(input => {
+        creditCardInputs.forEach(input => {
             input.removeAttribute('required');
-          });
+        });
         }
-      }
+    }
 
-      paymentMethodRadios.forEach(radio => {
+    paymentMethodRadios.forEach(radio => {
         radio.addEventListener('change', updateRequiredAttributes);
-      });
-
-      // Initialize the display based on the initial selection
-      updateRequiredAttributes();
     });
-  
+
+    // Initialize the display based on the initial selection
+    updateRequiredAttributes();
+    });
 
     // 到期日設置為預設格式(MM/YY)
-    document.getElementById('expiry-date').addEventListener('input', function (e) {
-        let input = e.target.value;
-        if (/[^0-9\/]/.test(input)) {
-            e.target.value = input.replace(/[^0-9\/]/g, '');
-            return;
-        }
-        if (input.length === 2 && !input.includes('/')) {
-            e.target.value = input + '/';
-        } else if (input.length === 3 && input[2] !== '/') {
-            e.target.value = input.slice(0, 2) + '/' + input[2];
-        }
-        if (input.length > 5) {
-            e.target.value = input.slice(0, 5);
-        }
+    document.getElementById('expiry-date').addEventListener('input', function(e) {
+    let input = e.target.value;
+    if (/[^0-9\/]/.test(input)) {
+        e.target.value = input.replace(/[^0-9\/]/g, '');
+        return;
+    }
+    if (input.length === 2 && !input.includes('/')) {
+        e.target.value = input + '/';
+    } else if (input.length === 3 && input[2] !== '/') {
+        e.target.value = input.slice(0, 2) + '/' + input[2];
+    }
+    if (input.length > 5) {
+        e.target.value = input.slice(0, 5);
+    }
     });
-    
 
     /* 處理未填寫偵測事件 */
     (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            var forms = document.getElementsByClassName('needs-validation');
-            Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        var invalidFields = form.querySelectorAll(':invalid');
-                        invalidFields.forEach(function(field) {
-                            var label = form.querySelector('label[for="' + field.id + '"]');
-                            if (label) {
-                                label.classList.add('invalid');
-                            }
-                            field.classList.add('is-invalid');
-                        });
-                    } else {
-                        var labels = form.querySelectorAll('label.invalid');
-                        labels.forEach(function(label) {
-                            label.classList.remove('invalid');
-                        });
-                        var invalidFields = form.querySelectorAll('.is-invalid');
-                        invalidFields.forEach(function(field) {
-                            field.classList.remove('is-invalid');
-                        });
-                    }
-                    form.classList.add('was-validated');
-                }, false);
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            var invalidFields = form.querySelectorAll(':invalid');
+            invalidFields.forEach(function(field) {
+                var label = form.querySelector('label[for="' + field.id + '"]');
+                if (label) {
+                label.classList.add('invalid');
+                }
+                field.classList.add('is-invalid');
             });
+            } else {
+            var labels = form.querySelectorAll('label.invalid');
+            labels.forEach(function(label) {
+                label.classList.remove('invalid');
+            });
+            var invalidFields = form.querySelectorAll('.is-invalid');
+            invalidFields.forEach(function(field) {
+                field.classList.remove('is-invalid');
+            });
+            }
+            form.classList.add('was-validated');
         }, false);
+        });
+    }, false);
     })();
 
-    // Submit both forms on button click
+    // Submit form on button click
     document.getElementById('submitButton').addEventListener('click', function(event) {
-        const deliveryForm = document.getElementById('deliveryForm');
-        const paymentForm = document.getElementById('paymentForm');
-        let isValid = true;
+    const deliveryForm = document.getElementById('deliveryForm');
+    const paymentForm = document.getElementById('paymentForm');
+    const orderForm = document.querySelector('.order');
+    let isValid = true;
 
-        if (!deliveryForm.checkValidity()) {
-            deliveryForm.classList.add('was-validated');
-            isValid = false;
-        }
+    if (!deliveryForm.checkValidity()) {
+        deliveryForm.classList.add('was-validated');
+        isValid = false;
+    }
 
-        if (!paymentForm.checkValidity()) {
-            paymentForm.classList.add('was-validated');
-            isValid = false;
-        }
+    if (!paymentForm.checkValidity()) {
+        paymentForm.classList.add('was-validated');
+        isValid = false;
+    }
 
-        /*警示仍有欄位未填妥*/
-        if (!isValid) {
-            alert("請填寫所有必填欄位");
-        } else {
-            deliveryForm.submit();
-            paymentForm.submit();
+    /*警示仍有欄位未填妥*/
+    if (!isValid) {
+        alert("請填寫所有必填欄位");
+    } else {
+        orderForm.submit();
+        alert("✅ 結帳成功");
+    }
 
-            /*結帳成功後顯示成功訊息並導至主頁*/
-            alert("✅ 結帳成功");
-            window.location.href = './index_LoggedIn.jsp';
-        }
-
-        // Prevent default form submission
-        event.preventDefault();
+    // Prevent default form submission
+    event.preventDefault();
     });
 
     </script>
