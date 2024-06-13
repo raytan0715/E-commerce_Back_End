@@ -386,26 +386,28 @@
               </div>
 
               <form method='post' action='./tocart.jsp' class='product' id="productForm">
-                  <div class="quantityButton" data-min="1" data-max="30">
-                      <input type="button" value="&minus;" class="min"/>
-                      <input type="text" name="quantity" value="1" class="quantity"/>
-                      <input type="button" value="+" class="add"/>
-                  </div>
-                  <input type="hidden" name="productId" value="<%= productId %>"/>
-                  <input type="hidden" name="MemberID" value="<%= MemberID %>"/>
-                  <input type="hidden" name="productPrice" value="<%= productPrice %>"/>
-                  <input type="hidden" name="Producturl" value="<%= productUrl %>"/>
-                  <input type="hidden" name="ProductName" value="<%= productName %>"/>
-              
-                  <div class="addToCart">
-                      <button type="submit" class="btn" onclick="showAlert()" id="addToCartButton">
-                          加入購物車
-                      </button>
-                      <button type="button" class="btn" id="buyNowButton">
-                          立即購買
-                      </button>
-                  </div>
-              </form>
+                <div class="quantityButton" data-min="1" data-max="30">
+                    <input type="button" value="&minus;" class="min"/>
+                    <input type="text" name="quantity" value="1" class="quantity"/>
+                    <input type="button" value="+" class="add"/>
+                </div>
+                <input type="hidden" name="productId" value="<%= productId %>"/>
+                <input type="hidden" name="MemberID" value="<%= MemberID %>"/>
+                <input type="hidden" name="productPrice" value="<%= productPrice %>"/>
+                <input type="hidden" name="Producturl" value="<%= productUrl %>"/>
+                <input type="hidden" name="ProductName" value="<%= productName %>"/>
+                <input type="hidden" name="source" value="product_LoggedIn.jsp"/>
+                <input type="hidden" name="redirect" value="product"/>
+            
+                <div class="addToCart">
+                    <button type="submit" class="btn" onclick="showAlert()" id="addToCartButton">
+                        加入購物車
+                    </button>
+                    <button type="button" class="btn" id="buyNowButton">
+                        立即購買
+                    </button>
+                </div>
+            </form>
               <script>
                 document.addEventListener("DOMContentLoaded", function() {
                     document.body.addEventListener('click', function(event) {

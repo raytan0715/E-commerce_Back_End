@@ -302,6 +302,7 @@ a { /* 圖卡連結移除下畫線設定 */
 
 .cart-icon-button {
     background: none;
+    margin-right: 10px;
     border: none;
     cursor: pointer;
     padding: 0;
@@ -311,3 +312,8 @@ a { /* 圖卡連結移除下畫線設定 */
 }
 
 
+.form_tocart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

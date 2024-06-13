@@ -223,20 +223,19 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                         <!-- 購買數量增減控制 -->
                         <script>
                           function updateQuantity(button, delta) {
-                              const form = button.closest('.quantity-form');
+                              const form = button.closest('.cartButtonContainer').querySelector('form');
                               const quantityInput = form.querySelector('.quantity');
                               let currentValue = parseInt(quantityInput.value);
-                     
-                              const min = parseInt(button.closest('.cp2').getAttribute('data-min'));
-                              const max = parseInt(button.closest('.cp2').getAttribute('data-max'));
+                              
+                              const min = parseInt(button.closest('.cart-button').getAttribute('data-min'));
+                              const max = parseInt(button.closest('.cart-button').getAttribute('data-max'));
                      
                               if (!isNaN(currentValue)) {
-                                  const newValue = currentValue + delta;
-                                  if (newValue >= min && newValue <= max) {
-                                      quantityInput.value = newValue;
-                                      form.submit();
-                                  }
-                              }
+                                const newValue = currentValue + delta;
+                                if (newValue >= min && newValue <= max) {
+                                    quantityInput.value = newValue;
+                                }
+                            }
                           }
                      
                           function validateQuantity(input) {
@@ -439,21 +438,27 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
 
                 <!-- add cart container -->
                 <div class="cartButtonContainer">
+                  <form action="./tocart.jsp" method="post"  class="form_tocart">
+                      <!-- cart-numberic button -->
+                      <div class="cart-button" data-min="1" data-max="50">
+                          <input type="button" class="min" value="&minus;" onclick="updateQuantity(this, -1)" />
+                          <input type="text" class="quantity" name="quantity" value="1" />
+                          <input type="button" class="add" value="+" onclick="updateQuantity(this, 1)" />
+                      </div>
 
-                  <!-- cart-numberic button -->
-                  <div class="cart-button" data-min="1" data-max="50">
-                    <input type="button" class="min" value="&minus;"/>
-                    <input type="text" class="quantity" value="1"/>
-                    <input type="button" class="add" value="+"/>
-                  </div>
+                      <!-- addtocart icon button -->
+                      <div class="addToCart_Btn">
+                          <input type="hidden" name="productId" value="<%= productId %>">
+                          <input type="hidden" name="productPrice" value="<%= productPrice %>">
+                          <input type="hidden" name="MemberID" value="<%= memberId %>">
+                          <input type="hidden" name="source" value="AllProduct_LoggedIn.jsp">
+                          <input type="hidden" name="redirect" value="product">
 
-                  <!-- addtocart icon button -->
-                  <!-- <div class="addToCart_Btn">
-                    <button type="button" class="cart-icon-button" onclick="showAlert()">
-                      <iconify-icon icon="iconoir:cart"></iconify-icon>
-                    </button>
-                  </div> -->
-
+                          <button type="submit" class="cart-icon-button">
+                              <iconify-icon icon="iconoir:cart"></iconify-icon>
+                          </button>
+                      </div>
+                  </form>
                 </div>
             </div>
             <%
@@ -526,21 +531,27 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
 
                   <!-- add cart container -->
                   <div class="cartButtonContainer">
+                    <form action="./tocart.jsp" method="post"  class="form_tocart">
+                        <!-- cart-numberic button -->
+                        <div class="cart-button" data-min="1" data-max="50">
+                            <input type="button" class="min" value="&minus;" onclick="updateQuantity(this, -1)" />
+                            <input type="text" class="quantity" name="quantity" value="1" />
+                            <input type="button" class="add" value="+" onclick="updateQuantity(this, 1)" />
+                        </div>
 
-                    <!-- cart-numberic button -->
-                    <div class="cart-button" data-min="1" data-max="50">
-                      <input type="button" class="min" value="&minus;"/>
-                      <input type="text" class="quantity" value="1"/>
-                      <input type="button" class="add" value="+"/>
-                    </div>
+                        <!-- addtocart icon button -->
+                        <div class="addToCart_Btn">
+                            <input type="hidden" name="productId" value="<%= productId %>">
+                            <input type="hidden" name="productPrice" value="<%= productPrice %>">
+                            <input type="hidden" name="MemberID" value="<%= memberId %>">
+                            <input type="hidden" name="source" value="AllProduct_LoggedIn.jsp">
+                            <input type="hidden" name="redirect" value="product">
 
-                    <!-- addtocart icon button -->
-                    <!-- <div class="addToCart_Btn">
-                      <button type="button" class="cart-icon-button" onclick="showAlert()">
-                        <iconify-icon icon="iconoir:cart"></iconify-icon>
-                      </button>
-                    </div> -->
-
+                            <button type="submit" class="cart-icon-button">
+                                <iconify-icon icon="iconoir:cart"></iconify-icon>
+                            </button>
+                        </div>
+                    </form>
                   </div>
                   
               </div>
@@ -612,21 +623,27 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
 
                   <!-- add cart container -->
                   <div class="cartButtonContainer">
+                    <form action="./tocart.jsp" method="post" class="form_tocart">
+                        <!-- cart-numberic button -->
+                        <div class="cart-button" data-min="1" data-max="50">
+                            <input type="button" class="min" value="&minus;" onclick="updateQuantity(this, -1)" />
+                            <input type="text" class="quantity" name="quantity" value="1" />
+                            <input type="button" class="add" value="+" onclick="updateQuantity(this, 1)" />
+                        </div>
 
-                    <!-- cart-numberic button -->
-                    <div class="cart-button" data-min="1" data-max="50">
-                      <input type="button" class="min" value="&minus;"/>
-                      <input type="text" class="quantity" value="1"/>
-                      <input type="button" class="add" value="+"/>
-                    </div>
+                        <!-- addtocart icon button -->
+                        <div class="addToCart_Btn">
+                            <input type="hidden" name="productId" value="<%= productId %>">
+                            <input type="hidden" name="productPrice" value="<%= productPrice %>">
+                            <input type="hidden" name="MemberID" value="<%= memberId %>">
+                            <input type="hidden" name="source" value="AllProduct_LoggedIn.jsp">
+                            <input type="hidden" name="redirect" value="product">
 
-                    <!-- addtocart icon button
-                    <div class="addToCart_Btn">
-                      <button type="button" class="cart-icon-button" onclick="showAlert()">
-                        <iconify-icon icon="iconoir:cart"></iconify-icon>
-                      </button>
-                    </div> -->
-
+                            <button type="submit" class="cart-icon-button">
+                                <iconify-icon icon="iconoir:cart"></iconify-icon>
+                            </button>
+                        </div>
+                    </form>
                   </div>
                   
               </div>

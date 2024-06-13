@@ -5,16 +5,17 @@
     String productPriceStr = request.getParameter("productPrice");
     String quantityStr = request.getParameter("quantity");
     String memberIdStr = request.getParameter("MemberID");
+    String source = request.getParameter("source");
     String redirect = request.getParameter("redirect");
 
-    if (productId == null || productPriceStr == null || quantityStr == null || memberIdStr == null) {
+    if (productId == null || productPriceStr == null || quantityStr == null || memberIdStr == null || source == null) {
         out.println("缺少必要的參數");
         return;
     }
 
     int productPrice = Integer.parseInt(productPriceStr);
     int quantity = Integer.parseInt(quantityStr);
-    int MemberID = Integer.parseInt(memberIdStr);
+    int memberId = Integer.parseInt(memberIdStr);
 
     Connection conn = null;
     PreparedStatement pstmt = null;
@@ -26,7 +27,7 @@
 
         String sql = "INSERT INTO cart (MemberID, ProductID, quantity) VALUES (?, ?, ?)";
         pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1, MemberID);
+        pstmt.setInt(1, memberId);
         pstmt.setString(2, productId);
         pstmt.setInt(3, quantity);
 
@@ -36,6 +37,8 @@
             alert("商品已加入購物車");
             <% if ("payment".equals(redirect)) { %>
                 window.location.href = "./payment.jsp";
+            <% } else if ("AllProduct_LoggedIn.jsp".equals(source)) { %>
+                window.location.href = "./AllProduct_LoggedIn.jsp";
             <% } else { %>
                 window.location.href = "./product_LoggedIn.jsp?productId=<%= productId %>";
             <% } %>
