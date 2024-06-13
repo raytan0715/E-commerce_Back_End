@@ -2,7 +2,21 @@
 <%@ page import="java.text.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
+<%
+  // 檢查用戶是否登入
+  String email = (String) session.getAttribute("userEmail");
+  boolean isLoggedIn = (email != null);
+  // 檢查用戶是否登入
+  if (!isLoggedIn) {
+    response.sendRedirect("./index.jsp"); // 若未登錄則重定向到首頁
+    return;
+  }
 
+  // 設置緩存控制頭
+  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  response.setHeader("Pragma", "no-cache");
+  response.setDateHeader("Expires", 0);
+%>
 
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
@@ -105,122 +119,156 @@
             <!-- 【購物車】 -->
             <div id="cart">
 
-              <!-- 購物車按鈕 --> 
-                <button onclick="openNav()".style.display='block' type="button" class="btn btn-light" style="width: auto;height:auto;">
-                    <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
-                </button>
-              
+                <!-- 購物車按鈕 --> 
+                  <button onclick="openNav()".style.display='block' type="button" class="btn btn-light" style="width: auto;height:auto;">
+                      <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
+                  </button>
             
-
-              <!-- 旁邊顯示之購物車界面 -->
-              <div id="mySidebar" class="sidebar">
-
-                <!-- 購物車頁面右邊之大叉叉-->
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-                <div class="sidebarinner">
-
-                  
-
-                      <div class="container">
-
-                          <%
-                          String memberId = String.valueOf(session.getAttribute("MemberID"));
-                          if (memberId == null) {
-                              out.println("<p>請先登入以查看購物車。</p>");
-                              return;
-                          }
-
-                          int totalQuantity = 0; // 總數量
-                          int totalPrice = 0; // 總價格
-
-                          Connection ProductConn = null;
-                          PreparedStatement ProductPstmt = null;
-                          ResultSet ProductRs = null;
-                          try {
-                              Class.forName("com.mysql.cj.jdbc.Driver");
-                              ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
-
-                              String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
-                              ProductPstmt = ProductConn.prepareStatement(sql);
-                              ProductPstmt.setInt(1, Integer.parseInt(memberId));
-                              ProductRs = ProductPstmt.executeQuery();
-
-                              if (!ProductRs.isBeforeFirst()) {
-                                  out.println("<p>您的購物車是空的</p>");
-                              } else {
-                                  while (ProductRs.next()) {
-                                      int cartID = ProductRs.getInt("cartID"); // Ensure cartID is retrieved
-                                      String pid = ProductRs.getString("productID");
-                                      int quantity = ProductRs.getInt("quantity");
-                                      String productName = ProductRs.getString("ProductName");
-                                      int price = ProductRs.getInt("Price");
-                                      String imageUrl = ProductRs.getString("Producturl");
-
-                                      totalQuantity += quantity;
-                                      totalPrice += price * quantity;
-                          %>
-                          
-                          <div class="cart-p">
-                            <img src="<%= imageUrl %>" alt="<%= productName %>">
-                            <div>
-                                <div class="cp1">   <!--商品名稱-->
-                                    <h1><%= productName %></h1>
-                                </div>
-                                <!-- 購物車表單 -->
-                                <form action="./changeCartItem.jsp" method="post" class="quantity-form">
-                                    <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
-                                        <input class="min" type="button" value="&minus;" onclick="updateQuantity(this, -1)" /> <!-- ' &minus; '是減號 -->
-                                        <input class="quantity" type="text" name="quantity" value="<%= quantity %>" oninput="validateQuantity(this)" />
-                                        <input class="add" type="button" value="+" onclick="updateQuantity(this, 1)" /> 
-                                    </div>
-                                    <input type="hidden" name="cartID" value="<%= cartID %>">
-                                    <input type="hidden" name="action" value="update">
-                                </form>
-                            </div>
-                            <div class="cp3">   <!-- 商品價格 -->
-                                <p>NT$ <%= price %></p>
-                            </div>
-                            <form action="./changeCartItem.jsp" method="post" style="display:inline;">
-                                <input type="hidden" name="cartID" value="<%= cartID %>">
-                                <input type="hidden" name="action" value="delete">
-                                <button type="submit">&times;</button> <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
-                            </form>
-                        </div>
-                          <%
-                                  }
-                              }
-                          } catch (Exception e) {
-                              e.printStackTrace();
-                          } finally {
-                              if (ProductRs != null) try { ProductRs.close(); } catch (SQLException ignore) {}
-                              if (ProductPstmt != null) try { ProductPstmt.close(); } catch (SQLException ignore) {}
-                              if (ProductConn != null) try { ProductConn.close(); } catch (SQLException ignore) {}
-                          }
-                          %>
-                        <!-- 計算總價 -->
-                        <div class="cart-total">
-                          <p>總金額<p>
-                          <p class="r">NT$ <%= totalPrice %></p>
-                        </div>
-
-                        <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
-                        <div class="cart-but row" >
-                          <div class="col">
-                              <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
+                <!-- 旁邊顯示之購物車界面 -->
+                <div id="mySidebar" class="sidebar">
+  
+                  <!-- 購物車頁面右邊之大叉叉-->
+                  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  
+                  <div class="sidebarinner">
+  
+                    
+  
+                        <div class="container">
+  
+                            <%
+                            String memberId = String.valueOf(session.getAttribute("MemberID"));
+                            if (memberId == null) {
+                                out.println("<p>請先登入以查看購物車。</p>");
+                                return;
+                            }
+  
+                            int totalQuantity = 0; // 總數量
+                            int totalPrice = 0; // 總價格
+  
+                            Connection ProductConn = null;
+                            PreparedStatement ProductPstmt = null;
+                            ResultSet ProductRs = null;
+                            try {
+                                Class.forName("com.mysql.cj.jdbc.Driver");
+                                ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
+  
+                                String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
+                                ProductPstmt = ProductConn.prepareStatement(sql);
+                                ProductPstmt.setInt(1, Integer.parseInt(memberId));
+                                ProductRs = ProductPstmt.executeQuery();
+  
+                                if (!ProductRs.isBeforeFirst()) {
+                                    out.println("<p>您的購物車是空的</p>");
+                                } else {
+                                    while (ProductRs.next()) {
+                                        int cartID = ProductRs.getInt("cartID"); // Ensure cartID is retrieved
+                                        String pid = ProductRs.getString("productID");
+                                        int quantity = ProductRs.getInt("quantity");
+                                        String productName = ProductRs.getString("ProductName");
+                                        int price = ProductRs.getInt("Price");
+                                        String imageUrl = ProductRs.getString("Producturl");
+  
+                                        totalQuantity += quantity;
+                                        totalPrice += price * quantity;
+                            %>
+                            
+                            <div class="cart-p">
+                              <img src="<%= imageUrl %>" alt="<%= productName %>">
+                              <div>
+                                  <div class="cp1">   <!--商品名稱-->
+                                      <h1><%= productName %></h1>
+                                  </div>
+                                  <!-- 購物車表單 -->
+                                  <form action="./changeCartItem.jsp" method="post" class="quantity-form">
+                                      <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                          <input class="min" type="button" value="&minus;" onclick="updateQuantity(this, -1)" /> <!-- ' &minus; '是減號 -->
+                                          <input class="quantity" type="text" name="quantity" value="<%= quantity %>" oninput="validateQuantity(this)" />
+                                          <input class="add" type="button" value="+" onclick="updateQuantity(this, 1)" /> 
+                                      </div>
+                                      <input type="hidden" name="cartID" value="<%= cartID %>">
+                                      <input type="hidden" name="action" value="update">
+                                  </form>
+                              </div>
+                              <div class="cp3">   <!-- 商品價格 -->
+                                  <p>NT$ <%= price %></p>
+                              </div>
+                              <form action="./changeCartItem.jsp" method="post" style="display:inline;">
+                                  <input type="hidden" name="cartID" value="<%= cartID %>">
+                                  <input type="hidden" name="action" value="delete">
+                                  <button type="submit">&times;</button> <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+                              </form>
                           </div>
-                          <div class="col">
-                              <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
+                            <%
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                if (ProductRs != null) try { ProductRs.close(); } catch (SQLException ignore) {}
+                                if (ProductPstmt != null) try { ProductPstmt.close(); } catch (SQLException ignore) {}
+                                if (ProductConn != null) try { ProductConn.close(); } catch (SQLException ignore) {}
+                            }
+                            %>
+                          <!-- 購買數量增減控制 -->
+                          <script>
+                            function updateQuantity(button, delta) {
+                                const form = button.closest('.quantity-form');
+                                const quantityInput = form.querySelector('.quantity');
+                                let currentValue = parseInt(quantityInput.value);
+                        
+                                const min = parseInt(button.closest('.cp2').getAttribute('data-min'));
+                                const max = parseInt(button.closest('.cp2').getAttribute('data-max'));
+                        
+                                if (!isNaN(currentValue)) {
+                                    const newValue = currentValue + delta;
+                                    if (newValue >= min && newValue <= max) {
+                                        quantityInput.value = newValue;
+                                        form.submit();
+                                    }
+                                }
+                            }
+                        
+                            function validateQuantity(input) {
+                                const form = input.closest('.quantity-form');
+                                let value = input.value.replace(/[^0-9]/g, '');
+                                const cp2 = input.closest('.cp2');
+                                const max = parseInt(cp2.getAttribute('data-max'));
+                        
+                                if (value > max) {
+                                    alert(`最多只能購買 ${max} 個`);
+                                    input.value = max;
+                                } else {
+                                    input.value = value;
+                                }
+                        
+                                form.submit();
+                            }
+                        </script>
+                        
+  
+                          <!-- 計算總價 -->
+                          <div class="cart-total">
+                            <p>總金額<p>
+                            <p class="r">NT$ <%= totalPrice %></p>
                           </div>
-                      </div>
-                      </div>
+  
+                          <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
+                          <div class="cart-but row" >
+                            <div class="col">
+                                <input type="button" value="繼續購物" class="Continu_OR_Checkout_Btn" onclick="closeNav()">
+                            </div>
+                            <div class="col">
+                                <input type="button" value="買單去" class="Continu_OR_Checkout_Btn" onclick="location.href='./payment.jsp'">
+                            </div>
+                        </div>
+                        </div>
+                  </div>
                 </div>
-              </div>
 
             <!-- 【會員註冊登入】 -->
             <%
-                // 獲取當前用戶的電子郵件
-                String email = (String) session.getAttribute("userEmail");
+
             
                 // 設置資料庫連接相關變數
                 Connection conn = null;
@@ -330,6 +378,9 @@
 
         <!-- 收件人與寄送資訊之容器 -->
         <section class="payment-cont">
+            
+        <!-- 結帳表單 -->
+        <form method="post" action="./order.jsp">
 
             <!-- 收件人與寄送資訊之標題 -->
             <div class="payment-header">
@@ -340,7 +391,7 @@
             <!-- 收件人與寄送資訊之容器2 -->
             <div class="payment-info">
 
-                <form id="deliveryForm" class="needs-validation" novalidate>
+                <div id="deliveryForm" class="needs-validation" novalidate>
                     <div class="form-group" style="margin-bottom: 30px;">
                         <label for="name" class="required">收件人姓名 :</label>
                         <input type="text" class="form-control" id="name" placeholder="請輸入本名" required>
@@ -422,12 +473,16 @@
 
                     </div>
 
-                    <fieldset class="fieldset-legend">
-                        <legend>訂單備註</legend>
-                        <textarea name="comment" rows="10" cols="30" style="height: 160px; width: 550px; resize: none;"></textarea>
-                    </fieldset>
+                    
+                        <!-- 其他輸入框 -->
+                        <fieldset class="fieldset-legend">
+                            <legend>訂單備註</legend>
+                            <textarea name="remark" rows="10" cols="30" style="height: 160px; width: 550px; resize: none;"></textarea>
+                        </fieldset>
+                        <!-- 其他輸入框 -->
 
-                </form>
+                </div>
+                
             </div>
         </section>
         
@@ -444,7 +499,7 @@
 
         <!-- payment information -->
         <div class="payment-info">
-            <form id="paymentForm" class="needs-validation" novalidate>
+            <div id="paymentForm" class="needs-validation" novalidate>
                 <div class="form-group">
                     <label for="payment-method">付款方式 :</label>
                     <label><input type="radio" name="payment-method" value="貨到付款"> 貨到付款</label>
@@ -479,15 +534,13 @@
                 </fieldset>
 
                 <div class="smallnotes">*您的信用卡資訊會被嚴格保護*</div>
-            </form>
+            </div>
 
         </div>
 
     </section>
 
     <%
-
-
     try {
         Class.forName("com.mysql.cj.jdbc.Driver");
         ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
@@ -502,12 +555,35 @@
                 int cartID = ProductRs.getInt("cartID");
                 String pid = ProductRs.getString("productID");
                 int quantity = ProductRs.getInt("quantity");
-                String productName = ProductRs.getString("ProductName");
+                String ProductName = ProductRs.getString("ProductName");
                 int price = ProductRs.getInt("Price");
-                String imageUrl = ProductRs.getString("Producturl");
+                String Producturl = ProductRs.getString("Producturl");
 
                 totalQuantity += quantity;
                 totalPrice += price * quantity;
+    %>
+
+        
+        <%
+        Integer productId = (Integer) session.getAttribute("productId");
+        Integer productPrice = (Integer) session.getAttribute("productPrice");
+        Integer totalprice = (Integer) session.getAttribute("totalprice");
+        String remark = request.getParameter("remark");
+        java.util.Date currentDate = new java.util.Date();
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateFormatter.format(currentDate);
+    %>
+        <input type="hidden" name="cartID" value="<%= cartID %>">
+        <input type="hidden" name="date" value="<%= formattedDate %>">
+        <input type="hidden" name="MemberID" value="<%= session.getAttribute("MemberID") %>">
+        <input type="hidden" name="productId" value="<%= pid %>">
+        <input type="hidden" name="quantity" value="<%= quantity %>">
+        <input type="hidden" name="productPrice" value="<%= price %>">
+        <input type="hidden" name="totalprice" value="<%= totalPrice %>">
+        <input type="hidden" name="remark" value="<%= remark %>">
+        <input type="hidden" name="Producturl" value="<%= Producturl %>">
+        <input type="hidden" name="ProductName" value="<%= ProductName %>">
+        <%
             }
         }
     } catch (Exception e) {
@@ -517,45 +593,18 @@
         if (ProductPstmt != null) try { ProductPstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
         if (ProductConn != null) try { ProductConn.close(); } catch (SQLException e) { e.printStackTrace(); }
     }
-%>
+    %>
 
-<!-- 結帳表單 -->
-<form method="post" action="./order.jsp" class="order">
     <div class="submitarea">
-        <button id="submitButton" class="paymentbtn">結帳</button>
+        <button id="checkoutButton" class="paymentbtn">結帳</button>
+        <script>
+            document.getElementById("checkoutButton").addEventListener("click", function() {
+                document.getElementById("paymentForm").submit();
+            });
+        </script>
     </div>
-    <%
-    // 確認並獲取變量
-    Integer cartID = (request.getParameter("cartID") != null) ? Integer.valueOf(request.getParameter("cartID")) : (Integer) session.getAttribute("cartID");
-    if (cartID == null) {
-        out.println("<p>購物車 ID 無法獲取</p>");
-    } else {
-        Integer productId = (Integer) session.getAttribute("productId");
-        Integer quantity = (Integer) session.getAttribute("quantity");
-        Integer productPrice = (Integer) session.getAttribute("productPrice");
-        Integer totalprice = (Integer) session.getAttribute("totalprice");
-        String remark = (String) session.getAttribute("remark");
 
-        if (productId == null || quantity == null || productPrice == null || totalprice == null || remark == null) {
-            out.println("<p>缺少必要的表單數據。</p>");
-        } else {
-            java.util.Date currentDate = new java.util.Date();
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String formattedDate = dateFormatter.format(currentDate);
-    %>
-            <input type="hidden" name="cartID" value="<%= cartID %>">
-            <input type="hidden" name="date" value="<%= formattedDate %>">
-            <input type="hidden" name="MemberID" value="<%= session.getAttribute("MemberID") %>">
-            <input type="hidden" name="productId" value="<%= productId %>">
-            <input type="hidden" name="quantity" value="<%= quantity %>">
-            <input type="hidden" name="productPrice" value="<%= productPrice %>">
-            <input type="hidden" name="totalprice" value="<%= totalprice %>">
-            <input type="hidden" name="remark" value="<%= remark %>">
-    <%
-        }
-    }
-    %>
-</form>
+    </form>
 
     <script>
 

@@ -2,6 +2,21 @@
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>
+<%
+  // 檢查用戶是否登入
+  String email = (String) session.getAttribute("userEmail");
+  boolean isLoggedIn = (email != null);
+  // 檢查用戶是否登入
+  if (!isLoggedIn) {
+    response.sendRedirect("./index.jsp"); // 若未登錄則重定向到首頁
+    return;
+  }
+
+  // 設置緩存控制頭
+  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  response.setHeader("Pragma", "no-cache");
+  response.setDateHeader("Expires", 0);
+%>
 <!doctype html>
 
 <html lang="en" data-bs-theme="auto">
@@ -255,47 +270,49 @@
 
             <!-- 【會員註冊登入】 -->
             <%
-                // 獲取當前用戶的電子郵件
-                String email = (String) session.getAttribute("userEmail");
-            
-                // 設置資料庫連接相關變數
-                Connection conn = null;
-                PreparedStatement pstmt = null;
-                ResultSet rs = null;
-            
-                String userName = "";
-                String userPhone = "";
-                String userBirthday = "";
-                String userAddress = "";
-            
-                try {
-                    // 連接到 MySQL 資料庫
-                    String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    conn = DriverManager.getConnection(url, "root", "Ray_930715");
-            
-                    // 獲取用戶資料
-                    String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
-                    
-                    // 使用 PreparedStatement 防止 SQL 注入
-                    pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, email);
-            
-                    // 執行查詢操作
-                    rs = pstmt.executeQuery();
-            
-                    if (rs.next()) {
-                        userName = rs.getString("MemberName");
-                        userPhone = rs.getString("MemberPhone");
-                        userBirthday = rs.getString("BirthdayDate");
-                        userAddress = rs.getString("Address");
-                    }
-            
-                    // 關閉資料庫連接
-                    conn.close();
-                } catch (SQLException sExec) {
-                    out.println("SQL 錯誤: " + sExec.toString());
-                }
+              if (email == null) {
+                  response.sendRedirect("index.jsp"); // 若未登錄則重定向到首頁
+                  return;
+              }
+          
+              // 設置資料庫連接相關變數
+              Connection conn1 = null;
+              PreparedStatement pstmt1 = null;
+              ResultSet rs1 = null;
+          
+              String userName = "";
+              String userPhone = "";
+              String userBirthday = "";
+              String userAddress = "";
+          
+              try {
+                  // 連接到 MySQL 資料庫
+                  String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+                  Class.forName("com.mysql.cj.jdbc.Driver");
+                  conn1 = DriverManager.getConnection(url, "root", "Ray_930715");
+          
+                  // 獲取用戶資料
+                  String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
+                  
+                  // 使用 PreparedStatement 防止 SQL 注入
+                  pstmt1 = conn1.prepareStatement(sql);
+                  pstmt1.setString(1, email);
+          
+                  // 執行查詢操作
+                  rs1 = pstmt1.executeQuery();
+          
+                  if (rs1.next()) {
+                      userName = rs1.getString("MemberName");
+                      userPhone = rs1.getString("MemberPhone");
+                      userBirthday = rs1.getString("BirthdayDate");
+                      userAddress = rs1.getString("Address");
+                  }
+          
+                  // 關閉資料庫連接
+                  conn1.close();
+              } catch (SQLException sExec) {
+                  out.println("SQL 錯誤: " + sExec.toString());
+              }
             %>
             <!-- 會員註冊與登入按鈕 -->
             <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
@@ -304,7 +321,7 @@
             </button>
 
             <!-- 登出按鈕 -->
-            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <button onclick="location.href='./logout.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
               登出
             </button>

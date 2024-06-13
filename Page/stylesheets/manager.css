@@ -1,25 +1,23 @@
 /* 全局設定 */
-
-body{
+body {
   font-family: "Noto Sans TC", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
 
-/* 滑動至頂部按鈕 
------------------------ */
+/* 滑動至頂部按鈕 */
 .slider {
-  position: fixed; /* 固定位置 */
-  bottom: 40px; /* 距離底部 40px */
-  right: 27px; /* 距離右邊 27px */
+  position: fixed;
+  bottom: 40px;
+  right: 27px;
   width: 50px;
   height: 50px;
   background: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* 保證在最上層 */
+  z-index: 1000;
 }
 
 .top {
@@ -36,7 +34,7 @@ body{
 
 .top:hover {
   font-size: 60px;
-  bottom: 35px; 
+  bottom: 35px;
   right: 22px;
   width: 70px;
   height: 70px;
@@ -44,24 +42,19 @@ body{
   color: #333333;
 }
 
-/* 中間選單
--------------------------------------------------- */
-
-.CategoryList_Container{
-  /*background-color: rgb(255, 159, 127);*/
+/* 中間選單 */
+.CategoryList_Container {
   display: flex;
-  justify-content: center; /* 水平排列靠中間對齊 */
+  justify-content: center;
   margin-bottom: 15px;
 }
 
 .list {
   display: flex;
-  flex-direction: row; /* 改為水平排列 */
-  width: 50%;        
-  /*margin-bottom: 10px;*/
-  justify-content: center; /* 水平排列時靠左對齊 */
-  align-items:flex-end; /* 垂直方向居中對齊 */
-  /*background-color: rgb(225, 255, 0);*/
+  flex-direction: row;
+  width: 50%;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .list label {
@@ -73,37 +66,23 @@ body{
   transition: all 0.3s ease;
   color: rgb(0, 0, 0);
   z-index: 12;
-  /*margin-right: 10px;*/
 }
 
-/* 原初樣式 */
+/* 按鈕樣式 */
 .modify,
-.record {
-    background-color: #ada090;
-    margin-right: 25px;
-    border-radius: 20px;
-    border: 0px;
-    cursor: pointer; /* 將鼠標光標改為手型 */
-    transition: background-color 0.3s; /* 添加過渡效果 */
+.record{
+  background-color: #ada090;
+  margin-right: 25px;
+  border-radius: 20px;
+  border: 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .modify .title,
 .record .title {
-    color: #fff;
-    font-weight: 800;
-}
-
-/* 當radio被選中時的樣式 - 目前這個沒有用可以忽略*/
-#modify:checked + .modify,
-#record:checked + .record {
-    background-color: #393939;
-    color: #bcbcbc;
-}
-
-.modify:hover
-.record:hover{
-  background-color: #393939;
-  color: #bcbcbc;
+  color: #fff;
+  font-weight: 800;
 }
 
 #modify:checked~.text-content .modify,
@@ -111,41 +90,36 @@ body{
   display: block;
 }
 
-
-
 .content input {
   display: none;
 }
 
-/*---*/
-
-.content .text-content { 
-  width: 70%; /* 可以調整個人資料在容器中的位置 */
+/* 內容樣式 */
+.content .text-content {
+  width: 70%;
   height: 100%;
 }
+
 .content .text {
   display: none;
 }
+
 .content .text .title {
   font-size: 20px;
   margin-bottom: 10px;
   font-weight: 500;
 }
+
 .content .text p {
   text-align: justify;
 }
 
-
-/* 個人與訂單資料
--------------------------------------------------- */
-
+/* 個人與訂單資料 */
 .OrderInfo_Container {
   width: 100%;
-  height: 100%;
-  display: flex;             /*置中*/
-  justify-content: center;   /*置中*/
-  align-items: center;       /*置中*/
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container2 {
@@ -153,45 +127,49 @@ body{
   min-height: 500px;
   width: 950px;
   margin-bottom: 50px;
-  background-color: rgba(245, 245, 245, 0.932);
-  border-radius: 30px;
   background-color: #f0ece8;
-  max-height: 600px; /* 设置最大高度 */
-  overflow-y: auto; /* 当内容超过最大高度时，显示滚动条 */
+  border-radius: 30px;
+  overflow: hidden;
 }
 
 .content {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+  width: 100%;
 }
 
-/*容器*/
-.OrderAndProduct_Container{
-  /*background-color: blue;*/
+/* 容器 */
+.OrderAndProduct_Container {
   display: flex;
   justify-content: center;
+  width: 100%;
+  min-height: 500px;
+  background-color: #f0ece8;
+  border-radius: 30px;
+  padding: 20px;
+  overflow: auto;
 }
 
 .text-content input {
   display: block;
 }
+
 .p-table {
   position: absolute;
   top: 80px;
 }
+
 .p-table td {
   padding: 10px;
   font-size: 18px;
   line-height: 24px;
 }
 
-.t-left{
+.t-left {
   text-align: right;
   margin-right: 30px;
 }
-
 
 /* 訂單管理 */
 .order-container {
@@ -205,33 +183,38 @@ body{
   max-width: 800px;
   justify-content: center;
 }
-.modify text{
-  justify-content: center;
-}
+
 .order-header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
+
 .order-header label {
   font-weight: bold;
 }
+
 .order-status {
   color: rgb(227, 20, 20);
 }
+
 .order-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
-.order-table th, .order-table td {
+
+.order-table th,
+.order-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
 }
+
 .order-table th {
   background-color: #f2f2f2;
 }
+
 .order-footer {
   text-align: right;
   font-weight: bold;
@@ -239,37 +222,35 @@ body{
 }
 
 /* 商品管理 */
-.r-table {
-  position: absolute;
-  top: 15%;
-  width: 72%;
-  border-collapse: collapse;
+.record.text {
+  background: none; /* 移除此行 */
 }
 
-.r-table input[type='number'] {
-  width: 80px; /* 設置寬度 */
-  height: 25px; /* 設置高度 */
-
-
- }
+.r-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: none;
+}
 
 .r-table th {
   font-size: 18px;
   letter-spacing: 1px;
   padding-bottom: 10px;
   text-align: left;
+  color: black; /* 改变标题的字体颜色 */
 }
 
 .r-table td {
   font-size: 16px;
   letter-spacing: 1px;
   padding: 5px 0px;
-
+  color: black; /* 改变单元格的字体颜色 */
 }
 
 .r-table td span {
   font-size: 13px;
   letter-spacing: 1px;
+  color: black; /* 改变span的字体颜色 */
 }
 
 .storenumber {
@@ -280,8 +261,5 @@ body{
   display: flex;
   justify-content: left;
   align-items: center;
-  margin-top: 13px; /* 細微調整與表格上下對齊*/
-  /*background-color: blueviolet;*/
+  margin-top: 13px;
 }
-
-

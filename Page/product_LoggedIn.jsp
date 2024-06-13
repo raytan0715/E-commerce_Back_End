@@ -2,7 +2,21 @@
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
+<%
+  // 檢查用戶是否登入
+  String email = (String) session.getAttribute("userEmail");
+  boolean isLoggedIn = (email != null);
+  // 檢查用戶是否登入
+  if (!isLoggedIn) {
+    response.sendRedirect("./index.jsp"); // 若未登錄則重定向到首頁
+    return;
+  }
 
+  // 設置緩存控制頭
+  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  response.setHeader("Pragma", "no-cache");
+  response.setDateHeader("Expires", 0);
+%>
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
   <head>
@@ -226,7 +240,6 @@
               </div>
 
             <%
-                String email = (String) session.getAttribute("userEmail");
             
                 Connection connUser = null;
                 PreparedStatement pstmtUser = null;
@@ -262,7 +275,8 @@
               <%= userName %> 您好！
             </button>
 
-            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <!-- 登出按鈕 -->
+            <button onclick="location.href='./logout.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
               登出
             </button>
@@ -380,6 +394,8 @@
                   <input type="hidden" name="productId" value="<%= productId %>"/>
                   <input type="hidden" name="MemberID" value="<%= MemberID %>"/>
                   <input type="hidden" name="productPrice" value="<%= productPrice %>"/>
+                  <input type="hidden" name="Producturl" value="<%= productUrl %>"/>
+                  <input type="hidden" name="ProductName" value="<%= productName %>"/>
               
                   <div class="addToCart">
                       <button type="submit" class="btn" onclick="showAlert()" id="addToCartButton">
@@ -598,10 +614,6 @@
             alert("✅ 已加入購物車！");
         }
     
-        function showAlert2() {
-            alert("✅ 已加入購物車！");
-            window.location.href("./payment.jsp");
-        }
     </script>
 
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>

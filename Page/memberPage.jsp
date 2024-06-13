@@ -3,8 +3,21 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.io.*" %>
-
 <%
+  // 檢查用戶是否登入
+  String email = (String) session.getAttribute("userEmail");
+  boolean isLoggedIn = (email != null);
+  // 檢查用戶是否登入
+  if (!isLoggedIn) {
+    response.sendRedirect("./index.jsp"); // 若未登錄則重定向到首頁
+    return;
+  }
+
+  // 設置緩存控制頭
+  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  response.setHeader("Pragma", "no-cache");
+  response.setDateHeader("Expires", 0);
+
     // 初始化購物車
     if (session.getAttribute("cart") == null) {
         session.setAttribute("cart", new HashMap<String, Integer>());
@@ -276,8 +289,6 @@
 
             <!-- 【會員註冊登入】 -->
             <%
-                // 獲取當前用戶的電子郵件
-                String email = (String) session.getAttribute("userEmail");
             
                 // 設置資料庫連接相關變數
                 Connection conn = null;
@@ -325,7 +336,7 @@
             </button>
 
             <!-- 登出按鈕 -->
-            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+            <button onclick="location.href='./logout.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
               登出
             </button>
@@ -473,48 +484,69 @@
                               }
                             </script>
 
+              
                             <div class="record text" style="color: #6e573a;">
+                              <table class="r-table">
+                                  <tr>
+                                      <th>訂單編號</th>
+                                      <th class="dis">訂單日期</th>
+                                      <th>品名</th>
+                                      <th>數量</th>
+                                      <th>合計</th>
+                                      <th class="dis">備註</th>
+                                      <th class="dis">訂單狀態</th>
+                                  </tr>
+                                  <%
+                                      String MemberID = String.valueOf(session.getAttribute("MemberID"));
 
-                                <table class="r-table">
-                                    <tr>
-                                        <th>訂單編號</th>
-                                        <th class="dis">訂單日期</th>
-                                        <th>品名</th>
-                                        <th>數量</th>
-                                        <th>合計</th>
-                                        <th class="dis">備註</th>
-                                        <th class="dis">訂單狀態</th>
-                                    </tr>
-                                    <tr>
-                                        <td>A20240510</td>
-                                        <td class="dis">2024/05/10</td>
-                                        <td><span>No Brand<br>經典炸醬拉麵 135g克 x 5 x 1PC包</span></td>
-                                        <td>1</td>
-                                        <td>$179</td>
-                                        <td class="dis">無</td>
-                                        <td class="dis">已完成</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A20240510</td>
-                                        <td class="dis">2024/05/10</td>
-                                        <td><span>OTTOGI<br>不倒翁 粗麵條版Q拉麵</span></td>
-                                        <td>1</td>
-                                        <td>$225</td>
-                                        <td class="dis">無</td>
-                                        <td class="dis">已完成</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A20240524</td>
-                                        <td class="dis">2024/05/24</td>
-                                        <td><span>SAMYANG<br>三養 4種起司風味火辣雞肉風味鐵板炒麵</span></td>
-                                        <td>1</td>
-                                        <td>$150</td>
-                                        <td class="dis">無</td>
-                                        <td class="dis">已完成</td>
-                                    </tr>
+                                      try {
+                                          Class.forName("com.mysql.cj.jdbc.Driver");
+                                          String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+                                          String dbUsername = "root";
+                                          String dbPassword = "Ray_930715";
+                                          conn = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-                                </table>
+                                          if (conn.isClosed()) {
+                                              out.println("連線建立失敗");
+                                          } else {
+                                              String sql = "SELECT * FROM orderitems WHERE MemberID = ?";
+                                              pstmt = conn.prepareStatement(sql);
+                                              pstmt.setString(1, MemberID);
+                                              rs = pstmt.executeQuery();
 
+                                              while (rs.next()) {
+                                                  int orderid = rs.getInt("orderid");
+                                                  String date = rs.getString("date");
+                                                  String productName = rs.getString("ProductName");
+                                                  int quantity = rs.getInt("quantity");
+                                                  int totalprice = rs.getInt("totalprice");
+                                                  String remark = rs.getString("remark");
+
+                                  %>
+                                  <tr>
+                                      <td>A<%= orderid %></td>
+                                      <td class="dis"><%= date %></td>
+                                      <td><span><%= productName %></span></td>
+                                      <td><%= quantity %></td>
+                                      <td>$<%= totalprice %></td>
+                                      <td class="dis"><%= remark %></td>
+                                      <td class="dis">已完成</td>
+                                  </tr>
+                                  <%
+                                              }
+                                          }
+                                      } catch (Exception e) {
+                                          e.printStackTrace();
+                                  %>
+                                  <p>Error: <%= e.getMessage() %></p>
+                                  <%
+                                      } finally {
+                                          if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+                                          if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
+                                          if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+                                      }
+                                  %>
+                              </table>
                             </div>
 
                         </div>

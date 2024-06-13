@@ -5,11 +5,24 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page language="java" import="java.util.*" %>
-
 <%
-// 初始化購物車
-if (session.getAttribute("cart") == null) {
-    session.setAttribute("cart", new HashMap<String, Integer>());
+  // 檢查用戶是否登入
+  String email = (String) session.getAttribute("userEmail");
+  boolean isLoggedIn = (email != null);
+  // 檢查用戶是否登入
+  if (!isLoggedIn) {
+    response.sendRedirect("./index.jsp"); // 若未登錄則重定向到首頁
+    return;
+  }
+
+  // 設置緩存控制頭
+  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  response.setHeader("Pragma", "no-cache");
+  response.setDateHeader("Expires", 0);
+
+  // 初始化購物車
+  if (session.getAttribute("cart") == null) {
+      session.setAttribute("cart", new HashMap<String, Integer>());
 }
 Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
 %>
@@ -70,92 +83,91 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
 
     <!-- 上方欄位 (工具欄)
     ================================================== -->
-
-    <!-- 先為code寫上註解 不要急著修改-->
-
-      <!-- 工具欄第一欄 -->
-      <nav class="navbar navbar-expand-lg"> 
-
+ 
+      <!-- 共具欄第一欄 -->
+      <nav class="navbar navbar-expand-lg">
+ 
         <!-- 工具欄第一欄內容物容器 -->
         <div class="row navOneRow">
-
+ 
           <!-- 【圖標logo】-->
-          <div class="col-sm navLogoCol">
+          <div class="col-sm navLogoCol" >
             <div class="navLogo" >
               <!-- Logo 點擊回到登入後主頁 -->
-              <a href="./index_LoggedIn.jsp">
+              <a href="index_LoggedIn.jsp">
               <img src="./picture/material/navPic/navLogo.png" alt="navLogoPic">
               </a>
             </div>
           </div>
-          
-
+         
+ 
           <!-- 搜尋欄 -->
           <div class="col-sm searchBarCol">
-
+ 
             <form class="d-flex" action="./SearchProduct_LoggedIn.jsp" method="get" style="width:750px;">
               <input id="searchBar" class="form-control me-2 searchBar" name="keyword" type="search" placeholder="🔍 搜尋" aria-label="Search">
-          
+         
               <script>
                   // 在輸入框獲得焦點時，添加特定的樣式
                   document.getElementById("searchBar").addEventListener("focus", function() {
                       this.classList.add("focused");
                   });
-          
+         
                   // 在輸入框失去焦點時，移除特定的樣式
                   document.getElementById("searchBar").addEventListener("blur", function() {
                       this.classList.remove("focused");
                   });
               </script>
           </form>
-            
+           
           </div>
-
+ 
+ 
           <!-- 右側兩個按鈕欄位 -->
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
-
+ 
             <!-- 【購物車】 -->
             <div id="cart">
-
-              <!-- 購物車按鈕 --> 
+ 
+              <!-- 購物車按鈕 -->
                 <button onclick="openNav()".style.display='block' type="button" class="btn btn-light" style="width: auto;height:auto;">
                     <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
                 </button>
-              
+             
               <!-- 旁邊顯示之購物車界面 -->
               <div id="mySidebar" class="sidebar">
-
+ 
                 <!-- 購物車頁面右邊之大叉叉-->
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
+ 
                 <div class="sidebarinner">
-
-                  
-
+ 
+                 
+ 
                       <div class="container">
-
+ 
                           <%
                           String memberId = String.valueOf(session.getAttribute("MemberID"));
                           if (memberId == null) {
                               out.println("<p>請先登入以查看購物車。</p>");
                               return;
                           }
-
+ 
                           int totalQuantity = 0; // 總數量
                           int totalPrice = 0; // 總價格
-
+ 
                           Connection ProductConn = null;
                           PreparedStatement ProductPstmt = null;
                           ResultSet ProductRs = null;
                           try {
                               Class.forName("com.mysql.cj.jdbc.Driver");
                               ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
-
+ 
                               String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
                               ProductPstmt = ProductConn.prepareStatement(sql);
                               ProductPstmt.setInt(1, Integer.parseInt(memberId));
                               ProductRs = ProductPstmt.executeQuery();
-
+ 
                               if (!ProductRs.isBeforeFirst()) {
                                   out.println("<p>您的購物車是空的</p>");
                               } else {
@@ -166,11 +178,11 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                                       String productName = ProductRs.getString("ProductName");
                                       int price = ProductRs.getInt("Price");
                                       String imageUrl = ProductRs.getString("Producturl");
-
+ 
                                       totalQuantity += quantity;
                                       totalPrice += price * quantity;
                           %>
-                          
+                         
                           <div class="cart-p">
                             <img src="<%= imageUrl %>" alt="<%= productName %>">
                             <div>
@@ -182,7 +194,7 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                                     <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
                                         <input class="min" type="button" value="&minus;" onclick="updateQuantity(this, -1)" /> <!-- ' &minus; '是減號 -->
                                         <input class="quantity" type="text" name="quantity" value="<%= quantity %>" oninput="validateQuantity(this)" />
-                                        <input class="add" type="button" value="+" onclick="updateQuantity(this, 1)" /> 
+                                        <input class="add" type="button" value="+" onclick="updateQuantity(this, 1)" />
                                     </div>
                                     <input type="hidden" name="cartID" value="<%= cartID %>">
                                     <input type="hidden" name="action" value="update">
@@ -214,10 +226,10 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                               const form = button.closest('.quantity-form');
                               const quantityInput = form.querySelector('.quantity');
                               let currentValue = parseInt(quantityInput.value);
-                      
+                     
                               const min = parseInt(button.closest('.cp2').getAttribute('data-min'));
                               const max = parseInt(button.closest('.cp2').getAttribute('data-max'));
-                      
+                     
                               if (!isNaN(currentValue)) {
                                   const newValue = currentValue + delta;
                                   if (newValue >= min && newValue <= max) {
@@ -226,31 +238,31 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                                   }
                               }
                           }
-                      
+                     
                           function validateQuantity(input) {
                               const form = input.closest('.quantity-form');
                               let value = input.value.replace(/[^0-9]/g, '');
                               const cp2 = input.closest('.cp2');
                               const max = parseInt(cp2.getAttribute('data-max'));
-                      
+                     
                               if (value > max) {
                                   alert(`最多只能購買 ${max} 個`);
                                   input.value = max;
                               } else {
                                   input.value = value;
                               }
-                      
+                     
                               form.submit();
                           }
                       </script>
-                      
-
+                     
+ 
                         <!-- 計算總價 -->
                         <div class="cart-total">
                           <p>總金額<p>
                           <p class="r">NT$ <%= totalPrice %></p>
                         </div>
-
+ 
                         <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
                         <div class="cart-but row" >
                           <div class="col">
@@ -263,76 +275,71 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                       </div>
                 </div>
               </div>
-
+ 
             <!-- 【會員註冊登入】 -->
             <%
-    
-
-              // 獲取當前用戶的電子郵件
-              String email = (String) session.getAttribute("userEmail");
-
+              if (email == null) {
+                  response.sendRedirect("index.jsp"); // 若未登錄則重定向到首頁
+                  return;
+              }
+          
               // 設置資料庫連接相關變數
-              Connection con = null;
-              PreparedStatement pstm = null;
-              ResultSet rst = null;
-
+              Connection conn1 = null;
+              PreparedStatement pstmt1 = null;
+              ResultSet rs1 = null;
+          
               String userName = "";
               String userPhone = "";
               String userBirthday = "";
               String userAddress = "";
-
+          
               try {
                   // 連接到 MySQL 資料庫
                   String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
                   Class.forName("com.mysql.cj.jdbc.Driver");
-                  con = DriverManager.getConnection(url, "root", "Ray_930715");
-
+                  conn1 = DriverManager.getConnection(url, "root", "Ray_930715");
+          
                   // 獲取用戶資料
                   String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
-
+                  
                   // 使用 PreparedStatement 防止 SQL 注入
-                  pstm = con.prepareStatement(sql);
-                  pstm.setString(1, email);
-
+                  pstmt1 = conn1.prepareStatement(sql);
+                  pstmt1.setString(1, email);
+          
                   // 執行查詢操作
-                  rst = pstm.executeQuery();
-
-                  if (rst.next()) {
-                      userName = rst.getString("MemberName");
-                      userPhone = rst.getString("MemberPhone");
-                      userBirthday = rst.getString("BirthdayDate");
-                      userAddress = rst.getString("Address");
+                  rs1 = pstmt1.executeQuery();
+          
+                  if (rs1.next()) {
+                      userName = rs1.getString("MemberName");
+                      userPhone = rs1.getString("MemberPhone");
+                      userBirthday = rs1.getString("BirthdayDate");
+                      userAddress = rs1.getString("Address");
                   }
-
+          
                   // 關閉資料庫連接
-                  con.close();
+                  conn1.close();
               } catch (SQLException sExec) {
                   out.println("SQL 錯誤: " + sExec.toString());
-              } finally {
-                  if (rst != null) try { rst.close(); } catch (SQLException ignore) {}
-                  if (pstm != null) try { pstm.close(); } catch (SQLException ignore) {}
-                  if (con != null) try { con.close(); } catch (SQLException ignore) {}
               }
-          %>
-           <!-- 【會員註冊登入】 -->
+            %>
+            <!-- 會員註冊與登入按鈕 -->
             <button onclick="location.href='./memberPage.jsp'" type="button" class="btn btn-light" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
               <i class="fa fa-user" aria-hidden="true" style="font-size: 22px;margin-right: 5px;"></i>
               <%= userName %> 您好！
             </button>
-
-          <!-- 登出按鈕 -->
-            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
-                <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
-                登出
+ 
+            <!-- 登出按鈕 -->
+            <button onclick="location.href='./logout.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+              <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
+              登出
             </button>
-
+ 
             <!-- 購物車所需js檔 -->
             <script src="./javascript/h.js" charset="utf-8"></script>
-
+ 
           </div>
-
-        </div>
-        
+ 
+        </div>   
       </nav>
 
       <!-- 工具欄第二欄 -->
@@ -441,11 +448,11 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                   </div>
 
                   <!-- addtocart icon button -->
-                  <div class="addToCart_Btn">
+                  <!-- <div class="addToCart_Btn">
                     <button type="button" class="cart-icon-button" onclick="showAlert()">
                       <iconify-icon icon="iconoir:cart"></iconify-icon>
                     </button>
-                  </div>
+                  </div> -->
 
                 </div>
             </div>
@@ -528,11 +535,11 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                     </div>
 
                     <!-- addtocart icon button -->
-                    <div class="addToCart_Btn">
+                    <!-- <div class="addToCart_Btn">
                       <button type="button" class="cart-icon-button" onclick="showAlert()">
                         <iconify-icon icon="iconoir:cart"></iconify-icon>
                       </button>
-                    </div>
+                    </div> -->
 
                   </div>
                   
@@ -613,12 +620,12 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                       <input type="button" class="add" value="+"/>
                     </div>
 
-                    <!-- addtocart icon button -->
+                    <!-- addtocart icon button
                     <div class="addToCart_Btn">
                       <button type="button" class="cart-icon-button" onclick="showAlert()">
                         <iconify-icon icon="iconoir:cart"></iconify-icon>
                       </button>
-                    </div>
+                    </div> -->
 
                   </div>
                   

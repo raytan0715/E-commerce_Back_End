@@ -20,39 +20,53 @@ USE FinalProject;
 
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
-  `cartID` int NOT NULL AUTO_INCREMENT,
-  `MemberID` int NOT NULL,
-  `productID` int NOT NULL,
-  `quantity` int DEFAULT NULL,
-  PRIMARY KEY (`cartID`),
-  FOREIGN KEY (`MemberID`) REFERENCES `membership` (`MemberID`),
-  FOREIGN KEY (`productID`) REFERENCES `inventoryquantity` (`ProductID`)
+    `cartID` int NOT NULL AUTO_INCREMENT,
+    `MemberID` int NOT NULL,
+    `productID` int NOT NULL,
+    `quantity` int NOT NULL,
+    PRIMARY KEY (`cartID`),
+    FOREIGN KEY (`MemberID`) REFERENCES `membership` (`MemberID`),
+    FOREIGN KEY (`productID`) REFERENCES `inventoryquantity` (`ProductID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `cart` VALUES (1, 1, 2, 2), (2, 1, 1, 1), (3, 2, 3, 1), (4, 3, 10, 1);
+INSERT INTO `cart` VALUES 
+(1, 1, 2, 2),
+(2, 1, 1, 1),
+(3, 2, 3, 1),
+(4, 3, 10, 1);
+/*
+(1, 1, 2, 2, 'No Brand 經典炸醬拉麵135g克 X 5 X 1PC包', 'https://i.imgur.com/kfdfiVq.jpeg'),
+(2, 1, 1, 1, 'Nongshim 農心 韓國境內版 辛拉麵 5包', 'https://i.imgur.com/FuGLtVt.jpeg'), 
+(3, 2, 3, 1, 'OTTOGI 不倒翁 粗麵條版Q拉麵', 'https://i.imgur.com/jI7yLcE.png'), 
+(4, 3, 10, 1, '韓國LOTTE樂天 七星汽水210ml', 'https://i.imgur.com/myVSiPr.jpeg');
+*/
+
+-- 添加 status 欄位
+ALTER TABLE `cart` ADD COLUMN `status` VARCHAR(20) DEFAULT 'pending';
 
 -- 解鎖表
 UNLOCK TABLES;
+
 
 --
 -- Table structure for table `inventoryquantity`
 --
 
 DROP TABLE IF EXISTS `inventoryquantity`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `inventoryquantity` (
-  `ProductID` int NOT NULL,
-  `ProductType` varchar(10) NOT NULL,
-  `ProductName` varchar(45) NOT NULL,
-  `Price` int NOT NULL,
-  `Quantity` int NOT NULL,
-  `exp` varchar(10) NOT NULL,
-  `LngredientList` varchar(1000) NOT NULL,
-  `AllergyList` varchar(100) NOT NULL,
-  `ProductDetails` varchar(300) NOT NULL,
-  `Producturl` varchar(50),
-  PRIMARY KEY (`ProductID`)
+    `ProductID` int NOT NULL,
+    `ProductType` varchar(10) NOT NULL,
+    `ProductName` varchar(45) NOT NULL,
+    `Price` int NOT NULL,
+    `Quantity` int NOT NULL,
+    `exp` varchar(10) NOT NULL,
+    `LngredientList` varchar(1000) NOT NULL,
+    `AllergyList` varchar(100) NOT NULL,
+    `ProductDetails` varchar(300) NOT NULL,
+    `Producturl` varchar(50),
+    PRIMARY KEY (`ProductID`),
+    UNIQUE (`ProductName`),
+    UNIQUE (`Producturl`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -466,7 +480,6 @@ DROP TABLE IF EXISTS orderitems;#訂單
 /*!50503 SET character_set_client = utf8mb4*/;
 CREATE TABLE orderitems (
   `orderid`  int NOT NULL AUTO_INCREMENT,
-  `cart_orderid` int  NOT NULL ,
   `MemberID` int  NOT NULL,
   `ProductID` int NOT NULL,
   `quantity` int NOT NULL,
@@ -474,8 +487,10 @@ CREATE TABLE orderitems (
   `date` varchar(30) DEFAULT NULL,
   `totalprice` int NOT NULL,
   `remark` varchar(100) DEFAULT NULL,
+  `Producturl` varchar(50)NOT NULL ,
+  `ProductName` varchar(45) NOT NULL,
+
   PRIMARY KEY (`orderid`),
-  FOREIGN KEY (`cart_orderid`) REFERENCES cart (`cartID`),
   FOREIGN KEY (`ProductID`) REFERENCES inventoryquantity (`ProductID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client*/;

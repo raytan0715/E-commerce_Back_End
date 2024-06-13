@@ -1,64 +1,104 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.text.*" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+
 <%
-    // 獲取參數
-    String cartIDStr = request.getParameter("cartID");
-    String memberIDStr = request.getParameter("MemberID");
-    String productID = request.getParameter("productId");
-    String quantityStr = request.getParameter("quantity");
-    String priceStr = request.getParameter("productPrice");
-    String date = request.getParameter("date");
-    String totalpriceStr = request.getParameter("totalprice");
-    String remark = request.getParameter("remark");
+request.setCharacterEncoding("UTF-8");
 
-    // 檢查所有參數是否存在
-    if (cartIDStr == null || memberIDStr == null || productID == null || quantityStr == null || priceStr == null || date == null || totalpriceStr == null || remark == null) {
-        out.println("缺少必要的參數。請返回並重試。");
-    } else {
-        int cart_orderid = Integer.parseInt(cartIDStr);
+String remark = request.getParameter("remark");
+String memberIDStr = request.getParameter("MemberID");
+String dateStr = request.getParameter("date");
+
+if (memberIDStr == null || memberIDStr.isEmpty()) {
+    out.println("<p>所有字段都必須填寫並且不能為空</p>");
+} else {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    PreparedStatement orderPstmt = null;
+    PreparedStatement deletePstmt = null;
+    ResultSet rs = null;
+
+    try {
         int MemberID = Integer.parseInt(memberIDStr);
-        int quantity = Integer.parseInt(quantityStr);
-        int price = Integer.parseInt(priceStr);
-        int totalprice = Integer.parseInt(totalpriceStr);
 
-        // Output the values to the page
-        out.println("<h3>Received Values:</h3>");
-        out.println("<p>cart_orderid: " + cart_orderid + "</p>");
-        out.println("<p>MemberID: " + MemberID + "</p>");
-        out.println("<p>ProductID: " + productID + "</p>");
-        out.println("<p>quantity: " + quantity + "</p>");
-        out.println("<p>price: " + price + "</p>");
-        out.println("<p>date: " + date + "</p>");
-        out.println("<p>totalprice: " + totalprice + "</p>");
-        out.println("<p>remark: " + remark + "</p>");
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
+        conn.setAutoCommit(false); // 開始交易
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
+        // 獲取購物車商品並插入訂單項目表
+        String cartSql = "SELECT c.cartID, c.productID, c.quantity, i.Price, i.ProductName, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
+        pstmt = conn.prepareStatement(cartSql);
+        pstmt.setInt(1, MemberID);
+        rs = pstmt.executeQuery();
 
+        int totalPrice = 0;
+        while (rs.next()) {
+            int cartID = rs.getInt("cartID");
+            int productId = rs.getInt("productID");
+            int quantity = rs.getInt("quantity");
+            int price = rs.getInt("Price");
+            String productName = rs.getString("ProductName");
+            String productUrl = rs.getString("Producturl");
+
+            // 計算總價格
+            totalPrice += price * quantity;
+
+            // 插入訂單項目表
+            String orderItemSql = "INSERT INTO orderitems (MemberID, ProductID, quantity, price, date, totalprice, remark, Producturl, ProductName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            orderPstmt = conn.prepareStatement(orderItemSql);
+            orderPstmt.setInt(1, MemberID);
+            orderPstmt.setInt(2, productId);
+            orderPstmt.setInt(3, quantity);
+            orderPstmt.setInt(4, price);
+            orderPstmt.setString(5, dateStr);
+            orderPstmt.setInt(6, price * quantity);
+            orderPstmt.setString(7, remark);
+            orderPstmt.setString(8, productUrl);
+            orderPstmt.setString(9, productName);
+            orderPstmt.executeUpdate();
+        }
+
+        // 刪除購物車中的項目
+        String deleteCartSql = "DELETE FROM cart WHERE MemberID = ?";
+        deletePstmt = conn.prepareStatement(deleteCartSql);
+        deletePstmt.setInt(1, MemberID);
+        deletePstmt.executeUpdate();
+
+        conn.commit(); // 提交交易
+
+        out.println("<p>訂單已成功提交並刪除購物車中的相關項目</p>");
+        %>
+        <script>
+            alert("謝謝購買");
+            window.location.href = "./memberPage.jsp";
+        </script>
+        <%
+    } catch (NumberFormatException e) {
+        if (conn != null) {
+            conn.rollback(); // 回滾交易
+        }
+        out.println("<p>請確保所有字段都是有效的數字格式</p>");
+    } catch (SQLException e) {
+        if (conn != null) {
+            conn.rollback(); // 回滾交易
+        }
+        out.println("<p>資料庫錯誤: " + e.getMessage() + "</p>");
+    } catch (Exception e) {
+        if (conn != null) {
+            conn.rollback(); // 回滾交易
+        }
+        out.println("<p>提交訂單時發生錯誤: " + e.getMessage() + "</p>");
+    } finally {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
-            conn = DriverManager.getConnection(url, "root", "Ray_930715");
-
-            String sql = "INSERT INTO orderitems (cart_orderid, MemberID, ProductID, quantity, price, date, totalprice, remark) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, cart_orderid);
-            pstmt.setInt(2, MemberID);
-            pstmt.setString(3, productID);
-            pstmt.setInt(4, quantity);
-            pstmt.setInt(5, price);
-            pstmt.setString(6, date);
-            pstmt.setInt(7, totalprice);
-            pstmt.setString(8, remark);
-            pstmt.executeUpdate();
-
-            out.println("<p>Order inserted successfully.</p>");
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            out.println("<p>MySQL 錯誤: " + e.getMessage() + "</p>");
-        } finally {
-            if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-            if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (orderPstmt != null) orderPstmt.close();
+            if (deletePstmt != null) deletePstmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            out.println("<p>關閉資源時發生錯誤: " + e.getMessage() + "</p>");
         }
     }
+}
 %>

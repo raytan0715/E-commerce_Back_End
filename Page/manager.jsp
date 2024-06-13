@@ -41,13 +41,55 @@
             }
         }
     }
+
+    // 儲存訂單資料
+    Map<String, List<Map<String, String>>> orders = new HashMap<>();
+
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        conn = getConnection();
+        String sql = "SELECT orderid, date, ProductID, ProductName, quantity, price, Producturl FROM orderitems ORDER BY date";
+        pstmt = conn.prepareStatement(sql);
+        rs = pstmt.executeQuery();
+
+        while (rs.next()) {
+            String orderID = rs.getString("orderid");
+            String orderDate = rs.getString("date");
+            String productID = rs.getString("ProductID");
+            String productName = rs.getString("ProductName");
+            int quantity = rs.getInt("quantity");
+            int price = rs.getInt("price");
+            String productImage = rs.getString("Producturl");
+
+            // 使用 orderDate 作為 key，將相同日期的訂單分組
+            if (!orders.containsKey(orderDate)) {
+                orders.put(orderDate, new ArrayList<>());
+            }
+            Map<String, String> orderDetails = new HashMap<>();
+            orderDetails.put("orderID", orderID);
+            orderDetails.put("productID", productID);
+            orderDetails.put("productName", productName);
+            orderDetails.put("quantity", String.valueOf(quantity));
+            orderDetails.put("price", String.valueOf(price));
+            orderDetails.put("productImage", productImage);
+            orders.get(orderDate).add(orderDetails);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+        if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
+        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+    }
 %>
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
 
-  <!-- 此為登入後的介面 -->
   <head>
-    <script src="./assets/js/color-modes.js"></script>
+    <script src="../assets/js/color-modes.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -92,11 +134,11 @@
     <link rel="stylesheet" href="./stylesheets/BuyCart.css">
 
      <!-- 會員介面樣式檔 -->
-     <link rel="stylesheet" href="./stylesheets/manager.css">
-     <style>
+    <link rel="stylesheet" href="./stylesheets/manager.css">
+    <style>
         .r-table input[type='number'] {
-            width: 80px; /* 设置宽度 */
-            height: 25px; /* 设置高度 */
+          width: 80px; /* 设置宽度 */
+          height: 25px; /* 设置高度 */
         }
     </style>
   </head>
@@ -121,10 +163,8 @@
             </div>
           </div>
           
-
-            <!-- 搜尋欄 -->
+          <!-- 搜尋欄 -->
             <div class="col-sm searchBarCol">
-
               <form class="d-flex" action="./SearchProduct_LoggedIn.jsp" method="get" style="width:750px;">
                 <input id="searchBar" class="form-control me-2 searchBar" name="keyword" type="search" placeholder="🔍 搜尋" aria-label="Search">
             
@@ -146,15 +186,15 @@
           <div class="col-sm BuyCart_and_Account" style="padding-left: 20px;">
 
             <!-- 【會員註冊登入】 -->
-            <!-- 【會員註冊登入】 -->
+            
             <%
             // 獲取當前用戶的電子郵件
             String email = (String) session.getAttribute("userEmail");
 
             // 設置資料庫連接相關變數
-            Connection conn = null;
-            PreparedStatement pstmt = null;
-            ResultSet rs = null;
+            conn = null;
+            pstmt = null;
+            rs = null;
 
             String managerName = ""; // 初始化管理員名稱
 
@@ -268,7 +308,7 @@
 
                 <div class="list">
                     <label for="modify" class="btn btn-secondary modify">
-                        <span class="title">訂單管理</span>
+                        <span class="title">訂單瀏覽</span>
                     </label>
                     <label for="record" class="btn btn-secondary record">
                         <span class="title">商品管理</span>
@@ -293,45 +333,47 @@
                         <!-- 字區域 -->
                         <div class="text-content">
 
-                            <div class="modify text" style="background: none;">
-                              <!-- 添加订单浏览代码 -->
-                              <%
-                                  Connection con = null;
-                                  PreparedStatement orderStmt = null;
-                                  ResultSet orderRs = null;
-
-                                  try {
-                                      con = getConnection();
-                                      String sql = "SELECT * FROM `order`";
-                                      orderStmt = con.prepareStatement(sql);
-                                      orderRs = orderStmt.executeQuery();
-
-                                      out.println("<div class='order-container'>");
-                                      while (orderRs.next()) {
-                                          out.println("<div class='order-header'><label>訂單編號: " + orderRs.getInt("orderId") + "</label><label>購買日期: " + orderRs.getDate("orderDate") + "</label><label class='order-status'>未出貨</label></div>");
-                                          out.println("<table class='order-table'><thead><tr><th>商品</th><th>數量</th><th>金額</th></tr></thead><tbody>");
-                                          out.println("<tr><td><img src='./picture/material/productPic/instant noodles/Instant_noodles_1.jpg' alt='商品名稱' width='50'>" + orderRs.getString("productName") + "</td><td>x " + orderRs.getInt("quantity") + "</td><td>$" + orderRs.getInt("price") + "</td></tr>");
-                                          out.println("</tbody></table><div class='order-footer'>總金額: $" + orderRs.getInt("totalPrice") + "</div>");
-                                      }
-                                      out.println("</div>");
-                                  } catch (SQLException | ClassNotFoundException e) {
-                                      e.printStackTrace();
-                                  } finally {
-                                      try {
-                                          if (orderRs != null) orderRs.close();
-                                          if (orderStmt != null) orderStmt.close();
-                                          if (con != null) con.close();
-                                      } catch (SQLException e) {
-                                          e.printStackTrace();
-                                      }
-                                  }
-                              %>
-                            </div>
+                          <div class="modify text" style="background: none;">
+                          <% for (String orderDate : orders.keySet()) { %>
+                              <div class="order-container">
+                                  <div class="order-header">
+                                      <label>訂購日期: <%= orderDate %></label>
+                                  </div>
+                                  <table class="order-table">
+                                      <thead>
+                                          <tr>
+                                              <th>商品</th>
+                                              <th>數量</th>
+                                              <th>金額</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <% int totalPrice = 0;
+                                            for (Map<String, String> order : orders.get(orderDate)) {
+                                                int price = Integer.parseInt(order.get("price"));
+                                                int quantity = Integer.parseInt(order.get("quantity"));
+                                                totalPrice += price * quantity;
+                                          %>
+                                          <tr>
+                                              <td><img src="<%= order.get("productImage") %>" alt="<%= order.get("productName") %>" width="50"><%= order.get("productName") %></td>
+                                              <td>x <%= order.get("quantity") %></td>
+                                              <td>$<%= price %></td>
+                                          </tr>
+                                          <% } %>
+                                      </tbody>
+                                  </table>
+                                  <div class="order-footer">
+                                      總金額: $<%= totalPrice %>
+                                  </div>
+                              </div>
+                          <% } %>
+                          </div>
 
                             
                             <div class="record text" style="color: #6e573a;">
                               <!-- 添加商品编辑代码 -->
                               <%
+                                  Connection con = null;
                                   con = null;
                                   PreparedStatement inventoryStmt = null;
                                   ResultSet inventoryRs = null;
@@ -391,7 +433,6 @@
       </a>
     </div>
       
-
 
     <!-- 頁尾(含聯絡資訊) 
     ================================================== -->

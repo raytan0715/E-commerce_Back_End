@@ -2,10 +2,19 @@
 <%@ page import="java.sql.*" %>
 <%
     String productId = request.getParameter("productId");
-    int productPrice = Integer.parseInt(request.getParameter("productPrice"));
-    int quantity = Integer.parseInt(request.getParameter("quantity"));
-    int MemberID = Integer.parseInt(request.getParameter("MemberID"));
-    String redirect = request.getParameter("redirect"); // 獲取重定向參數
+    String productPriceStr = request.getParameter("productPrice");
+    String quantityStr = request.getParameter("quantity");
+    String memberIdStr = request.getParameter("MemberID");
+    String redirect = request.getParameter("redirect");
+
+    if (productId == null || productPriceStr == null || quantityStr == null || memberIdStr == null) {
+        out.println("缺少必要的參數");
+        return;
+    }
+
+    int productPrice = Integer.parseInt(productPriceStr);
+    int quantity = Integer.parseInt(quantityStr);
+    int MemberID = Integer.parseInt(memberIdStr);
 
     Connection conn = null;
     PreparedStatement pstmt = null;
@@ -20,6 +29,7 @@
         pstmt.setInt(1, MemberID);
         pstmt.setString(2, productId);
         pstmt.setInt(3, quantity);
+
         pstmt.executeUpdate();
 %>
         <script>

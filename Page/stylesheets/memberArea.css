@@ -251,13 +251,14 @@ body{
   width: 72%;
   border-collapse: collapse;
 }
-.r-table th{
+.r-table th .dis{
   font-size: 18px;
   letter-spacing: 1px;
+  margin-right: 50px;
   padding-bottom: 10px;
   text-align: left;
 }
-.r-table td{
+.r-table td .dis{
   font-size: 16px;
   letter-spacing: 1px;
   padding: 5px 0px;
