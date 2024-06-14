@@ -436,7 +436,8 @@
                 
             </div>
         </div>
-    </div>
+    </div>     
+    <div class="separator"></div> <!-- 分隔線 -->
 
     <!-- 回到頂部按鈕 -->
     <div class="slider">

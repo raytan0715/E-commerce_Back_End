@@ -191,7 +191,17 @@
                         Class.forName("com.mysql.cj.jdbc.Driver");
                         ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC", "root", "Ray_930715");
                 
-                        Integer memberID = (Integer) session.getAttribute("MemberID");
+                        Object memberIDObj = session.getAttribute("MemberID");
+                        Integer memberID = null;
+                
+                        if (memberIDObj != null) {
+                            if (memberIDObj instanceof String) {
+                                memberID = Integer.parseInt((String) memberIDObj);
+                            } else if (memberIDObj instanceof Integer) {
+                                memberID = (Integer) memberIDObj;
+                            }
+                        }
+                
                         if (memberID != null) {
                             String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
                             ProductPstmt = ProductConn.prepareStatement(sql);
@@ -257,6 +267,7 @@
                         if (ProductConn != null) try { ProductConn.close(); } catch (SQLException ignore) {}
                     }
                     %>
+
 
                         <!-- 購買數量增減控制 -->
                         <script>

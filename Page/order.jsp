@@ -67,7 +67,6 @@ if (memberIDStr == null || memberIDStr.isEmpty()) {
 
         conn.commit(); // 提交交易
 
-        out.println("<p>訂單已成功提交並刪除購物車中的相關項目</p>");
         %>
         <script>
             alert("謝謝購買");
