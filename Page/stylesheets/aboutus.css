@@ -2,578 +2,593 @@
 -------------------------------------------------- */
 
 *{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-  }
-  
-  body {
-    margin: 0px;
-    font-family: "Noto Sans TC", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    /*background-color: #d28718;*/
-    background-color: #fff;
-    /*padding-bottom: 3rem;*/
-    /*color: rgb(var(--bs-tertiary-color-rgb));*/
-  }
-  
-  .separator{ /* 基本分隔線設定 */
-    border-top: 1px solid #7b7b7b; /* 黑色分隔線，1px 寬度 */
-    width: 1000px; /* 線長度 */
-    margin: 30px auto;  /* 與其他元素間距增大，中間對齊 */
-    /*box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* 添加陰影效果 */
-  
-  }
-  html {
-    scroll-behavior: smooth;
-  }
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 
-  /* 滑動至頂部按鈕 
-  ----------------------- */
+body {
+  margin: 0px;
+  font-family: "Noto Sans TC", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  /*background-color: #d28718;*/
+  background-color: #fff;
+  /*padding-bottom: 3rem;*/
+  /*color: rgb(var(--bs-tertiary-color-rgb));*/
+}
+
+.separator{ /* 基本分隔線設定 */
+  border-top: 1px solid #7b7b7b; /* 黑色分隔線，1px 寬度 */
+  width: 1000px; /* 線長度 */
+  margin: 30px auto;  /* 與其他元素間距增大，中間對齊 */
+  /*box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* 添加陰影效果 */
+
+}
+html {
+  scroll-behavior: smooth;
+}
+
+/* 滑動至頂部按鈕 
+----------------------- */
 .slider {
-  position: fixed; /* 固定位置 */
-  bottom: 40px; /* 距離底部 40px */
-  right: 27px; /* 距離右邊 27px */
-  width: 50px;
-  height: 50px;
-  background: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* 保證在最上層 */
+position: fixed; /* 固定位置 */
+bottom: 40px; /* 距離底部 40px */
+right: 27px; /* 距離右邊 27px */
+width: 50px;
+height: 50px;
+background: none;
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000; /* 保證在最上層 */
 }
 
 .top {
-  width: 42px;
-  height: 42px;
-  color: rgb(172, 186, 198);
-  transition: all 0.3s ease;
-  font-weight: 600;
-  font-size: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+width: 42px;
+height: 42px;
+color: rgb(172, 186, 198);
+transition: all 0.3s ease;
+font-weight: 600;
+font-size: 40px;
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 .top:hover {
-  font-size: 60px;
-  bottom: 35px; 
-  right: 22px;
-  width: 70px;
-  height: 70px;
-  transition: 0.3s;
-  color: #333333;
+font-size: 60px;
+bottom: 35px; 
+right: 22px;
+width: 70px;
+height: 70px;
+transition: 0.3s;
+color: #333333;
 }
-  
-  /* 上方欄位 (工具欄)
-  -------------------------------------------------- */
-  .navbar-expand-lg{
-    background-color: #cec0b4;
-    height:auto;
-    padding: 0px;
-    border: 0px;
-    margin: 0px;
-  }
-  .navOneRow{
-    width: 100%;
-    height:100%;
-    margin: 0px;
-  }
+
+/* 上方欄位 (工具欄)
+-------------------------------------------------- */
+.navbar-expand-lg{
+  background-color: #cec0b4;
+  height:auto;
+  padding: 0px;
+  border: 0px;
+  margin: 0px;
+}
+.navOneRow{
+  width: 100%;
+  height:100%;
+  margin: 0px;
+}
 
 
-  .navLogoCol{ /* nav logo 容器 */
-    /*background-color: aqua;*/
+.navLogoCol{ /* nav logo 容器 */
+  /*background-color: aqua;*/
 
-  }
-  .navLogo{
-    display: inline-block;
-    position: relative;
-    cursor: default;
-    width: 100%;
-    /*background-color: #535758;*/
-    margin-left: 210px; /* 將左側邊距自動設置為最大化，使圖像水平向右對齊 */
-    width: 115px; /*設定和圖片寬度差不多寬*/
-  }
-  .navLogo img {
-    width: 105px;
-    height: auto; /* 自動計算高度，保持圖片比例 */
-    display: block; /* 設定為區塊元素 */
-    /*padding-right: 25px;*/
-    /*background-color: #796146;*/
-  }
-  
+}
+.navLogo{
+  display: inline-block;
+  position: relative;
+  cursor: default;
+  width: 100%;
+  /*background-color: #535758;*/
+  margin-left: 210px; /* 將左側邊距自動設置為最大化，使圖像水平向右對齊 */
+  width: 115px; /*設定和圖片寬度差不多寬*/
+}
+.navLogo img {
+  width: 105px;
+  height: auto; /* 自動計算高度，保持圖片比例 */
+  display: block; /* 設定為區塊元素 */
+  /*padding-right: 25px;*/
+  /*background-color: #796146;*/
+}
 
-  .searchBarCol{ /* searchBar 搜尋欄容器 */
-    width: auto; /*搜尋欄位容器隨搜尋欄的寬度而自動改變*/
-    display: flex;
-    align-items: flex-end;
-    padding-bottom: 20px;
-    /*background-color: brown;*/
-  }
+
+.searchBarCol{ /* searchBar 搜尋欄容器 */
+  width: auto; /*搜尋欄位容器隨搜尋欄的寬度而自動改變*/
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 20px;
+  /*background-color: brown;*/
+}
+
+.searchBar{
+  background-color: #ffffff;
+}
+
+.searchBar::placeholder { /*更改搜尋本字的顏色*/
+  color: #8b7e71; 
+  font-weight: bold;
+
+}
+
+.searchBar.focused {
+  background-color: #ffffff; /* 修改為您想要的背景顏色 */
+  color: #8b7e71; /* 修改為您想要的文字顏色 */
+  font-weight: bold;
   
-  .searchBar{
-    background-color: #ffffff;
-  }
+}
+
+.BuyCart_and_Account{
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 20px;
+}
+
+/* 工具列第二欄下拉式選單*/
+
+.navCol-2  {
+  list-style: none;
+  margin: 0px;
+  border: 0px;
+  background-color: #f7f7f7;
+  width: 100%;
+  margin-left: 0px;
   
-  .searchBar::placeholder { /*更改搜尋本字的顏色*/
-    color: #8b7e71; 
-    font-weight: bold;
+}
+
+
+.dropdown-menu{
+  background: none;
+  /*border: 1px solid #7b6b5e; /* 添加邊框 */
+  border: 0px;
+}
+
+.nav-link:hover{
+  background-color: #ece3d5;
+}
+
+
+.dropdown-item{
+  background-color: #eacfa8;
+  padding: 5px;
+  color:#3f3f3f;
+  text-align:justify;
+  font-weight: bold;
+  border: 1px solid #000; /* 添加邊框 */
   
-  }
-  
-  .searchBar.focused {
-    background-color: #ffffff; /* 修改為您想要的背景顏色 */
-    color: #8b7e71; /* 修改為您想要的文字顏色 */
-    font-weight: bold;
-    
-  }
-  
-  .BuyCart_and_Account{
-    display: flex;
-    align-items: flex-end;
-    padding-bottom: 20px;
-  }
-  
-  /* 工具列第二欄下拉式選單*/
-  
-  .navCol-2  {
-    list-style: none;
-    margin: 0px;
-    border: 0px;
-    background-color: #f7f7f7;
-    width: 100%;
-    margin-left: 0px;
-    
-  }
-  
-  
-  .dropdown-menu{
-    background: none;
-    /*border: 1px solid #7b6b5e; /* 添加邊框 */
-    border: 0px;
-  }
-  
-  .nav-link:hover{
-    background-color: #ece3d5;
-  }
-  
-  
-  .dropdown-item{
-    background-color: #eacfa8;
-    padding: 5px;
-    color:#3f3f3f;
-    text-align:justify;
-    font-weight: bold;
-    border: 1px solid #000; /* 添加邊框 */
-    
-  }
-  .dropdown-item:hover{
-    background-color: #fef6ea;
-    color: #3f3f3f;
-  }
-  
+}
+.dropdown-item:hover{
+  background-color: #fef6ea;
+  color: #3f3f3f;
+}
+
 /* ----- about us part ----------------------------- */
 .aboutSect{
-    margin: 50px 100px 120px 100px;
+  margin: 50px 100px 120px 100px;
 
 }
 /* 品牌理念 */
 .brandCont{
-    display: flex;
-    margin: 20px 60px 60px 60px;
-    flex-direction: row;
-    align-items: center; 
-    justify-content: center;
+  display: flex;
+  margin: 20px 60px 60px 60px;
+  flex-direction: row;
+  align-items: center; 
+  justify-content: center;
 }
 
 .titleButtonSect{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 3px;
 
 }
 
 .titleButton1{
-  background-color: #cda574;
-  width: 220px;
-  border-radius: 10px;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
-  margin: 50px 60px 30px 60px;
-  display: flex;
+background-color: #cda574;
+width: 220px;
+border-radius: 10px;
+height: 50px;
+align-items: center;
+justify-content: center;
+margin: 50px 60px 30px 60px;
+display: flex;
 }
 
 .titleButton1 h4{
-  text-align: center;
-  font-weight: 1000;
+text-align: center;
+font-weight: 1000;
 }
-  
+
 
 
 /* explanation 1 */
 .brandImgContlogo{
-    display: flex;
-    padding: 20px;
-    width: 300px;
-    height: 300px;
-    border-radius: 8px 0 0 8px;
-    align-items: center;
-    justify-content: center;
-    background-color: #61432ef1;
+  display: flex;
+  padding: 20px;
+  width: 300px;
+  height: 300px;
+  border-radius: 8px 0 0 8px;
+  align-items: center;
+  justify-content: center;
+  background-color: #61432ef1;
 }
 
 .brandImgContlogo img{
-    width: 220px;
-    justify-content: center;
-    align-items: center;
-    margin-top: -10px;
-    padding: 10px;
-    height: 220px;
+  width: 220px;
+  justify-content: center;
+  align-items: center;
+  margin-top: -10px;
+  padding: 10px;
+  height: 220px;
 }
-  
+
 .brandDesceven{
-    width: 400px;
-    text-align: left;
-    height: 220px;
-    border-radius: 0 8px 8px 0;
-    background-color: #b49e8b84;
-    color: #462804;
+  width: 400px;
+  text-align: left;
+  height: 220px;
+  border-radius: 0 8px 8px 0;
+  background-color: #b49e8b84;
+  color: #462804;
 }
 
 .brandDesceven h6{
-    margin: 20px 20px 10px 55px ;
-    line-height: 35px;
-    letter-spacing: 2px;
+  margin: 20px 20px 10px 55px ;
+  line-height: 35px;
+  letter-spacing: 2px;
 }
 
 
 /* explanation 2 */
 .brandDescodd{
-    width: 360px;
-    text-align: right;
-    height: auto;
-    border-radius: 8px 0 0 8px;
-    background-color: #b49e8b84;
-    color: #462804;
+  width: 360px;
+  text-align: right;
+  height: auto;
+  border-radius: 8px 0 0 8px;
+  background-color: #b49e8b84;
+  color: #462804;
 }
 
 
 .brandDescodd h6{
-    margin: 20px 20px 10px 15px ;
-    line-height: 35px;
-    letter-spacing: 2px;
+  margin: 20px 20px 10px 15px ;
+  line-height: 35px;
+  letter-spacing: 2px;
 }
 
 .brandImgCont{
-    position: relative;
-    width: 340px;
-    height: auto;
-    align-items: center; 
-    border-radius: 8px 0 0 8px;
-    justify-content: center;
+  position: relative;
+  width: 340px;
+  height: auto;
+  align-items: center; 
+  border-radius: 8px 0 0 8px;
+  justify-content: center;
 }
 
 .brandImgCont img{
-    width: 340px;
-    height: 280px;
-    display: block;
-    border-radius: 0 10px 10px 0;
+  width: 340px;
+  height: 280px;
+  display: block;
+  border-radius: 0 10px 10px 0;
 }
 
 .brandDescodd h3{
-    margin: 0;
-    padding: 10px;
+  margin: 0;
+  padding: 10px;
 }
 
 .text-overlay {
-    position: absolute; /* Position the text overlay absolutely within the container */
- /* Align the overlay to the left */
-    width: 340px; /* Make the overlay take the full width of the container */
-    height: 280px;
-    background-color: rgba(90, 73, 61, 0.342); /* Background color with transparency */
-    color: white; /* Text color */
-    padding: 15px; /* Padding around the text */
-    box-sizing: border-box; /* Include padding in width and height calculations */
-    text-align: center; /* Center the text */
-    justify-content: center;
-    display: flex;
-    border-radius: 0 10px 10px 0;
+  position: absolute; /* Position the text overlay absolutely within the container */
+/* Align the overlay to the left */
+  width: 340px; /* Make the overlay take the full width of the container */
+  height: 280px;
+  background-color: rgba(90, 73, 61, 0.342); /* Background color with transparency */
+  color: white; /* Text color */
+  padding: 15px; /* Padding around the text */
+  box-sizing: border-box; /* Include padding in width and height calculations */
+  text-align: center; /* Center the text */
+  justify-content: center;
+  display: flex;
+  border-radius: 0 10px 10px 0;
 
 }
 
 .text-overlay h3{
-    text-align: center;
-    justify-content: center;
-    display: flex;
-    margin: 90px 30px 50px 30px;
-    line-height: 40px;
-    font-weight: bold;
-    letter-spacing: 3px;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  margin: 90px 30px 50px 30px;
+  line-height: 40px;
+  font-weight: bold;
+  letter-spacing: 3px;
 }
 
 /* explanation 3 */
 .brandDescEven2{
-    width: 360px;
-    text-align: left;
-    font-weight: bold;
-    height: auto;
-    font-size: 60px;
-    border-radius:0  8px  8px 0;
-    background-color: #b49e8b84;
-    color: #462804;
+  width: 360px;
+  text-align: left;
+  font-weight: bold;
+  height: auto;
+  font-size: 60px;
+  border-radius:0  8px  8px 0;
+  background-color: #b49e8b84;
+  color: #462804;
 }
 
 
 .brandDescEven2 h6{
-    margin: 20px 20px 10px 15px ;
-    line-height: 35px;
-    letter-spacing: 2px;
+  margin: 20px 20px 10px 15px ;
+  line-height: 35px;
+  letter-spacing: 2px;
 }
 
 .brandImgCont3{
-    position: relative;
-    width: 340px;
-    height: auto;
-    align-items: center; 
-    border-radius:  0 8px 8px 0;
-    justify-content: center;
+  position: relative;
+  width: 340px;
+  height: auto;
+  align-items: center; 
+  border-radius:  0 8px 8px 0;
+  justify-content: center;
 }
 
 .brandImgCont3 img{
-    width: 340px;
-    height: 280px;
-    display: block;
-    border-radius: 10px 0  0 10px;
+  width: 340px;
+  height: 280px;
+  display: block;
+  border-radius: 10px 0  0 10px;
 }
 
 .brandDescEven2 h3{
-    margin: 0;
-    padding: 10px;
+  margin: 0;
+  padding: 10px;
 }
 
 .text-overlayodd {
-    position: absolute; /* Position the text overlay absolutely within the container */
- /* Align the overlay to the left */
-    width: 340px; /* Make the overlay take the full width of the container */
-    height: 280px;
-    background-color: rgba(90, 73, 61, 0.342); /* Background color with transparency */
-    color: white; /* Text color */
-    padding: 15px; /* Padding around the text */
-    box-sizing: border-box; /* Include padding in width and height calculations */
-    text-align: center; /* Center the text */
-    justify-content: center;
-    display: flex;
-    border-radius: 10px 0  0 10px;
+  position: absolute; /* Position the text overlay absolutely within the container */
+/* Align the overlay to the left */
+  width: 340px; /* Make the overlay take the full width of the container */
+  height: 280px;
+  background-color: rgba(90, 73, 61, 0.342); /* Background color with transparency */
+  color: white; /* Text color */
+  padding: 15px; /* Padding around the text */
+  box-sizing: border-box; /* Include padding in width and height calculations */
+  text-align: center; /* Center the text */
+  justify-content: center;
+  display: flex;
+  border-radius: 10px 0  0 10px;
 
 }
 
 .text-overlayodd h3{
-    text-align: center;
-    justify-content: center;
-    display: flex;
-    font-weight: bold;
-    margin: 90px 30px 50px 30px;
-    line-height: 40px;
-    letter-spacing: 3px;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  font-weight: bold;
+  margin: 90px 30px 50px 30px;
+  line-height: 40px;
+  letter-spacing: 3px;
 }
 
 
-  /* Footers 頁尾(含聯絡資訊) 
-  -------------------------------------------------- */
+/* Footers 頁尾(含聯絡資訊) 
+-------------------------------------------------- */
 
-  .separator_Footer{ /* 基本分隔線設定 */
-  
-    border-top: 1px solid #7b7b7b; /* 黑色分隔線，1px 寬度 */
-    width: 1300px; /* 線長度 */
-    margin: 30px auto;  /* 與其他元素間距增大，中間對齊 */
-    /*box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* 添加陰影效果 */
-  
-  }
-  
+.separator_Footer{ /* 基本分隔線設定 */
 
-  /* Member Introduction -------- */
-  #MemberIntro.aboutSect{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-direction: row;
-  }
-
-
-  
-  .titleButton h4{
-    text-align: center;
-  }
-
-
-  /* ------------ Member card ------------ */
-  .titleButton{
-    background-color: #cda574;
-    width: 220px;
-    border-radius: 10px;
-    height: 50px;
-    margin: 50px 60px 30px 60px;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  .titleButton h4{
-    font-weight:1000;
-  }
-
-.cardBoxCont{
-  display: flex;
-  justify-content: space-between;
-  width: 85%;
-  height: 100%;
-  margin-top: 30px;
-  padding-top: 10px;
-  margin: 0 90px;
-  margin-bottom: 150px ;
+  border-top: 1px solid #7b7b7b; /* 黑色分隔線，1px 寬度 */
+  width: 1300px; /* 線長度 */
+  margin: 30px auto;  /* 與其他元素間距增大，中間對齊 */
+  /*box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); /* 添加陰影效果 */
 
 }
 
-  .memberCardCont{
-    width: 400px;
-    height: 500px;
-    margin: 0 40px;
-    perspective: 1000px;
-  }
 
-  .card_inner{
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.8s;
-  }
-
-  .front_side, .back_side{
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    position: absolute;
-    border-radius: 10px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .front_side img{
-    margin-top: -50px;
-    width: 320px;
-    height: 380px;
-    padding: 20px;
-    object-fit: cover;
-    border-radius:25px; 
-    margin-bottom: 30px;
-
-  }
-
-  .front_side{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: #b49e8b36;
-    color: #462804;
-    width: 100%;
-    padding-top: 5px;
-    height: 600px;
-    border-radius: 10px;
-    z-index: 2;    
-  }
-.cardName{
+/* Member Introduction -------- */
+#MemberIntro.aboutSect{
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+
+
+.titleButton h4{
+  text-align: center;
+}
+
+
+/* ------------ Member card ------------ */
+.titleButton{
+  background-color: #cda574;
+  width: 220px;
+  border-radius: 10px;
+  height: 50px;
+  margin: 50px 60px 30px 60px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.titleButton h4{
+  font-weight:1000;
+}
+
+.cardBoxCont{
+display: flex;
+justify-content: space-between;
+width: 85%;
+height: 100%;
+margin-top: 30px;
+padding-top: 10px;
+margin: 0 90px;
+margin-bottom: 150px ;
+
+}
+
+.memberCardCont{
+  width: 400px;
+  height: 500px;
+  margin: 0 40px;
+  perspective: 1000px;
+}
+
+.card_inner{
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+}
+
+.front_side, .back_side{
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.front_side img{
+  margin-top: -50px;
+  width: 320px;
+  height: 380px;
+  padding: 20px;
+  object-fit: cover;
+  border-radius:25px; 
+  margin-bottom: 30px;
+
+}
+
+.front_side{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #b49e8b36;
+  color: #462804;
+  width: 100%;
+  padding-top: 5px;
+  height: 600px;
+  border-radius: 10px;
+  z-index: 2;    
+}
+.cardName{
+display: flex;
+flex-wrap: wrap;
+flex-direction: column;
+align-items: center;
+justify-content: center;
 
 }
 
 .front_side p{
-  letter-spacing: 5px;
-  font-size: 25px;
+letter-spacing: 5px;
+font-size: 25px;
+color: #462804;
+height: 10px;
+margin-top: 0;
+margin-bottom: 10px;
+text-align: center;
+}
+
+.cardName h1{
+  margin-top: -70px;
+  font-weight: bold;
   color: #462804;
-  height: 10px;
-  margin-top: 0;
-  margin-bottom: 10px;
   text-align: center;
 }
 
-  .cardName h1{
-    margin-top: -70px;
-    font-weight: bold;
-    color: #462804;
-    text-align: center;
-  }
+.cardName h3{
+  color: #727271;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-align: center;
+}
 
-  .cardName h3{
-    color: #727271;
-    font-size: 18px;
-    letter-spacing: 1px;
-    text-align: center;
-  }
+.memberCardCont:hover .card_inner{
+  transform: rotateY(-180deg);
+}
 
-  .memberCardCont:hover .card_inner{
-    transform: rotateY(-180deg);
-  }
+.back_side{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 15px;
+  text-align: center;
+  width: 100%;
+  height: 600px;
+  /* background-color: #7b7b7b; */
+  transform: rotateY(180deg);
+  background-color: #b1adaa4f;
 
-  .back_side{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 15px;
-    text-align: center;
-    width: 100%;
-    height: 600px;
-    /* background-color: #7b7b7b; */
-    transform: rotateY(180deg);
-    background-color: #b1adaa4f;
+}
 
-  }
+.back_side h2{
+  font-size: 40px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #462804;
+}
 
-  .back_side h2{
-    font-size: 40px;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    text-align: center;
-    color: #462804;
-  }
+.back_side p{
+  font-size: 18px;
+  margin-top: -10px;
+  text-align: center;
+  margin-bottom: 5px;
+  color: #462804;
+  padding-left: 20px;
+  padding-right: 20px;
 
-  .back_side p{
-    font-size: 18px;
-    margin-top: -10px;
-    text-align: center;
-    margin-bottom: 5px;
-    color: #462804;
-    padding-left: 20px;
-    padding-right: 20px;
+}
 
-  }
-
-  .social-icon a{
-    display: inline-flex;
-    color: #111;
-    justify-content: center;
-    align-items: center;
-    width: 64;
-    height: 64px;
-    background: transparent;
-    border: 0.2rem;
-    font-size: 32px;
-    border-radius:50% ;
-    border-radius: 50%;
-    margin:0 24px 20px 0;
-    transition: 0.3s ease;
+.social-icon a{
+  display: inline-flex;
+  color: #111;
+  justify-content: center;
+  align-items: center;
+  width: 64;
+  height: 64px;
+  background: transparent;
+  border: 0.2rem;
+  font-size: 32px;
+  border-radius:50% ;
+  border-radius: 50%;
+  margin:0 24px 20px 0;
+  transition: 0.3s ease;
 }
 
 .social-icon a:hover{
-    font-size: 50px;
+font-size: 50px;
 }
 
+.social-icon_aTag{
+color:rgba(31, 31, 31, 0.4);
+text-decoration: none;
+text-decoration-color:white;
+transition: color 0.3s, text-decoration-color 0.3s;
+}
+.social-icon_aTag:hover {
+color: rgba(0, 0, 0, 0.975);
+text-decoration: underline;
+text-underline-offset: 1rem;
+text-decoration-color: rgb(181, 181, 181);
+font-size: 20px;
+font-weight: bold;
+
+}

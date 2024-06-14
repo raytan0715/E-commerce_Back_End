@@ -3,51 +3,60 @@
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.sql.*" %>
 <%
-  // 檢查用戶是否登入
-  String email = (String) session.getAttribute("userEmail");
-  boolean isLoggedIn = (email != null);
-  // 檢查用戶是否登入
-  if (!isLoggedIn) {
-    response.sendRedirect("./index.jsp"); // 若未登錄則重定向到首頁
-    return;
-  }
+    // Check if the user is logged in
+    String email = (String) session.getAttribute("userEmail");
+    boolean isLoggedIn = (email != null);
+    
+    if (!isLoggedIn) {
+        response.sendRedirect("./index.jsp"); // Redirect to the home page if not logged in
+        return;
+    }
 
-  // 設置緩存控制頭
-  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  response.setHeader("Pragma", "no-cache");
-  response.setDateHeader("Expires", 0);
+    // Set cache control headers
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+    
+    String userName = "";
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    
+    try {
+        String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        conn = DriverManager.getConnection(url, "root", "Ray_930715");
 
-  Object memberIdObj = session.getAttribute("MemberID");
-  if (memberIdObj == null) {
-      out.println("<p>請先登入以查看購物車。</p>");
-      return;
-  }
-  
-  String memberId;
-  if (memberIdObj instanceof Integer) {
-      memberId = memberIdObj.toString();
-  } else if (memberIdObj instanceof String) {
-      memberId = (String) memberIdObj;
-  } else {
-      out.println("<p>無效的MemberID類型。</p>");
-      return;
-  }
-
-  int totalQuantity = 0; // 總數量
-  int totalPrice = 0; // 總價格
-
-  Connection ProductConn = null;
-  PreparedStatement ProductPstmt = null;
-  ResultSet ProductRs = null;
-  try {
-      Class.forName("com.mysql.cj.jdbc.Driver");
-      ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC", "root", "Ray_930715");
-
-      String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
-      ProductPstmt = ProductConn.prepareStatement(sql);
-      ProductPstmt.setInt(1, Integer.parseInt(memberId));
-      ProductRs = ProductPstmt.executeQuery();
+        // Check if the email is in the seller table
+        String sql = "SELECT managerName FROM seller WHERE email = ?";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, email);
+        rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            userName = rs.getString("managerName");
+        } else {
+            // If not a seller, check if it's a member
+            sql = "SELECT MemberName FROM membership WHERE MemberAccount = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+            rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                userName = rs.getString("MemberName");
+            }
+        }
+    } catch (ClassNotFoundException e) {
+        out.println("JDBC Driver not found: " + e.toString());
+    } catch (SQLException sExec) {
+        out.println("SQL Error: " + sExec.toString());
+    } finally {
+        if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+        if (pstmt != null) try { pstmt.close(); } catch (SQLException ignore) {}
+        if (conn != null) try { conn.close(); } catch (SQLException ignore) {}
+    }
 %>
+
 
 <!doctype html>
 
@@ -158,7 +167,7 @@
             <div id="cart">
  
               <!-- 購物車按鈕 -->
-                <button onclick="openNav()".style.display='block' type="button" class="btn btn-light" style="width: auto;height:auto;">
+                <button onclick="openNav()" type="button" class="btn btn-light" style="width: auto;height:auto;">
                     <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
                 </button>
              
@@ -170,66 +179,85 @@
  
                 <div class="sidebarinner">
  
-                 
- 
-                      <div class="container">
-                        <%
-                        if (!ProductRs.isBeforeFirst()) {
-                            out.println("<p>您的購物車是空的</p>");
-                        } else {
-                            while (ProductRs.next()) {
-                                int cartID = ProductRs.getInt("cartID");
-                                String pid = ProductRs.getString("productID");
-                                int quantity = ProductRs.getInt("quantity");
-                                String productName = ProductRs.getString("ProductName");
-                                int price = ProductRs.getInt("Price");
-                                String imageUrl = ProductRs.getString("Producturl");
-                    
-                                totalQuantity += quantity;
-                                totalPrice += price * quantity;
-                        %>
-                         
-                          <div class="cart-p">
-                            <img src="<%= imageUrl %>" alt="<%= productName %>">
-                            <div>
-                                <div class="cp1">   <!--商品名稱-->
-                                    <h1><%= productName %></h1>
+                  <div class="container">
+                    <%
+                    Connection ProductConn = null;
+                    PreparedStatement ProductPstmt = null;
+                    ResultSet ProductRs = null;
+                    int totalQuantity = 0; // 總數量
+                    int totalPrice = 0; // 總價格
+                
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC", "root", "Ray_930715");
+                
+                        Integer memberID = (Integer) session.getAttribute("MemberID");
+                        if (memberID != null) {
+                            String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
+                            ProductPstmt = ProductConn.prepareStatement(sql);
+                            ProductPstmt.setInt(1, memberID);
+                            ProductRs = ProductPstmt.executeQuery();
+                
+                            if (!ProductRs.isBeforeFirst()) {
+                                out.println("<p>您的購物車是空的</p>");
+                            } else {
+                                while (ProductRs.next()) {
+                                    int cartID = ProductRs.getInt("cartID");
+                                    String pid = ProductRs.getString("productID");
+                                    int quantity = ProductRs.getInt("quantity");
+                                    String productName = ProductRs.getString("ProductName");
+                                    int price = ProductRs.getInt("Price");
+                                    String imageUrl = ProductRs.getString("Producturl");
+                
+                                    totalQuantity += quantity;
+                                    totalPrice += price * quantity;
+                    %>
+                
+                    <div class="cart-p">
+                        <img src="<%= imageUrl %>" alt="<%= productName %>">
+                        <div>
+                            <div class="cp1">   <!--商品名稱-->
+                                <h1><%= productName %></h1>
+                            </div>
+                            <!-- 購物車表單 -->
+                            <form action="./changeCartItem.jsp" method="post" class="quantity-form">
+                                <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
+                                    <input class="min" type="button" value="&minus;" onclick="updateQuantity(this, -1)" /> <!-- ' &minus; '是減號 -->
+                                    <input class="quantity" type="text" name="quantity" value="<%= quantity %>" oninput="validateQuantity(this)" />
+                                    <input class="add" type="button" value="+" onclick="updateQuantity(this, 1)" />
                                 </div>
-                                <!-- 購物車表單 -->
-                                <form action="./changeCartItem.jsp" method="post" class="quantity-form">
-                                    <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
-                                        <input class="min" type="button" value="&minus;" onclick="updateQuantity(this, -1)" /> <!-- ' &minus; '是減號 -->
-                                        <input class="quantity" type="text" name="quantity" value="<%= quantity %>" oninput="validateQuantity(this)" />
-                                        <input class="add" type="button" value="+" onclick="updateQuantity(this, 1)" />
-                                    </div>
-                                    <input type="hidden" name="cartID" value="<%= cartID %>">
-                                    <input type="hidden" name="action" value="update">
-                                </form>
-                            </div>
-                            <div class="cp3">   <!-- 商品價格 -->
-                                <p>NT$ <%= price %></p>
-                            </div>
-                            <form action="./changeCartItem.jsp" method="post" style="display:inline;">
                                 <input type="hidden" name="cartID" value="<%= cartID %>">
-                                <input type="hidden" name="action" value="delete">
-                                <button type="submit">&times;</button> <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+                                <input type="hidden" name="action" value="update">
                             </form>
                         </div>
-                        <%
-                                  }
-                              }
-                          } catch (SQLException e) {
-                              e.printStackTrace();
-                              out.println("<p>SQL 錯誤: " + e.getMessage() + "</p>");
-                          } catch (ClassNotFoundException e) {
-                              e.printStackTrace();
-                              out.println("<p>驅動加載錯誤: " + e.getMessage() + "</p>");
-                          } finally {
-                              if (ProductRs != null) try { ProductRs.close(); } catch (SQLException ignore) {}
-                              if (ProductPstmt != null) try { ProductPstmt.close(); } catch (SQLException ignore) {}
-                              if (ProductConn != null) try { ProductConn.close(); } catch (SQLException ignore) {}
-                          }
-                          %>
+                        <div class="cp3">   <!-- 商品價格 -->
+                            <p>NT$ <%= price %></p>
+                        </div>
+                        <form action="./changeCartItem.jsp" method="post" style="display:inline;">
+                            <input type="hidden" name="cartID" value="<%= cartID %>">
+                            <input type="hidden" name="action" value="delete">
+                            <button type="submit">&times;</button> <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
+                        </form>
+                    </div>
+                    <%
+                                }
+                            }
+                        } else {
+                            out.println("<p>會員ID無效或不存在</p>");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        out.println("<p>SQL 錯誤: " + e.getMessage() + "</p>");
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                        out.println("<p>驅動加載錯誤: " + e.getMessage() + "</p>");
+                    } finally {
+                        if (ProductRs != null) try { ProductRs.close(); } catch (SQLException ignore) {}
+                        if (ProductPstmt != null) try { ProductPstmt.close(); } catch (SQLException ignore) {}
+                        if (ProductConn != null) try { ProductConn.close(); } catch (SQLException ignore) {}
+                    }
+                    %>
+
                         <!-- 購買數量增減控制 -->
                         <script>
                           function updateQuantity(button, delta) {
@@ -290,11 +318,10 @@
             <%
            
                 // 設置資料庫連接相關變數
-                Connection conn = null;
-                PreparedStatement pstmt = null;
-                ResultSet rs = null;
+                Connection memberConn = null;
+                PreparedStatement memberPstmt = null;
+                ResultSet memberRs = null;
            
-                String userName = "";
                 String userPhone = "";
                 String userBirthday = "";
                 String userAddress = "";
@@ -303,29 +330,30 @@
                     // 連接到 MySQL 資料庫
                     String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
                     Class.forName("com.mysql.cj.jdbc.Driver");
-                    conn = DriverManager.getConnection(url, "root", "Ray_930715");
+                    memberConn = DriverManager.getConnection(url, "root", "Ray_930715");
            
                     // 獲取用戶資料
                     String sql = "SELECT MemberName, MemberPhone, BirthdayDate, Address FROM membership WHERE MemberAccount = ?";
                    
                     // 使用 PreparedStatement 防止 SQL 注入
-                    pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, email);
+                    memberPstmt = memberConn.prepareStatement(sql);
+                    memberPstmt.setString(1, email);
            
                     // 執行查詢操作
-                    rs = pstmt.executeQuery();
+                    memberRs = memberPstmt.executeQuery();
            
-                    if (rs.next()) {
-                        userName = rs.getString("MemberName");
-                        userPhone = rs.getString("MemberPhone");
-                        userBirthday = rs.getString("BirthdayDate");
-                        userAddress = rs.getString("Address");
+                    if (memberRs.next()) {
+                        userPhone = memberRs.getString("MemberPhone");
+                        userBirthday = memberRs.getString("BirthdayDate");
+                        userAddress = memberRs.getString("Address");
                     }
            
-                    // 關閉資料庫連接
-                    conn.close();
                 } catch (SQLException sExec) {
                     out.println("SQL 錯誤: " + sExec.toString());
+                } finally {
+                    if (memberRs != null) try { memberRs.close(); } catch (SQLException ignore) {}
+                    if (memberPstmt != null) try { memberPstmt.close(); } catch (SQLException ignore) {}
+                    if (memberConn != null) try { memberConn.close(); } catch (SQLException ignore) {}
                 }
             %>
             <!-- 會員註冊與登入按鈕 -->
@@ -347,6 +375,7 @@
  
         </div>   
       </nav>
+ 
  
 
       <!-- 工具欄第二欄 -->

@@ -447,10 +447,10 @@
                   <p>這次是我第二次主導前後端的專案實作，相比前一次，這次順利了很多，前後端的溝通與合作都非常主動。我在項目中學習了前端的排版方法，體會到前端工作並不是那麼簡單。當然，最大的挑戰是前後端程式碼合併的問題。我們採取的方法是由我負責主要的結構設計，其餘的功能則分配給其他組員單獨完成。最後，透過我來進行程式碼合併並上傳。這個過程中，我不僅提升了技術能力，還加深了對團隊合作的重要性的理解。
                   </p>
                   <div class="social-icon">
-                    <a href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" target="_blank"><i class="fa-brands fa-facebook-square"></i></a>
-                    <a href="#"><i class="fa-regular fa-envelope"></i></a>
-                </div>
+                    <a href="https://facebook.com" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-facebook-square"></i></a>
+                    <a href="https://github.com/Pan8732965" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://gmail.com" class="social-icon_aTag"><i class="fa-regular fa-envelope"></i></a>
+                  </div>
                 </div>
           
               </div>
@@ -472,10 +472,10 @@
                 <p>整體而言，這個專案是一個寶貴的學習經歷，增強了我們的技術技能，並教會了我們在現實專案環境中團隊合作和溝通的重要性。看到我們的共同努力最終產生了一個一致且功能完善的最終產品，這讓我們感到非常滿足，並進一步強調了在任何複雜專案中，協作是成功的關鍵。
                 </p>
                 <div class="social-icon">
-                  <a href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                  <a href="#" target="_blank"><i class="fa-brands fa-facebook-square"></i></a>
-                  <a href="#"><i class="fa-regular fa-envelope"></i></a>
-              </div>
+                  <a href="https://facebook.com" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-facebook-square"></i></a>
+                  <a href="https://github.com/Nat0202" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-github"></i></a>
+                  <a href="https://gmail.com" class="social-icon_aTag"><i class="fa-regular fa-envelope"></i></a>
+                </div>
               </div>
         
             </div>
@@ -497,10 +497,10 @@
                 <p>這學期換擔任前端的部分，我覺得前置作業是很重要的，一開始要確定好主題還有方向，這樣在實作過程中才不會越來越偏離理想的樣子，另外，使用流程也要清楚方便，讓使用者可以直觀操作，而實作的部分需要花一些時間去調整版型。最後我認為前後端的溝通也非常重要，很感謝組員們按時完成進度，以及後端組員的努力，每週撥空討論，前後端整合後才能讓我們的網站是完整、流暢的。
                 </p>
                 <div class="social-icon">
-                  <a href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                  <a href="#" target="_blank"><i class="fa-brands fa-facebook-square"></i></a>
-                  <a href="#"><i class="fa-regular fa-envelope"></i></a>
-              </div>
+                  <a href="https://facebook.com" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-facebook-square"></i></a>
+                  <a href="https://github.com/YinZhen814" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-github"></i></a>
+                  <a href="https://gmail.com" class="social-icon_aTag"><i class="fa-regular fa-envelope"></i></a>
+                </div>
               </div>
         
             </div>
@@ -526,10 +526,10 @@
                   <h2>心得</h2>
                   <p>這學期輪到我們小組做後端開發的部分，但是我們在做後端的部分上面有遇到許多不少的問題，像是當我們想要設定一些有關比較複雜的java函數放在檔案裏面會導致許多的錯誤，像是當我在製作後端密碼傳送時的時候，我想要設定關於哈希加密的時候環境設定等等的問題。總之在很多關於後端的部份我們還有很多的部分要學，希望未來如果要繼續學習後端的部分我可以能夠更能精進，能將現在的所學套用到未來。</p>
                   <div class="social-icon">
-                    <a href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" target="_blank"><i class="fa-brands fa-facebook-square"></i></a>
-                    <a href="#"><i class="fa-regular fa-envelope"></i></a>
-                </div>
+                    <a href="https://facebook.com" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-facebook-square"></i></a>
+                    <a href="https://github.com/raytan0715" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://gmail.com" class="social-icon_aTag"><i class="fa-regular fa-envelope"></i></a>
+                  </div>
                 </div>
           
               </div>
@@ -551,10 +551,10 @@
                 <p>這學期輪到我們小組負責後端部分的開發。雖然這是我首次深入了解後端程式設計，但由於有上學期的經驗，減少了許多手忙腳亂的情況。這學期，我們兩邊的小組成員能夠利用彼此在前端和後端的經驗和知識互相幫助，溝通更為流暢，網站也因此能夠快速地成形。通過這次的合作，我學到了如何更好地整合前後端技術，並深刻體會到團隊合作的重要性。
                 </p>
                 <div class="social-icon">
-                  <a href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                  <a href="#" target="_blank"><i class="fa-brands fa-facebook-square"></i></a>
-                  <a href="#"><i class="fa-regular fa-envelope"></i></a>
-              </div>
+                  <a href="https://facebook.com" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-facebook-square"></i></a>
+                  <a href="https://github.com/Anitakao" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-github"></i></a>
+                  <a href="https://gmail.com" class="social-icon_aTag"><i class="fa-regular fa-envelope"></i></a>
+                </div>
               </div>
         
             </div>
@@ -576,10 +576,10 @@
                 <p>這次我們改負責後端的部分雖然有了一點前端的經驗感覺會比之前輕鬆一點，但結果一開始還是有非常多不懂和找不到問題點的BUG，在多次開會溝通和資料查詢下我們才逐漸地讓架構成型和成功的一一排錯。多虧了兩組所有人的溝通與合作最後才能有效的連結前端與後端完成這個網站。
                 </p>
                 <div class="social-icon">
-                  <a href="#" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                  <a href="#" target="_blank"><i class="fa-brands fa-facebook-square"></i></a>
-                  <a href="#"><i class="fa-regular fa-envelope"></i></a>
-              </div>
+                  <a href="https://facebook.com" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-facebook-square"></i></a>
+                  <a href="https://github.com/alice60102" target="_blank" class="social-icon_aTag"><i class="fa-brands fa-github"></i></a>
+                  <a href="https://gmail.com" class="social-icon_aTag"><i class="fa-regular fa-envelope"></i></a>
+                </div>
               </div>
         
             </div>
@@ -593,7 +593,7 @@
       
 
      
-
+      <div class="separator"></div> <!-- 分隔線 -->
       <!-- 頁尾(含聯絡資訊) 
       ================================================== -->
 
