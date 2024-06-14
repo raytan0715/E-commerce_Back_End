@@ -132,7 +132,7 @@
                               ProductRs = ProductPstmt.executeQuery();
 
                               if (!ProductRs.isBeforeFirst()) {
-                                  out.println("<p>您的購物車是空的</p>");
+                                  out.println("<p style='color: black; text-align: center;'>您的購物車是空的</p>");
                               } else {
                                   while (ProductRs.next()) {
                                       int cartID = ProductRs.getInt("cartID"); // Ensure cartID is retrieved

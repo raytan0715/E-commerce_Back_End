@@ -181,48 +181,50 @@
  
                   <div class="container">
                     <%
-                    Connection ProductConn = null;
-                    PreparedStatement ProductPstmt = null;
-                    ResultSet ProductRs = null;
-                    int totalQuantity = 0; // 總數量
-                    int totalPrice = 0; // 總價格
-                
-                    try {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC", "root", "Ray_930715");
-                
-                        Object memberIDObj = session.getAttribute("MemberID");
-                        Integer memberID = null;
-                
-                        if (memberIDObj != null) {
-                            if (memberIDObj instanceof String) {
-                                memberID = Integer.parseInt((String) memberIDObj);
-                            } else if (memberIDObj instanceof Integer) {
-                                memberID = (Integer) memberIDObj;
-                            }
-                        }
-                
-                        if (memberID != null) {
-                            String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
-                            ProductPstmt = ProductConn.prepareStatement(sql);
-                            ProductPstmt.setInt(1, memberID);
-                            ProductRs = ProductPstmt.executeQuery();
-                
-                            if (!ProductRs.isBeforeFirst()) {
-                                out.println("<p>您的購物車是空的</p>");
-                            } else {
-                                while (ProductRs.next()) {
-                                    int cartID = ProductRs.getInt("cartID");
-                                    String pid = ProductRs.getString("productID");
-                                    int quantity = ProductRs.getInt("quantity");
-                                    String productName = ProductRs.getString("ProductName");
-                                    int price = ProductRs.getInt("Price");
-                                    String imageUrl = ProductRs.getString("Producturl");
-                
-                                    totalQuantity += quantity;
-                                    totalPrice += price * quantity;
-                    %>
-                
+                      Connection ProductConn = null;
+                      PreparedStatement ProductPstmt = null;
+                      ResultSet ProductRs = null;
+                      int totalQuantity = 0; // 總數量
+                      int totalPrice = 0; // 總價格
+
+                      try {
+                          Class.forName("com.mysql.cj.jdbc.Driver");
+                          ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC", "root", "1234");
+
+                          Object memberIDObj = session.getAttribute("MemberID");
+                          Integer memberID = null;
+
+                          if (memberIDObj != null) {
+                              if (memberIDObj instanceof String) {
+                                  String memberIDStr = (String) memberIDObj;
+                                  if (!memberIDStr.isEmpty()) {
+                                      memberID = Integer.parseInt(memberIDStr);
+                                  }
+                              } else if (memberIDObj instanceof Integer) {
+                                  memberID = (Integer) memberIDObj;
+                              }
+                          }
+
+                          if (memberID != null) {
+                              String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
+                              ProductPstmt = ProductConn.prepareStatement(sql);
+                              ProductPstmt.setInt(1, memberID);
+                              ProductRs = ProductPstmt.executeQuery();
+
+                              if (!ProductRs.isBeforeFirst()) {
+                                  out.println("<p style='color: black; text-align: center;'>您的購物車是空的</p>");
+                              } else {
+                                  while (ProductRs.next()) {
+                                      int cartID = ProductRs.getInt("cartID");
+                                      String pid = ProductRs.getString("productID");
+                                      int quantity = ProductRs.getInt("quantity");
+                                      String productName = ProductRs.getString("ProductName");
+                                      int price = ProductRs.getInt("Price");
+                                      String imageUrl = ProductRs.getString("Producturl");
+
+                                      totalQuantity += quantity;
+                                      totalPrice += price * quantity;
+                      %>
                     <div class="cart-p">
                         <img src="<%= imageUrl %>" alt="<%= productName %>">
                         <div>
