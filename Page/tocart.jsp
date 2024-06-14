@@ -1,12 +1,15 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%
+    request.setCharacterEncoding("UTF-8");
+    
     String productId = request.getParameter("productId");
     String productPriceStr = request.getParameter("productPrice");
     String quantityStr = request.getParameter("quantity");
     String memberIdStr = request.getParameter("MemberID");
     String source = request.getParameter("source");
     String redirect = request.getParameter("redirect");
+    String keyword = request.getParameter("keyword");
 
     if (productId == null || productPriceStr == null || quantityStr == null || memberIdStr == null || source == null) {
         out.println("缺少必要的參數");
@@ -39,6 +42,8 @@
                 window.location.href = "./payment.jsp";
             <% } else if ("AllProduct_LoggedIn.jsp".equals(source)) { %>
                 window.location.href = "./AllProduct_LoggedIn.jsp";
+            <% } else if ("SearchProduct_LoggedIn.jsp".equals(source)) { %>
+                window.location.href = "./SearchProduct_LoggedIn.jsp?keyword=<%= keyword %>";
             <% } else { %>
                 window.location.href = "./product_LoggedIn.jsp?productId=<%= productId %>";
             <% } %>

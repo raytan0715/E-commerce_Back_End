@@ -120,46 +120,46 @@
 
             <!-- 【購物車】 -->
             <div id="cart">
-
-              <!-- 購物車按鈕 --> 
+ 
+              <!-- 購物車按鈕 -->
                 <button onclick="openNav()".style.display='block' type="button" class="btn btn-light" style="width: auto;height:auto;">
                     <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 22px;"></i>
                 </button>
-              
+             
               <!-- 旁邊顯示之購物車界面 -->
               <div id="mySidebar" class="sidebar">
-
+ 
                 <!-- 購物車頁面右邊之大叉叉-->
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
+ 
                 <div class="sidebarinner">
-
-                  
-
+ 
+                 
+ 
                       <div class="container">
-
+ 
                           <%
                           String memberId = String.valueOf(session.getAttribute("MemberID"));
                           if (memberId == null) {
                               out.println("<p>請先登入以查看購物車。</p>");
                               return;
                           }
-
+ 
                           int totalQuantity = 0; // 總數量
                           int totalPrice = 0; // 總價格
-
+ 
                           Connection ProductConn = null;
                           PreparedStatement ProductPstmt = null;
                           ResultSet ProductRs = null;
                           try {
                               Class.forName("com.mysql.cj.jdbc.Driver");
                               ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
-
+ 
                               String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
                               ProductPstmt = ProductConn.prepareStatement(sql);
                               ProductPstmt.setInt(1, Integer.parseInt(memberId));
                               ProductRs = ProductPstmt.executeQuery();
-
+ 
                               if (!ProductRs.isBeforeFirst()) {
                                   out.println("<p>您的購物車是空的</p>");
                               } else {
@@ -170,11 +170,11 @@
                                       String productName = ProductRs.getString("ProductName");
                                       int price = ProductRs.getInt("Price");
                                       String imageUrl = ProductRs.getString("Producturl");
-
+ 
                                       totalQuantity += quantity;
                                       totalPrice += price * quantity;
                           %>
-                          
+                         
                           <div class="cart-p">
                             <img src="<%= imageUrl %>" alt="<%= productName %>">
                             <div>
@@ -186,7 +186,7 @@
                                     <div class="cp2" data-min="1" data-max="50"> <!-- 數量增減 min最小購買數量、max最大購買數量 -->
                                         <input class="min" type="button" value="&minus;" onclick="updateQuantity(this, -1)" /> <!-- ' &minus; '是減號 -->
                                         <input class="quantity" type="text" name="quantity" value="<%= quantity %>" oninput="validateQuantity(this)" />
-                                        <input class="add" type="button" value="+" onclick="updateQuantity(this, 1)" /> 
+                                        <input class="add" type="button" value="+" onclick="updateQuantity(this, 1)" />
                                     </div>
                                     <input type="hidden" name="cartID" value="<%= cartID %>">
                                     <input type="hidden" name="action" value="update">
@@ -218,10 +218,10 @@
                               const form = button.closest('.quantity-form');
                               const quantityInput = form.querySelector('.quantity');
                               let currentValue = parseInt(quantityInput.value);
-                      
+                     
                               const min = parseInt(button.closest('.cp2').getAttribute('data-min'));
                               const max = parseInt(button.closest('.cp2').getAttribute('data-max'));
-                      
+                     
                               if (!isNaN(currentValue)) {
                                   const newValue = currentValue + delta;
                                   if (newValue >= min && newValue <= max) {
@@ -230,31 +230,31 @@
                                   }
                               }
                           }
-                      
+                     
                           function validateQuantity(input) {
                               const form = input.closest('.quantity-form');
                               let value = input.value.replace(/[^0-9]/g, '');
                               const cp2 = input.closest('.cp2');
                               const max = parseInt(cp2.getAttribute('data-max'));
-                      
+                     
                               if (value > max) {
                                   alert(`最多只能購買 ${max} 個`);
                                   input.value = max;
                               } else {
                                   input.value = value;
                               }
-                      
+                     
                               form.submit();
                           }
                       </script>
-                      
-
+                     
+ 
                         <!-- 計算總價 -->
                         <div class="cart-total">
                           <p>總金額<p>
                           <p class="r">NT$ <%= totalPrice %></p>
                         </div>
-
+ 
                         <!-- 購物車最後按鈕 (繼續購物/結帳去)-->
                         <div class="cart-but row" >
                           <div class="col">
@@ -423,22 +423,30 @@
 
                   <!-- add cart container -->
                   <div class="cartButtonContainer">
+                    <form action="./tocart.jsp" method="post" class="form_tocart">
+                        <!-- cart-numberic button -->
+                        <div class="cart-button" data-min="1" data-max="50">
+                            <input type="button" class="min" value="&minus;" onclick="updateQuantity(this, -1)" />
+                            <input type="text" class="quantity" name="quantity" value="1" />
+                            <input type="button" class="add" value="+" onclick="updateQuantity(this, 1)" />
+                        </div>
 
-                    <!-- cart-numberic button -->
-                    <div class="cart-button" data-min="1" data-max="50">
-                      <input type="button" class="min" value="&minus;"/>
-                      <input type="text" class="quantity" value="1"/>
-                      <input type="button" class="add" value="+"/>
-                    </div>
+                        <!-- addtocart icon button -->
+                        <div class="addToCart_Btn">
+                            <input type="hidden" name="productId" value="<%= productId %>">
+                            <input type="hidden" name="productPrice" value="<%= productPrice %>">
+                            <input type="hidden" name="MemberID" value="<%= memberId %>">
+                            <input type="hidden" name="keyword" value="<%= request.getParameter("keyword") %>">
+                            <input type="hidden" name="source" value="SearchProduct_LoggedIn.jsp">
+                            <input type="hidden" name="redirect" value="product">
 
-                    <!-- addtocart icon button -->
-                    <div class="addToCart_Btn">
-                      <button type="button" class="cart-icon-button" onclick="showAlert()">
-                        <iconify-icon icon="iconoir:cart"></iconify-icon>
-                      </button>
-                    </div>
-
+                            <button type="submit" class="cart-icon-button">
+                                <iconify-icon icon="iconoir:cart"></iconify-icon>
+                            </button>
+                        </div>
+                    </form>
                   </div>
+
               </div>
               <%
               }

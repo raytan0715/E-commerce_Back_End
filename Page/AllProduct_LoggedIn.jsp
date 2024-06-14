@@ -223,19 +223,20 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                         <!-- 購買數量增減控制 -->
                         <script>
                           function updateQuantity(button, delta) {
-                              const form = button.closest('.cartButtonContainer').querySelector('form');
+                              const form = button.closest('.quantity-form');
                               const quantityInput = form.querySelector('.quantity');
                               let currentValue = parseInt(quantityInput.value);
-                              
-                              const min = parseInt(button.closest('.cart-button').getAttribute('data-min'));
-                              const max = parseInt(button.closest('.cart-button').getAttribute('data-max'));
+                     
+                              const min = parseInt(button.closest('.cp2').getAttribute('data-min'));
+                              const max = parseInt(button.closest('.cp2').getAttribute('data-max'));
                      
                               if (!isNaN(currentValue)) {
-                                const newValue = currentValue + delta;
-                                if (newValue >= min && newValue <= max) {
-                                    quantityInput.value = newValue;
-                                }
-                            }
+                                  const newValue = currentValue + delta;
+                                  if (newValue >= min && newValue <= max) {
+                                      quantityInput.value = newValue;
+                                      form.submit();
+                                  }
+                              }
                           }
                      
                           function validateQuantity(input) {
