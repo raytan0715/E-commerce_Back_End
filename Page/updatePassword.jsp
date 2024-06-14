@@ -2,7 +2,6 @@
 <%@ page import="java.sql.*" %>
 
 <%
-
     // 設置發送到資料庫的字符編碼為UTF-8
     request.setCharacterEncoding("UTF-8");
     
@@ -27,22 +26,31 @@
 
             int rows = pstmt.executeUpdate();
             if (rows > 0) {
-                session.setAttribute("updateMessage", "更新成功");
+                message = "密碼更新成功";
             } else {
-                session.setAttribute("updateMessage", "密碼更新失敗");
+                message = "密碼更新失敗";
             }
-            // 重定向到 memberPage.jsp
-            response.sendRedirect("./memberPage.jsp");
 
             conn.close();
         } catch (Exception e) {
-            message = "错误: " + e.getMessage();
+            message = "Error: " + e.getMessage();
         }
     } else {
-        message = "請輸入有效的資料。";
+        message = "請輸入有效的資料";
     }
 %>
 
-<script>
-    alert("<%= message %>");
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="3;url=./memberPage.jsp">
+    <title>更新密碼</title>
+</head>
+<body>
+    <script>
+        alert("<%= message %>");
+        window.location.href = "./memberPage.jsp";
+    </script>
+</body>
+</html>

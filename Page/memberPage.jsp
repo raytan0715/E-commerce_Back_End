@@ -557,15 +557,25 @@
         </div>
     </div>
       
+    <!-- 回到頂部按鈕 -->
+    <div class="slider">
+      <a href="#">
+        <div class="top">
+            <iconify-icon icon="iconoir:page-up"></iconify-icon>
+        </div>
+      </a>
+    </div>
 
-      <!-- 頁尾(含聯絡資訊) 
-      ================================================== -->
-      <jsp:include page="./footer.jsp" />
+
+    <!-- 頁尾(含聯絡資訊) 
+    ================================================== -->
+    <jsp:include page="./footer.jsp" />
 
     
+   
     <!-- Javascript 區域 -->
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
+    <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
 
   </body>
   
