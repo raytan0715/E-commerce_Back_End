@@ -573,10 +573,11 @@
 
     
    
-    <!-- Javascript 區域 -->
-    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
-
+    
+   <!-- Javascript 區域 -->
+   <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+   <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
   </body>
   
 </html>

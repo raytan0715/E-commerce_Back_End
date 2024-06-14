@@ -1,6 +1,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
@@ -10,13 +11,10 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 DROP DATABASE IF EXISTS FinalProject;
-#purchase sales stock
 
 CREATE DATABASE FinalProject CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 USE FinalProject;
---
---
 
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
@@ -34,23 +32,10 @@ INSERT INTO `cart` VALUES
 (2, 1, 1, 1),
 (3, 2, 3, 1),
 (4, 3, 10, 1);
-/*
-(1, 1, 2, 2, 'No Brand 經典炸醬拉麵135g克 X 5 X 1PC包', 'https://i.imgur.com/kfdfiVq.jpeg'),
-(2, 1, 1, 1, 'Nongshim 農心 韓國境內版 辛拉麵 5包', 'https://i.imgur.com/FuGLtVt.jpeg'), 
-(3, 2, 3, 1, 'OTTOGI 不倒翁 粗麵條版Q拉麵', 'https://i.imgur.com/jI7yLcE.png'), 
-(4, 3, 10, 1, '韓國LOTTE樂天 七星汽水210ml', 'https://i.imgur.com/myVSiPr.jpeg');
-*/
 
--- 添加 status 欄位
 ALTER TABLE `cart` ADD COLUMN `status` VARCHAR(20) DEFAULT 'pending';
 
--- 解鎖表
 UNLOCK TABLES;
-
-
---
--- Table structure for table `inventoryquantity`
---
 
 DROP TABLE IF EXISTS `inventoryquantity`;
 CREATE TABLE `inventoryquantity` (
@@ -63,16 +48,11 @@ CREATE TABLE `inventoryquantity` (
     `LngredientList` varchar(1000) NOT NULL,
     `AllergyList` varchar(100) NOT NULL,
     `ProductDetails` varchar(300) NOT NULL,
-    `Producturl` varchar(50),
-    PRIMARY KEY (`ProductID`),
-    UNIQUE (`ProductName`),
-    UNIQUE (`Producturl`)
+    `Producturl` varchar(50) NOT NULL,
+    PRIMARY KEY (`ProductID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `inventoryquantity`
---
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `inventoryquantity` WRITE;
 /*!40000 ALTER TABLE `inventoryquantity` DISABLE KEYS */;
@@ -396,16 +376,10 @@ https://i.imgur.com/FuGLtVt.jpeg'),
 ','https://i.imgur.com/MvRSCRh.jpeg'),
 (25,'飲料/酒','TEAZEN 玉米鬚茶','226','175','2025.05.14','玉米、玉米鬚、玉竹、水、碳水化合物、蛋白質。','請參考商品包裝或產品本身','★ 韓國原裝進口。★ 淡淡玄米香~ 清香可口。★ 口感細緻溫順，冷熱飲皆可。','https://i.imgur.com/y9MvQgm.png')
 ;
-/*!40000 ALTER TABLE `inventoryquantity` ENABLE KEYS */;
+
 UNLOCK TABLES;
 
---
--- Table structure for table `membership`
---
-
 DROP TABLE IF EXISTS `membership`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `membership` (
   `MemberID` int NOT NULL AUTO_INCREMENT,
   `MemberAccount` varchar(45) NOT NULL,
@@ -416,19 +390,13 @@ CREATE TABLE `membership` (
   `Address` varchar(200) DEFAULT '桃園市中壢區中北路200號',
   PRIMARY KEY (`MemberID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 INSERT INTO `membership` (`MemberID`, `MemberAccount`, `MemberPassword`, `MemberName`, `MemberPhone`, `BirthdayDate`, `Address`) VALUES
 (1, '11144139jay@gmail.com', '12345', 'jay', '0906692674', NULL, '台北市信義區永吉路30巷101弄10號'),
 (2, '11144154jay@gmail.com', '54321', 'alice', '0901297374', NULL, '桃園市中壢區中北路200號'),
 (3, '11144138ray@gmail.com', '114514', '譚睿承','0905114520', NULL, '桃園市中壢區普忠路210號');
-/*!40000 ALTER TABLE `membership` ENABLE KEYS */;
+
 UNLOCK TABLES;
-
-
-
---
--- Table structure for table `reviews`
---
 
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
@@ -443,42 +411,29 @@ CREATE TABLE `comment` (
   CONSTRAINT `fk_member` FOREIGN KEY (`MemberID`) REFERENCES `membership` (`MemberID`),
   CONSTRAINT `fk_product` FOREIGN KEY (`ProductID`) REFERENCES `inventoryquantity` (`ProductID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
--- Dumping data for table `comment`
---
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
 #INSERT INTO `comment` VALUES (1,'11144139jay@gmail.com',1,4,'好吃');
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
---
--- Dumping data for table `reviews`
---
-
-
---
--- Table structure for table `seller`
---
 
 DROP TABLE IF EXISTS `seller`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `seller` (
   `email` varchar(45) NOT NULL,
   `password` varchar(45) DEFAULT NULL,
   `managerName` varchar(45) NOT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `seller`
---
-DROP TABLE IF EXISTS orderitems;#訂單
-/*!40101 SET @saved_cs_client     = @@character_set_client*/;
-/*!50503 SET character_set_client = utf8mb4*/;
-CREATE TABLE orderitems (
+LOCK TABLES `seller` WRITE;
+/*!40000 ALTER TABLE `seller` DISABLE KEYS */;
+INSERT INTO `seller` VALUES ('11144138@cycu.hc.edu.tw','123456789','譚睿承');
+/*!40000 ALTER TABLE `seller` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `orderitems`;
+CREATE TABLE `orderitems` (
   `orderid`  int NOT NULL AUTO_INCREMENT,
   `MemberID` int  NOT NULL,
   `ProductID` int NOT NULL,
@@ -487,30 +442,18 @@ CREATE TABLE orderitems (
   `date` varchar(30) DEFAULT NULL,
   `totalprice` int NOT NULL,
   `remark` varchar(100) DEFAULT NULL,
-  `Producturl` varchar(50)NOT NULL ,
+  `Producturl` varchar(50) NOT NULL,
   `ProductName` varchar(45) NOT NULL,
-
   PRIMARY KEY (`orderid`),
   FOREIGN KEY (`ProductID`) REFERENCES inventoryquantity (`ProductID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client*/;
 
---
--- Dumping data for table orderitems
---
-
-LOCK TABLES orderitems WRITE;
-/*!40000 ALTER TABLE orderitems DISABLE KEYS*/;
-/*!40000 ALTER TABLE orderitems ENABLE KEYS*/;
+LOCK TABLES `orderitems` WRITE;
+/*!40000 ALTER TABLE `orderitems` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orderitems` ENABLE KEYS */;
 UNLOCK TABLES;
 
-LOCK TABLES `seller` WRITE;
-/*!40000 ALTER TABLE `seller` DISABLE KEYS */;
-INSERT INTO `seller` VALUES ('11144138@cycu.hc.edu.tw','123456789','譚睿承');
-/*!40000 ALTER TABLE `seller` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

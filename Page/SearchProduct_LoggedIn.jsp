@@ -410,7 +410,7 @@
                 int productPrice = rs.getInt("Price");
         %>
                 <!-- 泡麵商品圖卡jsp -->
-            <a href="./product.jsp?productId=<%= productId %>">
+            <a href="./product_LoggedIn.jsp?productId=<%= productId %>">
 
               <div class="pro">
 

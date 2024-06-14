@@ -424,7 +424,6 @@ Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
                     int productPrice = rs.getInt("Price");
                       
                       %>
-                    }
           <!-- 泡麵商品圖卡jsp -->
           <a href="./product_LoggedIn.jsp?productId=<%= productId %>">
 

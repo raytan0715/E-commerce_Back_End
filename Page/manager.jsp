@@ -12,6 +12,21 @@
     }
 %>
 <%
+    // 檢查用戶是否登入
+    String email = (String) session.getAttribute("userEmail");
+    boolean isLoggedIn = (email != null);
+    
+    // 檢查用戶是否登入
+    if (!isLoggedIn) {
+        response.sendRedirect("./index.jsp"); // 若未登錄則重定向到首頁
+        return;
+    }
+
+    // 設置緩存控制頭
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+
     if ("Update".equals(request.getParameter("action"))) {
         int productId = Integer.parseInt(request.getParameter("productId"));
         int price = Integer.parseInt(request.getParameter("price"));
@@ -188,8 +203,7 @@
             <!-- 【會員註冊登入】 -->
             
             <%
-            // 獲取當前用戶的電子郵件
-            String email = (String) session.getAttribute("userEmail");
+
 
             // 設置資料庫連接相關變數
             conn = null;
@@ -242,9 +256,9 @@
             </button>
 
             <!-- 登出按鈕 -->
-            <button onclick="location.href='./index.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
-              <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
-              登出
+            <button onclick="location.href='./logout.jsp'" type="button" class="btn btn-danger" style="width: auto;height:auto;font-weight: bold;margin-left:10px;">
+                <i class="fa fa-sign-out" aria-hidden="true" style="font-size: 16px;margin-right: 5px;"></i>
+                登出
             </button>
 
           </div>

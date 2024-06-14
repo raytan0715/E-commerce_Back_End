@@ -153,6 +153,7 @@ body{
   background-color: rgba(245, 245, 245, 0.932);
   border-radius: 30px;
   background-color: #f0ece8; /* 新增的样式 */
+  overflow: auto;
   /*padding: 20px;          /* 新增的样式 */
 }
 .content {

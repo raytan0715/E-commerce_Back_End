@@ -16,6 +16,37 @@
   response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   response.setHeader("Pragma", "no-cache");
   response.setDateHeader("Expires", 0);
+
+  Object memberIdObj = session.getAttribute("MemberID");
+  if (memberIdObj == null) {
+      out.println("<p>請先登入以查看購物車。</p>");
+      return;
+  }
+  
+  String memberId;
+  if (memberIdObj instanceof Integer) {
+      memberId = memberIdObj.toString();
+  } else if (memberIdObj instanceof String) {
+      memberId = (String) memberIdObj;
+  } else {
+      out.println("<p>無效的MemberID類型。</p>");
+      return;
+  }
+
+  int totalQuantity = 0; // 總數量
+  int totalPrice = 0; // 總價格
+
+  Connection ProductConn = null;
+  PreparedStatement ProductPstmt = null;
+  ResultSet ProductRs = null;
+  try {
+      Class.forName("com.mysql.cj.jdbc.Driver");
+      ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC", "root", "Ray_930715");
+
+      String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
+      ProductPstmt = ProductConn.prepareStatement(sql);
+      ProductPstmt.setInt(1, Integer.parseInt(memberId));
+      ProductRs = ProductPstmt.executeQuery();
 %>
 
 <!doctype html>
@@ -142,43 +173,21 @@
                  
  
                       <div class="container">
- 
-                          <%
-                          String memberId = String.valueOf(session.getAttribute("MemberID"));
-                          if (memberId == null) {
-                              out.println("<p>請先登入以查看購物車。</p>");
-                              return;
-                          }
- 
-                          int totalQuantity = 0; // 總數量
-                          int totalPrice = 0; // 總價格
- 
-                          Connection ProductConn = null;
-                          PreparedStatement ProductPstmt = null;
-                          ResultSet ProductRs = null;
-                          try {
-                              Class.forName("com.mysql.cj.jdbc.Driver");
-                              ProductConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
- 
-                              String sql = "SELECT c.cartID, c.productID, c.quantity, i.ProductName, i.Price, i.Producturl FROM cart c JOIN inventoryquantity i ON c.productID = i.ProductID WHERE c.MemberID = ?";
-                              ProductPstmt = ProductConn.prepareStatement(sql);
-                              ProductPstmt.setInt(1, Integer.parseInt(memberId));
-                              ProductRs = ProductPstmt.executeQuery();
- 
-                              if (!ProductRs.isBeforeFirst()) {
-                                  out.println("<p>您的購物車是空的</p>");
-                              } else {
-                                  while (ProductRs.next()) {
-                                      int cartID = ProductRs.getInt("cartID"); // Ensure cartID is retrieved
-                                      String pid = ProductRs.getString("productID");
-                                      int quantity = ProductRs.getInt("quantity");
-                                      String productName = ProductRs.getString("ProductName");
-                                      int price = ProductRs.getInt("Price");
-                                      String imageUrl = ProductRs.getString("Producturl");
- 
-                                      totalQuantity += quantity;
-                                      totalPrice += price * quantity;
-                          %>
+                        <%
+                        if (!ProductRs.isBeforeFirst()) {
+                            out.println("<p>您的購物車是空的</p>");
+                        } else {
+                            while (ProductRs.next()) {
+                                int cartID = ProductRs.getInt("cartID");
+                                String pid = ProductRs.getString("productID");
+                                int quantity = ProductRs.getInt("quantity");
+                                String productName = ProductRs.getString("ProductName");
+                                int price = ProductRs.getInt("Price");
+                                String imageUrl = ProductRs.getString("Producturl");
+                    
+                                totalQuantity += quantity;
+                                totalPrice += price * quantity;
+                        %>
                          
                           <div class="cart-p">
                             <img src="<%= imageUrl %>" alt="<%= productName %>">
@@ -206,11 +215,15 @@
                                 <button type="submit">&times;</button> <!-- 刪除商品按鈕 '&times;'是叉叉符號 -->
                             </form>
                         </div>
-                          <%
+                        <%
                                   }
                               }
-                          } catch (Exception e) {
+                          } catch (SQLException e) {
                               e.printStackTrace();
+                              out.println("<p>SQL 錯誤: " + e.getMessage() + "</p>");
+                          } catch (ClassNotFoundException e) {
+                              e.printStackTrace();
+                              out.println("<p>驅動加載錯誤: " + e.getMessage() + "</p>");
                           } finally {
                               if (ProductRs != null) try { ProductRs.close(); } catch (SQLException ignore) {}
                               if (ProductPstmt != null) try { ProductPstmt.close(); } catch (SQLException ignore) {}
@@ -692,7 +705,7 @@
       <div class="slider">
         <a href="#">
           <div class="top">
-              <iconify-icon icon="iconoir:page-up"></iconify-icon>
+            <iconify-icon icon="iconoir:page-up"></iconify-icon>
           </div>
         </a>
       </div>
@@ -712,10 +725,8 @@
 
     <!-- Javascript 區域 -->
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
-    <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script></body>
-
-    <!-- 添加 cookie提示 script -->
-    <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
 
   </body>
   
