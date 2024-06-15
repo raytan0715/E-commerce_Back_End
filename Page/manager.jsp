@@ -57,6 +57,62 @@
         }
     }
 
+    if ("Add".equals(request.getParameter("action"))) {
+        String productName = request.getParameter("productName");
+        int price = Integer.parseInt(request.getParameter("price"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            con = getConnection();
+            String sql = "INSERT INTO inventoryquantity (ProductName, Price, Quantity) VALUES (?, ?, ?)";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, productName);
+            pstmt.setInt(2, price);
+            pstmt.setInt(3, quantity);
+            pstmt.executeUpdate();
+            out.println("<script>alert('Product added successfully!');</script>");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) pstmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    if ("Delete".equals(request.getParameter("action"))) {
+        int productId = Integer.parseInt(request.getParameter("productId"));
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            con = getConnection();
+            String sql = "DELETE FROM inventoryquantity WHERE ProductID = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, productId);
+            pstmt.executeUpdate();
+            out.println("<script>alert('Product deleted successfully!');</script>");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) pstmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     // 儲存訂單資料
     Map<String, List<Map<String, String>>> orders = new HashMap<>();
 
@@ -410,7 +466,8 @@
                                           out.println("<td><input type='number' name='price' value='" + price + "'></td>");
                                           out.println("<td><input type='number' name='quantity' value='" + quantity + "'></td>");
                                           out.println("<td class='dis'><input type='hidden' name='productId' value='" + productId + "'>");
-                                          out.println("<button type='submit' name='action' value='Update' style='background-color: #907859; color: white; border: none; padding: 3px; cursor: pointer;margin-bottom: 2px; border-radius: 15%; '>更新</button></td>");
+                                          out.println("<button type='submit' name='action' value='Update' style='background-color: #907859; color: white; border: none; padding: 3px; cursor: pointer;margin-bottom: 2px; border-radius: 15%; '>更新</button>");
+                                          out.println("<button type='submit' name='action' value='Delete' style='background-color: #d9534f; color: white; border: none; padding: 3px; cursor: pointer; margin-bottom: 2px; border-radius: 15%;'>刪除</button>");
                                           out.println("</form></tr>");
                                       }
                                       out.println("</table>");
@@ -426,6 +483,27 @@
                                       }
                                   }
                               %>
+
+                              <!-- 添加商品 -->
+                              <form action="manager.jsp" method="post" style="margin: 20px;">
+                                  <input type="hidden" name="action" value="Add">
+                                  <div>
+                                      <label for="productName">商品名稱:</label>
+                                      <input type="text" name="productName" required>
+                                  </div>
+                                  <div>
+                                      <label for="price">價格:</label>
+                                      <input type="number" name="price" required>
+                                  </div>
+                                  <div>
+                                      <label for="quantity">庫存:</label>
+                                      <input type="number" name="quantity" required>
+                                  </div>
+                                  <div>
+                                      <button type="submit" style="background-color: #5cb85c; color: white; border: none; padding: 5px; cursor: pointer; margin-top: 10px; border-radius: 5%;">新增商品</button>
+                                  </div>
+                              </form>
+
                             </div>
 
                         </div>
@@ -436,8 +514,7 @@
                 
             </div>
         </div>
-    </div>     
-    <div class="separator"></div> <!-- 分隔線 -->
+    </div>
 
     <!-- 回到頂部按鈕 -->
     <div class="slider">

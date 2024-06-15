@@ -534,9 +534,9 @@
           <div class="comment-box">
               <%
               List<Map<String, Object>> comments = new ArrayList<>(); // Declare outside the try block to ensure availability in the loop
-              Connection conn = null;
-              PreparedStatement pstmt = null;
-              ResultSet rs = null;
+              Connection connComments = null; // Use unique variable names
+              PreparedStatement pstmtComments = null; // Use unique variable names
+              ResultSet rsComments = null; // Use unique variable names
 
               try {
                   // Fetch product ID from request
@@ -550,26 +550,26 @@
 
                   String url = "jdbc:mysql://localhost:3306/FinalProject?serverTimezone=UTC";
                   Class.forName("com.mysql.cj.jdbc.Driver");
-                  conn = DriverManager.getConnection(url, "root", "Ray_930715");
+                  connComments = DriverManager.getConnection(url, "root", "Ray_930715");
 
-                  String sql = "SELECT m.MemberName, c.star, c.comment FROM comment c JOIN membership m ON c.MemberID = m.MemberID WHERE c.ProductID = ?";
-                  pstmt = conn.prepareStatement(sql);
-                  pstmt.setInt(1, productIds);
-                  rs = pstmt.executeQuery();
+                  String sql = "SELECT m.MemberName, c.star, c.comment FROM comment c JOIN membership m ON c.MemberID = m.MemberID WHERE c.ProductID = ? ORDER BY c.CommentID DESC";
+                  pstmtComments = connComments.prepareStatement(sql);
+                  pstmtComments.setInt(1, productIds);
+                  rsComments = pstmtComments.executeQuery();
 
-                  while (rs.next()) {
+                  while (rsComments.next()) {
                       Map<String, Object> comment = new HashMap<>();
-                      comment.put("userName", rs.getString("MemberName"));
-                      comment.put("starRating", rs.getInt("star"));
-                      comment.put("comment", rs.getString("comment"));
+                      comment.put("userName", rsComments.getString("MemberName"));
+                      comment.put("starRating", rsComments.getInt("star"));
+                      comment.put("comment", rsComments.getString("comment"));
                       comments.add(comment);
                   }
               } catch (Exception e) {
                   e.printStackTrace();
               } finally {
-                  if (rs != null) try { rs.close(); } catch (SQLException ex) { ex.printStackTrace(); }
-                  if (pstmt != null) try { pstmt.close(); } catch (SQLException ex) { ex.printStackTrace(); }
-                  if (conn != null) try { conn.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+                  if (rsComments != null) try { rsComments.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+                  if (pstmtComments != null) try { pstmtComments.close(); } catch (SQLException ex) { ex.printStackTrace(); }
+                  if (connComments != null) try { connComments.close(); } catch (SQLException ex) { ex.printStackTrace(); }
               }
 
               for (Map<String, Object> comment : comments) {
@@ -592,6 +592,7 @@
               <% } %>
           </div>
         </div>
+
       </section>
       
       <div class="slider">
