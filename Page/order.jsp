@@ -10,17 +10,20 @@ String remark = request.getParameter("remark");
 String memberIDStr = request.getParameter("MemberID");
 String dateStr = request.getParameter("date");
 
-if (memberIDStr == null || memberIDStr.isEmpty()) {
+if (memberIDStr == null || memberIDStr.isEmpty() || dateStr == null || dateStr.isEmpty() || request.getParameter("productId") == null || request.getParameter("quantity") == null) {
     out.println("<p>所有字段都必須填寫並且不能為空</p>");
 } else {
     Connection conn = null;
     PreparedStatement pstmt = null;
     PreparedStatement orderPstmt = null;
     PreparedStatement deletePstmt = null;
+    PreparedStatement updatePstmt = null;
     ResultSet rs = null;
 
     try {
         int MemberID = Integer.parseInt(memberIDStr);
+        String productId = request.getParameter("productId");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
         Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FinalProject", "root", "Ray_930715");
@@ -35,8 +38,6 @@ if (memberIDStr == null || memberIDStr.isEmpty()) {
         int totalPrice = 0;
         while (rs.next()) {
             int cartID = rs.getInt("cartID");
-            int productId = rs.getInt("productID");
-            int quantity = rs.getInt("quantity");
             int price = rs.getInt("Price");
             String productName = rs.getString("ProductName");
             String productUrl = rs.getString("Producturl");
@@ -48,7 +49,7 @@ if (memberIDStr == null || memberIDStr.isEmpty()) {
             String orderItemSql = "INSERT INTO orderitems (MemberID, ProductID, quantity, price, date, totalprice, remark, Producturl, ProductName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             orderPstmt = conn.prepareStatement(orderItemSql);
             orderPstmt.setInt(1, MemberID);
-            orderPstmt.setInt(2, productId);
+            orderPstmt.setInt(2, rs.getInt("productID"));
             orderPstmt.setInt(3, quantity);
             orderPstmt.setInt(4, price);
             orderPstmt.setString(5, dateStr);
@@ -59,6 +60,13 @@ if (memberIDStr == null || memberIDStr.isEmpty()) {
             orderPstmt.executeUpdate();
         }
 
+        // 扣除庫存
+        String updateSql = "UPDATE inventoryquantity SET Quantity = Quantity - ? WHERE ProductID = ?";
+        updatePstmt = conn.prepareStatement(updateSql);
+        updatePstmt.setInt(1, quantity);
+        updatePstmt.setString(2, productId);
+        updatePstmt.executeUpdate();
+        
         // 刪除購物車中的項目
         String deleteCartSql = "DELETE FROM cart WHERE MemberID = ?";
         deletePstmt = conn.prepareStatement(deleteCartSql);
@@ -94,6 +102,7 @@ if (memberIDStr == null || memberIDStr.isEmpty()) {
             if (pstmt != null) pstmt.close();
             if (orderPstmt != null) orderPstmt.close();
             if (deletePstmt != null) deletePstmt.close();
+            if (updatePstmt != null) updatePstmt.close();
             if (conn != null) conn.close();
         } catch (SQLException e) {
             out.println("<p>關閉資源時發生錯誤: " + e.getMessage() + "</p>");
